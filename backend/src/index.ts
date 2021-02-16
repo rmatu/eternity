@@ -2,6 +2,9 @@ import dotenv from "dotenv";
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 
+import productRouter from "./routers/productRouter";
+import userRouter from "./routers/userRouter";
+
 dotenv.config();
 
 const app = express();
@@ -9,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/eternity", {
   useNewUrlParser: true, // get rid of depricated warnings
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -18,6 +21,9 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
 app.get("/", (_, res) => {
   res.send("Server is ready");
 });
+
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
 
 // An error catcher
 app.use((err: any, _: Request, res: Response, __: NextFunction) => {
