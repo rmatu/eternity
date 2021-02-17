@@ -6,7 +6,6 @@ import thunk, { ThunkMiddleware } from "redux-thunk";
 
 import rootReducer, { AppState } from "./rootReducer";
 
-//test
 const makeStore = () =>
   createStore(
     rootReducer,
