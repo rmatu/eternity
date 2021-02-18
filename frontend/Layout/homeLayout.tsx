@@ -15,7 +15,7 @@ export const Links = styled.div`
   letter-spacing: 0.1rem;
 
   a {
-    opacity: 90%;
+    opacity: 70%;
     margin: 0.7em 0;
 
     :hover {
@@ -44,6 +44,11 @@ export const SocialIconsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 1em;
+  opacity: 70%;
+
+  :hover {
+    opacity: 100%;
+  }
 
   svg {
     display: flex;

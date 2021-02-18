@@ -2,6 +2,8 @@ node_modules
 dist
 .env
 .vscode
+uploads/*
+
 
 # debug
 npm-debug.log*

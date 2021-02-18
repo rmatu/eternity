@@ -1,20 +1,10 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import argon2 from "argon2";
-import users from "../users";
 import User from "../models/userModel";
 import { generateToken, isAuth } from "../utils";
 
 const userRouter = express.Router();
-
-userRouter.get(
-  "/seed",
-  expressAsyncHandler(async (_, res) => {
-    // await User.remove({});
-    const createdUsers = await User.insertMany(users);
-    res.send({ createdUsers });
-  })
-);
 
 userRouter.post(
   "/signin",

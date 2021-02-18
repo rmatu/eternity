@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
+import morgan from "morgan";
 
 import productRouter from "./routers/productRouter";
 import userRouter from "./routers/userRouter";
@@ -9,6 +10,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(morgan("dev"));
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

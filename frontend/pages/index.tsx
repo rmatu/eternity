@@ -58,7 +58,7 @@ const Home = () => {
         </SideNavbar>
         <MainContent>
           <Description>
-            <h2>Le Locle Tissot</h2>
+            <h2>Le Locle Tissot </h2>
           </Description>
           <ImageWrapper>
             <Image src="/watch.png" width={550} height={550} />
