@@ -12,17 +12,17 @@ export const Header = () => {
       </LeftWrapper>
       <SvgWrapper>
         <BiSearch />
-        <Link href="cart">
+        <Link href="/cart">
           <a>
             <BiCart />
           </a>
         </Link>
-        <Link href="favorite">
+        <Link href="/favorites">
           <a>
             <BiHeart />
           </a>
         </Link>
-        <Link href="account">
+        <Link href="/account">
           <a>
             <User />
           </a>

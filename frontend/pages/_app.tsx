@@ -2,6 +2,10 @@ import { wrapper } from "../redux/store";
 import { GlobalStyle } from "../theme";
 import Head from "next/head";
 
+import axios from "axios";
+axios.defaults.baseURL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 const MyApp = ({ Component, pageProps }) => (
   <>
     <Head>
@@ -12,6 +16,7 @@ const MyApp = ({ Component, pageProps }) => (
       />
     </Head>
     <GlobalStyle />
+
     <Component {...pageProps} />
   </>
 );

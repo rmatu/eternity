@@ -1,20 +1,24 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Header } from "../components/Header/Header";
 import {
   SideNavbar,
   Links,
   Content,
   SocialLinks,
-  SocialIconsWrapper,
   MainContent,
   Description,
+  ImageContent,
   ImageWrapper,
-} from "../Layout/homeLayout";
+} from "../layout/homeLayout";
 import Link from "next/link";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import axios from "axios";
+import { IProduct } from "../types";
+import Image from "next/image";
 
-const Home = () => {
+const Home = ({ data }) => {
+  const { mainProductImage, brand }: IProduct = data[0];
+  const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${mainProductImage}`;
+
   return (
     <>
       <Head>
@@ -38,35 +42,31 @@ const Home = () => {
               <a>Sale</a>
             </Link>
           </Links>
-          <SocialLinks>
-            <SocialIconsWrapper>
-              <a href="https://facebook.com">
-                <FaFacebookF />
-              </a>
-            </SocialIconsWrapper>
-            <SocialIconsWrapper>
-              <a href="https://twitter.com">
-                <FaTwitter />
-              </a>
-            </SocialIconsWrapper>
-            <SocialIconsWrapper>
-              <a href="https://instagram.com">
-                <FaInstagram />
-              </a>
-            </SocialIconsWrapper>
-          </SocialLinks>
+          <SocialLinks>Explore</SocialLinks>
         </SideNavbar>
         <MainContent>
           <Description>
-            <h2>Le Locle Tissot </h2>
+            <h2>{brand}</h2>
           </Description>
-          <ImageWrapper>
-            <Image src="/watch.png" width={550} height={550} />
-          </ImageWrapper>
+          <ImageContent>
+            <ImageWrapper>
+              <Image src={fullUrl} layout="fill" quality={100}></Image>
+            </ImageWrapper>
+          </ImageContent>
         </MainContent>
       </Content>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  const { data } = await axios.get("/api/products");
+
+  return {
+    props: {
+      data,
+    },
+  };
+}
 
 export default Home;

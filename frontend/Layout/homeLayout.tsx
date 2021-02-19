@@ -28,6 +28,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: row;
   height: calc(100vh - 7em);
+  width: 100%;
 `;
 
 export const SocialLinks = styled.div`
@@ -66,11 +67,22 @@ export const MainContent = styled.div`
   width: 100%;
 `;
 
-export const ImageWrapper = styled.div`
-  max-width: 550px;
+export const ImageContent = styled.div`
+  width: 500px;
   height: 100%;
   display: flex;
   align-items: center;
+`;
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  width: 500px;
+  height: 700px;
+  img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
 `;
 
 export const Description = styled.div`
