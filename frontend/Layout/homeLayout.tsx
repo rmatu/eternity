@@ -1,28 +1,5 @@
 import styled from "styled-components";
 
-export const SideNavbar = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-export const Links = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 1.2rem;
-  letter-spacing: 0.1rem;
-
-  a {
-    opacity: 70%;
-    margin: 0.7em 0;
-
-    :hover {
-      opacity: 100%;
-    }
-  }
-`;
-
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
@@ -66,6 +43,10 @@ export const MainContent = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-evenly;
+
+  @media (max-width: 1200px) {
+    justify-content: flex-end;
+  }
 `;
 
 export const ImageContent = styled.div`
@@ -74,6 +55,11 @@ export const ImageContent = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  @media (max-width: 1200px) {
+    margin-left: 0;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -101,6 +87,11 @@ export const ImageWrapper = styled.div`
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+  }
+
+  @media (max-width: 1200px) {
+    width: 400px;
+    height: 600px;
   }
 `;
 

@@ -13,6 +13,10 @@ export const Logo = styled.p`
   font-size: 2.4rem;
   font-weight: lighter;
   letter-spacing: 0.3rem;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const Special = styled.span`

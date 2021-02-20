@@ -1,8 +1,6 @@
 import Head from "next/head";
 import { Header } from "../components/Header/Header";
 import {
-  SideNavbar,
-  Links,
   Content,
   ButtonsRow,
   MainContent,
@@ -19,6 +17,7 @@ import { twoDecimals } from "../utils/format";
 import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
 import Rating from "../components/UI/Rating/Rating";
+import { SideNavbar } from "../components/SideNavbar/SideNavbar";
 
 const Home = ({ data }) => {
   const {
@@ -28,6 +27,7 @@ const Home = ({ data }) => {
     price,
     rating,
     name,
+    _id,
   }: IProduct = data[0];
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${mainProductImage}`;
 
@@ -39,22 +39,7 @@ const Home = ({ data }) => {
       </Head>
       <Header />
       <Content>
-        <SideNavbar>
-          <Links>
-            <Link href="/men">
-              <a>Men</a>
-            </Link>
-            <Link href="/women">
-              <a>Women</a>
-            </Link>
-            <Link href="/kids">
-              <a>Kids</a>
-            </Link>
-            <Link href="/sale">
-              <a>Sale</a>
-            </Link>
-          </Links>
-        </SideNavbar>
+        <SideNavbar />
         <MainContent>
           <Description>
             <DescriptionContent>
@@ -73,7 +58,11 @@ const Home = ({ data }) => {
                 <Button margin="2em 0 0 0" bColor="#be6a15">
                   Add to Cart
                 </Button>
-                <Button margin="2em">Details</Button>
+                <Link href={`/products/${_id}`}>
+                  <a>
+                    <Button margin="2em">Details</Button>
+                  </a>
+                </Link>
               </ButtonsRow>
             </DescriptionContent>
           </Description>
