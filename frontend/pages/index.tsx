@@ -18,6 +18,7 @@ import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
 import Rating from "../components/UI/Rating/Rating";
 import { SideNavbar } from "../components/SideNavbar/SideNavbar";
+import Footer from "../components/Footer/Footer";
 
 const Home = ({ data }) => {
   const {
@@ -56,7 +57,7 @@ const Home = ({ data }) => {
               <p>{description}</p>
               <ButtonsRow>
                 <Button margin="2em 0 0 0" bColor="#be6a15">
-                  Add to Cart
+                  Add
                 </Button>
                 <Link href={`/products/${_id}`}>
                   <a>

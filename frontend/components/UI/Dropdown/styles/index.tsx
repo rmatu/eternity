@@ -14,6 +14,7 @@ export const StyledDropdown = styled.div`
 `;
 
 export const Ul = styled.ul`
+  z-index: 10;
   position: absolute;
   border-radius: 10px;
   left: 10px;

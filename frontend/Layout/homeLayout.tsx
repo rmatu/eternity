@@ -47,6 +47,10 @@ export const MainContent = styled.div`
   @media (max-width: 1200px) {
     justify-content: flex-end;
   }
+
+  @media (max-width: 850px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const ImageContent = styled.div`
@@ -59,6 +63,11 @@ export const ImageContent = styled.div`
 
   @media (max-width: 1200px) {
     margin-left: 0;
+  }
+
+  @media (max-width: 850px) {
+    width: calc(100vw - 4em);
+    height: 500px;
   }
 `;
 
@@ -93,6 +102,10 @@ export const ImageWrapper = styled.div`
     width: 400px;
     height: 600px;
   }
+
+  @media (max-width: 850px) {
+    height: 100%;
+  }
 `;
 
 export const Description = styled.div`
@@ -108,9 +121,16 @@ export const DescriptionContent = styled.div`
   p {
     font-size: 1.125rem;
   }
+
+  @media (max-width: 850px) {
+    max-width: 800px;
+  }
 `;
 
 export const ButtonsRow = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 430px) {
+  }
 `;
