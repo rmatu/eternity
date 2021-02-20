@@ -4,12 +4,13 @@ export interface IProduct extends Document {
   name: string;
   brand: string;
   description: string;
-  price: number;
+  price: number; // in cents;
   countInStock: number;
   rating: number;
   numReviews: number;
   mainProductImage: string;
   specification: {
+    sex: string;
     claspType: string;
     caseSize: string;
     brandColor: string;
@@ -33,6 +34,7 @@ const productSchema = new mongoose.Schema(
     numReviews: { type: Number, required: true },
     mainProductImage: { type: String, required: true },
     specification: {
+      sex: { type: String },
       claspType: { type: String },
       caseSize: { type: String },
       brandColor: { type: String },

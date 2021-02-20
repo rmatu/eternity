@@ -57,6 +57,7 @@ productRouter.post(
       numReviews: req.body.numReviews,
       mainProductImage: req.file.path,
       specification: {
+        sex: req.body.sex,
         claspType: req.body.claspType,
         caseSize: req.body.caseSize,
         brandColor: req.body.branColor,
@@ -80,6 +81,7 @@ productRouter.post(
       numReviews: createdProduct.numReviews,
       mainProductImage: createdProduct.mainProductImage,
       specification: {
+        sex: createdProduct.specification.sex,
         claspType: createdProduct.specification.claspType,
         caseSize: createdProduct.specification.caseSize,
         brandColor: createdProduct.specification.brandColor,

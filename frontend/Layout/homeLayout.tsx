@@ -5,7 +5,6 @@ export const SideNavbar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 200px;
 `;
 
 export const Links = styled.div`
@@ -63,11 +62,14 @@ export const SocialIconsWrapper = styled.div`
 
 export const MainContent = styled.div`
   display: flex;
-  justify-content: space-between;
+  max-width: 1980px;
   width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 
 export const ImageContent = styled.div`
+  margin-left: 5em;
   width: 500px;
   height: 100%;
   display: flex;
@@ -78,6 +80,23 @@ export const ImageWrapper = styled.div`
   position: relative;
   width: 500px;
   height: 700px;
+  background: rgb(37, 44, 46);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 10%,
+    rgba(0, 0, 0, 1) 60%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 10%,
+    rgba(0, 0, 0, 1) 60%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 10%,
+    rgba(0, 0, 0, 1) 60%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
   img {
     object-fit: contain;
     max-width: 100%;
@@ -87,7 +106,20 @@ export const ImageWrapper = styled.div`
 
 export const Description = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: auto;
+`;
+
+export const DescriptionContent = styled.div`
+  max-width: 400px;
+
+  p {
+    font-size: 1.125rem;
+  }
+`;
+
+export const ButtonsRow = styled.div`
+  display: flex;
+  flex-direction: row;
 `;

@@ -8,6 +8,7 @@ export interface IProduct {
   numReviews: number;
   mainProductImage: string;
   specification: {
+    sex: string;
     claspType: string;
     caseSize: string;
     brandColor: string;

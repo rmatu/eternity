@@ -4,19 +4,31 @@ import {
   SideNavbar,
   Links,
   Content,
-  SocialLinks,
+  ButtonsRow,
   MainContent,
   Description,
   ImageContent,
   ImageWrapper,
+  DescriptionContent,
 } from "../layout/homeLayout";
 import Link from "next/link";
 import axios from "axios";
 import { IProduct } from "../types";
 import Image from "next/image";
+import { twoDecimals } from "../utils/format";
+import Button from "../components/UI/Button/Button";
+import Heading from "../components/UI/Heading/Heading";
+import Rating from "../components/UI/Rating/Rating";
 
 const Home = ({ data }) => {
-  const { mainProductImage, brand }: IProduct = data[0];
+  const {
+    mainProductImage,
+    brand,
+    description,
+    price,
+    rating,
+    name,
+  }: IProduct = data[0];
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${mainProductImage}`;
 
   return (
@@ -42,11 +54,28 @@ const Home = ({ data }) => {
               <a>Sale</a>
             </Link>
           </Links>
-          <SocialLinks>Explore</SocialLinks>
         </SideNavbar>
         <MainContent>
           <Description>
-            <h2>{brand}</h2>
+            <DescriptionContent>
+              <Heading size="h1" color="#fff" marginB="0">
+                {name}
+              </Heading>
+              <Heading size="h2" color="#fff;" marginB="0">
+                {brand}
+              </Heading>
+              <Heading size="h3" marginB="0.2em" color="#be6a15">
+                ${twoDecimals(price)}
+              </Heading>
+              <Rating rating={rating} />
+              <p>{description}</p>
+              <ButtonsRow>
+                <Button margin="2em 0 0 0" bColor="#be6a15">
+                  Add to Cart
+                </Button>
+                <Button margin="2em">Details</Button>
+              </ButtonsRow>
+            </DescriptionContent>
           </Description>
           <ImageContent>
             <ImageWrapper>
