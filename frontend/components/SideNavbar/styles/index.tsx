@@ -1,17 +1,22 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.nav`
+interface WrapperProps {
+  width?: string;
+}
+
+export const Wrapper = styled.nav<WrapperProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: ${({ width }) => (width ? width : "")};
 
   @media (max-width: 1200px) {
     display: none;
   }
 `;
 
-export const Links = styled.div`
+export const Links = styled.ul`
   display: flex;
   flex-direction: column;
   font-size: 1.2rem;
@@ -19,8 +24,13 @@ export const Links = styled.div`
 
   a {
     opacity: 70%;
-    margin: 0.7em 0;
+  }
 
+  li {
+    margin: 0.7em 0;
+  }
+
+  a {
     :hover {
       opacity: 100%;
     }

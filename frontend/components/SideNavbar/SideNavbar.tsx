@@ -1,22 +1,34 @@
 import Link from "next/link";
 import { Wrapper, Links } from "./styles";
 
-export const SideNavbar = () => {
+interface SideNavbarProps {
+  width?: string;
+}
+
+export const SideNavbar: React.FC<SideNavbarProps> = ({ width }) => {
   return (
-    <Wrapper>
+    <Wrapper width={width}>
       <Links>
-        <Link href="/men">
-          <a>Men</a>
-        </Link>
-        <Link href="/women">
-          <a>Women</a>
-        </Link>
-        <Link href="/kids">
-          <a>Kids</a>
-        </Link>
-        <Link href="/sale">
-          <a>Sale</a>
-        </Link>
+        <li>
+          <Link href="/men">
+            <a>Men</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/women">
+            <a>Women</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/kids">
+            <a>Kids</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/sale">
+            <a>Sale</a>
+          </Link>
+        </li>
       </Links>
     </Wrapper>
   );

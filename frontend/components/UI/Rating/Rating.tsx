@@ -3,11 +3,13 @@ import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
 interface RatingProps {
   rating: number;
+  color?: any;
+  margin?: any;
 }
 
-const Rating: React.FC<RatingProps> = ({ rating }) => {
+const Rating: React.FC<RatingProps> = ({ rating, color, margin }) => {
   return (
-    <RatingWrapper>
+    <RatingWrapper color={color} margin={margin}>
       {rating >= 1 ? (
         <BsStarFill />
       ) : rating >= 0.5 ? (
