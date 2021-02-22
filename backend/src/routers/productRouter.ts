@@ -93,9 +93,15 @@ productRouter.put(
     const product = await Product.findById(req.params.id);
     const user = await User.findById(req.body.userId);
 
-    if (product && user) {
+    if (!user) {
+      res.status(404).send({ message: "User not Found" });
+      return;
+    }
+
+    if (product) {
       const review = new Review({
         body: req.body.body,
+        username: user.name,
         rating: req.body.rating,
         product: product._id,
         user: user._id,
@@ -108,7 +114,7 @@ productRouter.put(
 
       res.send(updatedProduct);
     } else {
-      res.status(404).send({ message: "404 Not Found" });
+      res.status(404).send({ message: "Product not Found" });
     }
   })
 );
