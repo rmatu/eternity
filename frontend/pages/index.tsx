@@ -43,13 +43,13 @@ const Home = ({ data }) => {
         <MainContent>
           <Description>
             <DescriptionContent>
-              <Heading size="h1" color="#fff" marginB="0">
+              <Heading size="h1" color="#fff">
                 {name}
               </Heading>
-              <Heading size="h2" color="#fff;" marginB="0">
+              <Heading size="h2" color="#fff;">
                 {brand}
               </Heading>
-              <Heading size="h3" marginB="0.2em" color="#be6a15">
+              <Heading size="h3" margin="0 0 0.2em 0" color="#be6a15">
                 ${twoDecimals(price)}
               </Heading>
               <Rating rating={rating} margin="0 0 0.5em 0" />

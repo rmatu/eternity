@@ -3,6 +3,8 @@ import multer from "multer";
 import expressAsyncHandler from "express-async-handler";
 
 import Product from "../models/productModel";
+import Review from "../models/reviewModel";
+import User from "../models/userModel";
 
 // Multer config
 const storage = multer.diskStorage({
@@ -45,7 +47,6 @@ productRouter.post(
   "/product",
   upload.single("mainProductImage"),
   expressAsyncHandler(async (req, res) => {
-    console.log(req.file);
     const product = new Product({
       name: req.body.name,
       imagePath: req.body.imagePath,
@@ -70,29 +71,7 @@ productRouter.post(
       },
     });
     const createdProduct = await product.save();
-    res.send({
-      _id: createdProduct._id,
-      name: createdProduct.name,
-      brand: createdProduct.brand,
-      description: createdProduct.description,
-      price: createdProduct.price,
-      countInStock: createdProduct.countInStock,
-      rating: createdProduct.rating,
-      numReviews: createdProduct.numReviews,
-      mainProductImage: createdProduct.mainProductImage,
-      specification: {
-        sex: createdProduct.specification.sex,
-        claspType: createdProduct.specification.claspType,
-        caseSize: createdProduct.specification.caseSize,
-        brandColor: createdProduct.specification.brandColor,
-        caseWidth: createdProduct.specification.caseWidth,
-        lensType: createdProduct.specification.lensType,
-        caseFinish: createdProduct.specification.caseFinish,
-        watchMovement: createdProduct.specification.watchMovement,
-        waterResistance: createdProduct.specification.waterResistance,
-        strapAndLugWidth: createdProduct.specification.strapAndLugWidth,
-      },
-    });
+    res.send(createdProduct);
   })
 );
 
@@ -102,6 +81,44 @@ productRouter.get(
     const product = await Product.findById(req.params.id);
     if (product) {
       res.send(product);
+    } else {
+      res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
+productRouter.put(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    const user = await User.findById(req.body.userId);
+
+    if (product && user) {
+      const review = new Review({
+        body: req.body.body,
+        rating: req.body.rating,
+        product: product._id,
+        user: user._id,
+      });
+
+      product.reviews.push(review._id);
+
+      const updatedProduct = await product.save();
+      await review.save();
+
+      res.send(updatedProduct);
+    } else {
+      res.status(404).send({ message: "404 Not Found" });
+    }
+  })
+);
+
+productRouter.get(
+  "/reviews/:id",
+  expressAsyncHandler(async (req, res) => {
+    const reviews = await Review.find({ product: req.params.id });
+    if (reviews) {
+      res.send(reviews);
     } else {
       res.status(404).send({ message: "Product Not Found" });
     }

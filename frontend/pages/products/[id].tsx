@@ -43,10 +43,10 @@ const Product: React.FC<ProductProps> = ({ product }) => {
         <MainContent>
           <ProductInformationWrapper>
             <LeftSection>
-              <Heading color="#fff" size="h1" marginB="">
+              <Heading color="#fff" size="h1" margin="">
                 {product.name}
               </Heading>
-              <Heading color="#fff" size="h3" marginB="0.5em">
+              <Heading color="#fff" size="h3" margin="0 0 0.5em 0">
                 {product.brand}
               </Heading>
               <ProductId>
@@ -57,7 +57,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             </LeftSection>
             <RightSection>
               <PriceWrapper>
-                <Heading size="h2" marginB="0.4em" color="#be6a15">
+                <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
                   ${twoDecimals(product.price)}
                 </Heading>
                 <Button margin="0 0 1em 2em" padding="0.3em 3em">
@@ -80,12 +80,12 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             </ImageWrapper>
           </ImageContent>
 
-          <Heading color="#fff" size="h1" marginB="0.5em">
+          <Heading color="#fff" size="h1" margin="0 0 0.5em 0">
             SPECIFICATION
           </Heading>
           <Specification product={product} />
 
-          <Heading color="#fff" size="h1" marginB="0.5em">
+          <Heading color="#fff" size="h1" margin="0.5em 0 ">
             Reviews
           </Heading>
         </MainContent>

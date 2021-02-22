@@ -2,14 +2,13 @@ import styled, { css } from "styled-components";
 
 export interface Props {
   color: string;
-  marginB: string;
+  margin?: string;
   size?: string;
 }
 
 const baseStyle = css<Props>`
   color: ${({ color }) => color};
-  margin-top: 0;
-  margin-bottom: ${({ marginB }) => marginB};
+  margin: ${({ margin }) => margin};
 `;
 
 export const Heading1 = styled.h1`

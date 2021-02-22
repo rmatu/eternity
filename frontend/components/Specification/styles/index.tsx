@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Wrapper = styled.ul`
   max-width: 100%;
   font-size: 1.2rem;
-  bottom: 2em;
 `;
 
 export const Row = styled.div`

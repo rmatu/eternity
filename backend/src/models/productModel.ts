@@ -21,6 +21,12 @@ export interface IProduct extends Document {
     waterResistance: number;
     strapAndLugWidth: number;
   };
+  reviews: [
+    {
+      body: string;
+      rating: string;
+    }
+  ];
 }
 
 const productSchema = new mongoose.Schema(
@@ -45,6 +51,13 @@ const productSchema = new mongoose.Schema(
       waterResistance: { type: Number },
       strapAndLugWidth: { type: Number },
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );
