@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface RatingProps {
-  color?: any;
+  rColor?: any;
   margin?: any;
 }
 
@@ -10,6 +10,6 @@ export const Wrapper = styled.div``;
 export const RatingWrapper = styled.div<RatingProps>`
   margin: ${({ margin }) => (margin ? margin : null)};
   svg {
-    fill: ${({ color }) => (color ? "#be6a15" : null)};
+    fill: ${({ rColor }) => (rColor ? "#be6a15" : "")};
   }
 `;

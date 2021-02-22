@@ -40,8 +40,6 @@ export const Header = () => {
       <Ul open={open}>
         <Li>Cart</Li>
         <Li>Favorites</Li>
-        <Li>Men</Li>
-        <Li>Women</Li>
         <Li>Sale</Li>
         <Li>
           <Link href="/account">

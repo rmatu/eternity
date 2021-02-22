@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Header } from "../../components/Header/Header";
 import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
 import Heading from "../../components/UI/Heading/Heading";
+import Image from "next/image";
 import { IProduct } from "../../types";
 import {
   MainContent,
@@ -15,16 +16,23 @@ import {
   Avalibility,
   Id,
   AvalibilityWrapper,
+  ImageContent,
+  ImageWrapper,
+  Specification,
+  SpecificationItem,
+  SpecificationRow,
 } from "../../layout/productLayout";
 import Rating from "../../components/UI/Rating/Rating";
 import Button from "../../components/UI/Button/Button";
-import { twoDecimals } from "../../utils/format";
+import { splitAndCapitalize, twoDecimals } from "../../utils/format";
 
 interface ProductProps {
   product: IProduct;
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
+  const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+
   return (
     <>
       <Head>
@@ -45,7 +53,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
               </Heading>
               <ProductId>
                 <Id>{product._id}</Id>
-                <Rating rating={product.rating} color margin="0.2em 0 0 0 " />
+                <Rating rating={product.rating} rColor margin="0.2em 0 0 0 " />
                 <p>({`${product.numReviews}`})</p>
               </ProductId>
             </LeftSection>
@@ -68,6 +76,26 @@ const Product: React.FC<ProductProps> = ({ product }) => {
               </AvalibilityWrapper>
             </RightSection>
           </ProductInformationWrapper>
+          <ImageContent>
+            <ImageWrapper>
+              <Image src={fullUrl} layout="fill" quality={100}></Image>
+            </ImageWrapper>
+          </ImageContent>
+          <Heading color="#fff" size="h1" marginB="">
+            SPECIFICATION
+          </Heading>
+          <Specification>
+            {Object.keys(product.specification).map((name) => (
+              <SpecificationRow key={name}>
+                <SpecificationItem>
+                  {splitAndCapitalize(name)}
+                </SpecificationItem>
+                <SpecificationItem bolder>
+                  {product.specification[name]}
+                </SpecificationItem>
+              </SpecificationRow>
+            ))}
+          </Specification>
         </MainContent>
       </Content>
     </>

@@ -6,6 +6,9 @@ interface WrapperProps {
 
 export const Wrapper = styled.nav<WrapperProps>`
   display: flex;
+  position: sticky;
+  top: 300px;
+  position: -webkit-sticky;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;

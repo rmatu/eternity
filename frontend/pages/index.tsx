@@ -52,7 +52,7 @@ const Home = ({ data }) => {
               <Heading size="h3" marginB="0.2em" color="#be6a15">
                 ${twoDecimals(price)}
               </Heading>
-              <Rating rating={rating} margin={"0 0 0.5em 0"} />
+              <Rating rating={rating} margin="0 0 0.5em 0" />
               <p>{description}</p>
               <ButtonsRow>
                 <Button margin="2em 0 0 0" bColor="#be6a15">
