@@ -47,6 +47,7 @@ dd {
 /* Set core body defaults */
 body {
   height: 100vh;
+  max-width: 100%;
   padding: 0 2em;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
@@ -66,6 +67,7 @@ body {
     border-radius: 0 0 0 8px;
   }
 }
+
 /* Remove list styles on ul, ol elements with a class attribute */
 ul[class],
 ol[class] {

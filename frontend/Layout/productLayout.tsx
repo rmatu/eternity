@@ -13,15 +13,11 @@ export const MainContent = styled.div`
 `;
 
 export const ProductInformationWrapper = styled.section`
-  margin: 5em 0 0 0;
+  margin: 0;
   padding-bottom: 2em;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #6d6d6d;
-
-  @media (max-width: 1200px) {
-    margin: 5em 0 0 0;
-  }
 
   @media (max-width: 700px) {
     flex-direction: column;
@@ -50,7 +46,7 @@ export const ProductId = styled.div`
   display: flex;
   align-items: center;
   p {
-    margin-left: 1em;
+    margin-left: 0.5em;
   }
 
   ${Id} {
@@ -85,7 +81,6 @@ export const PriceWrapper = styled.div`
 
 export const ImageContent = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,23 +97,23 @@ export const ImageContent = styled.div`
 
 export const ImageWrapper = styled.div`
   position: relative;
-  width: 500px;
-  height: 700px;
+  width: 300px;
+  height: 500px;
   background: rgb(37, 44, 46);
   background: -moz-radial-gradient(
     circle,
-    rgba(37, 44, 46, 1) 10%,
-    rgba(0, 0, 0, 1) 60%
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
   );
   background: -webkit-radial-gradient(
     circle,
-    rgba(37, 44, 46, 1) 10%,
-    rgba(0, 0, 0, 1) 60%
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
   );
   background: radial-gradient(
     circle,
-    rgba(37, 44, 46, 1) 10%,
-    rgba(0, 0, 0, 1) 60%
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
   img {
@@ -128,32 +123,8 @@ export const ImageWrapper = styled.div`
   }
 
   @media (max-width: 1200px) {
-    width: 400px;
-    height: 600px;
   }
 
   @media (max-width: 850px) {
-    height: 100%;
   }
-`;
-
-export const Specification = styled.ul`
-  max-width: 100%;
-  font-size: 1.2rem;
-`;
-
-export const SpecificationRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 1em 0;
-  border-bottom: 1px solid #6d6d6d;
-
-  :last-of-type {
-    border-bottom: none;
-  }
-`;
-
-export const SpecificationItem = styled.li<{ bolder?: any }>`
-  text-transform: capitalize;
-  font-weight: ${({ bolder }) => (bolder ? "700" : "300")};
 `;

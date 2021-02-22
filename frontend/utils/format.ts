@@ -19,7 +19,7 @@ export const capitalizeFirstLetter = (string: string) => {
  * Capitalize first letter and split every capitalized word in string
  * @param {string} name
  */
-export const splitAndCapitalize = (name: string) => {
+export const capitalizeAndSplit = (name: string) => {
   return capitalizeFirstLetter(name)
     .match(/[A-Z][a-z]+|[0-9]+/g)
     .join(" ");

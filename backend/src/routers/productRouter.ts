@@ -60,7 +60,7 @@ productRouter.post(
         sex: req.body.sex,
         claspType: req.body.claspType,
         caseSize: req.body.caseSize,
-        brandColor: req.body.branColor,
+        brandColor: req.body.brandColor,
         caseWidth: req.body.caseWidth,
         lensType: req.body.lensType,
         caseFinish: req.body.caseFinish,

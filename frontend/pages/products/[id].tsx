@@ -18,13 +18,11 @@ import {
   AvalibilityWrapper,
   ImageContent,
   ImageWrapper,
-  Specification,
-  SpecificationItem,
-  SpecificationRow,
 } from "../../layout/productLayout";
 import Rating from "../../components/UI/Rating/Rating";
 import Button from "../../components/UI/Button/Button";
-import { splitAndCapitalize, twoDecimals } from "../../utils/format";
+import { twoDecimals } from "../../utils/format";
+import { Specification } from "../../components/Specification/Specification";
 
 interface ProductProps {
   product: IProduct;
@@ -59,7 +57,7 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             </LeftSection>
             <RightSection>
               <PriceWrapper>
-                <Heading size="h2" marginB="0.2em" color="#be6a15">
+                <Heading size="h2" marginB="0.4em" color="#be6a15">
                   ${twoDecimals(product.price)}
                 </Heading>
                 <Button margin="0 0 1em 2em" padding="0.3em 3em">
@@ -81,21 +79,11 @@ const Product: React.FC<ProductProps> = ({ product }) => {
               <Image src={fullUrl} layout="fill" quality={100}></Image>
             </ImageWrapper>
           </ImageContent>
-          <Heading color="#fff" size="h1" marginB="">
+
+          <Heading color="#fff" size="h1" marginB="0.5em">
             SPECIFICATION
           </Heading>
-          <Specification>
-            {Object.keys(product.specification).map((name) => (
-              <SpecificationRow key={name}>
-                <SpecificationItem>
-                  {splitAndCapitalize(name)}
-                </SpecificationItem>
-                <SpecificationItem bolder>
-                  {product.specification[name]}
-                </SpecificationItem>
-              </SpecificationRow>
-            ))}
-          </Specification>
+          <Specification product={product} />
         </MainContent>
       </Content>
     </>
