@@ -12,6 +12,7 @@
   "author": "Ryszard Matula",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.2",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "argon2": "^0.27.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",

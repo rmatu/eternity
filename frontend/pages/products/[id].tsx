@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Moment from "react-moment";
 import axios from "axios";
 import Head from "next/head";
@@ -32,10 +33,22 @@ import { Specification } from "../../components/Specification/Specification";
 interface ProductProps {
   product: IProduct;
   reviews: IReviews[];
+  productId: string;
 }
 
-const Product: React.FC<ProductProps> = ({ product, reviews }) => {
+const Product: React.FC<ProductProps> = ({ product, reviews, productId }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+  const [limit, setLimit] = useState(4);
+  const [skip, setSkip] = useState(4);
+  const [comments, setComments] = useState([...reviews]);
+
+  const handleRefetchComments = async (limit, skip) => {
+    setSkip(skip + 4);
+    const { data } = await axios.get(
+      `/api/products/reviews/${productId}?limit=${limit}&skip=${skip}`
+    );
+    setComments([...comments, ...data]);
+  };
 
   return (
     <>
@@ -61,6 +74,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews }) => {
                 <p>({`${product.numReviews}`})</p>
               </ProductId>
             </LeftSection>
+
             <RightSection>
               <PriceWrapper>
                 <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
@@ -95,7 +109,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews }) => {
             Reviews
           </Heading>
 
-          {reviews.map((review, index) => (
+          {comments.map((review, index) => (
             <Reviews key={index}>
               <Info>
                 <div>
@@ -112,6 +126,12 @@ const Product: React.FC<ProductProps> = ({ product, reviews }) => {
               <ReviewText>{review.body}</ReviewText>
             </Reviews>
           ))}
+          <Button
+            onClick={() => handleRefetchComments(limit, skip)}
+            padding="0.3em 3em"
+          >
+            Load more
+          </Button>
         </MainContent>
       </Content>
     </>
@@ -130,6 +150,7 @@ export async function getServerSideProps(context) {
     props: {
       product,
       reviews,
+      productId: context.params.id,
     },
   };
 }

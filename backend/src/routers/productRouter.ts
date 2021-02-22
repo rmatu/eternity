@@ -122,7 +122,15 @@ productRouter.put(
 productRouter.get(
   "/reviews/:id",
   expressAsyncHandler(async (req, res) => {
-    const reviews = await Review.find({ product: req.params.id });
+    //@ts-ignore
+    const skip = parseInt(req.query.skip) || 0;
+    //@ts-ignore
+    const limit = parseInt(req.query.limit) || 4;
+    console.log(skip, limit);
+    const reviews = await Review.find({ product: req.params.id })
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit);
     if (reviews) {
       res.send(reviews);
     } else {
