@@ -1,6 +1,6 @@
 import { wrapper } from "../redux/store";
-import { GlobalStyle } from "../theme";
 import Head from "next/head";
+import { GlobalStyle } from "../theme";
 
 import axios from "axios";
 axios.defaults.baseURL =
@@ -16,7 +16,6 @@ const MyApp = ({ Component, pageProps }) => (
       />
     </Head>
     <GlobalStyle />
-
     <Component {...pageProps} />
   </>
 );

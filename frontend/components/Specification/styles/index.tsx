@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const SpecificationWrapper = styled.ul`
+export const Wrapper = styled.ul`
   max-width: 100%;
   font-size: 1.2rem;
+  bottom: 2em;
 `;
 
-export const SpecificationRow = styled.div`
+export const Row = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1em 0;
@@ -16,7 +17,7 @@ export const SpecificationRow = styled.div`
   }
 `;
 
-export const SpecificationItem = styled.li<{ bolder?: any }>`
+export const Item = styled.li<{ bolder?: any }>`
   font-weight: ${({ bolder }) => (bolder ? "700" : "300")};
   color: ${({ bolder }) => (bolder ? "white" : "#cdd0d3")};
 `;

@@ -84,6 +84,10 @@ const Product: React.FC<ProductProps> = ({ product }) => {
             SPECIFICATION
           </Heading>
           <Specification product={product} />
+
+          <Heading color="#fff" size="h1" marginB="0.5em">
+            Reviews
+          </Heading>
         </MainContent>
       </Content>
     </>
