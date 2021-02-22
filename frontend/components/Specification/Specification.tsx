@@ -49,7 +49,7 @@ export const Specification: React.FC<SpecificationProps> = ({
       </Row>
       <Row>
         <Item>Strap and Lug Width</Item>
-        <Item bolder>{specification.strapAndLugWidth}</Item>
+        <Item bolder>{specification.strapAndLugWidth} mm</Item>
       </Row>
     </Wrapper>
   );

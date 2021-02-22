@@ -15,6 +15,7 @@ interface ButtonProps {
   disabled?: boolean;
   padding?: string;
   bColor?: string;
+  bFlex?: string;
 }
 
 export const StyledButton = styled.button<ButtonProps>`

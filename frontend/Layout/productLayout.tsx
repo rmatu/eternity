@@ -128,3 +128,21 @@ export const ImageWrapper = styled.div`
   @media (max-width: 850px) {
   }
 `;
+
+export const Reviews = styled.div`
+  padding: 2em 0;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  :first-child {
+    margin-bottom: 1em;
+  }
+`;
+
+export const ReviewText = styled.div`
+  font-size: 1.125rem;
+`;

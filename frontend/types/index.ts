@@ -21,3 +21,10 @@ export interface IProduct {
     strapAndLugWidth: number;
   };
 }
+
+export interface IReviews {
+  body: string;
+  rating: number;
+  username: string;
+  createdAt: string;
+}

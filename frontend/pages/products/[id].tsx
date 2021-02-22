@@ -1,10 +1,12 @@
+import Moment from "react-moment";
 import axios from "axios";
 import Head from "next/head";
 import { Header } from "../../components/Header/Header";
 import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
 import Heading from "../../components/UI/Heading/Heading";
 import Image from "next/image";
-import { IProduct } from "../../types";
+import { HiPlusSm } from "react-icons/hi";
+import { IProduct, IReviews } from "../../types";
 import {
   MainContent,
   ProductInformationWrapper,
@@ -18,6 +20,9 @@ import {
   AvalibilityWrapper,
   ImageContent,
   ImageWrapper,
+  Info,
+  ReviewText,
+  Reviews,
 } from "../../layout/productLayout";
 import Rating from "../../components/UI/Rating/Rating";
 import Button from "../../components/UI/Button/Button";
@@ -26,9 +31,10 @@ import { Specification } from "../../components/Specification/Specification";
 
 interface ProductProps {
   product: IProduct;
+  reviews: IReviews[];
 }
 
-const Product: React.FC<ProductProps> = ({ product }) => {
+const Product: React.FC<ProductProps> = ({ product, reviews }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
 
   return (
@@ -85,9 +91,27 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           </Heading>
           <Specification product={product} />
 
-          <Heading color="#fff" size="h1" margin="0.5em 0 ">
+          <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
             Reviews
           </Heading>
+
+          {reviews.map((review, index) => (
+            <Reviews key={index}>
+              <Info>
+                <div>
+                  <Heading color="#fff" size="h4" margin="0">
+                    {review.username}
+                  </Heading>
+                  <Moment fromNow ago>
+                    {review.createdAt}
+                  </Moment>{" "}
+                  ago
+                </div>
+                <Rating rating={review.rating} rColor="#be6a15" />
+              </Info>
+              <ReviewText>{review.body}</ReviewText>
+            </Reviews>
+          ))}
         </MainContent>
       </Content>
     </>
@@ -98,10 +122,14 @@ export async function getServerSideProps(context) {
   const { data: product } = await axios.get(
     `/api/products/${context.params.id}`
   );
+  const { data: reviews } = await axios.get(
+    `/api/products/reviews/${context.params.id}`
+  );
 
   return {
     props: {
       product,
+      reviews,
     },
   };
 }

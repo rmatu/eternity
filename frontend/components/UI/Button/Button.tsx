@@ -10,6 +10,7 @@ interface ButtonProps {
   // For future loader
   loading?: any;
   flex?: any;
+  bFlex?: any;
 }
 
 const Button: React.FC<
@@ -22,11 +23,13 @@ const Button: React.FC<
   flex,
   bColor,
   loading,
+  bFlex,
   ...rest
 }) => {
   return (
     <Wrapper margin={margin} flex={flex}>
       <StyledButton
+        bFlex={bFlex}
         bColor={bColor}
         padding={padding}
         disabled={disabled}
