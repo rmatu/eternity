@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Moment from "react-moment";
 import axios from "axios";
 import Head from "next/head";
@@ -6,8 +6,9 @@ import { Header } from "../../components/Header/Header";
 import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
 import Heading from "../../components/UI/Heading/Heading";
 import Image from "next/image";
-import { HiPlusSm } from "react-icons/hi";
 import { IProduct, IReviews } from "../../types";
+import Link from "next/link";
+import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import {
   MainContent,
   ProductInformationWrapper,
@@ -18,6 +19,11 @@ import {
   PriceWrapper,
   Avalibility,
   Id,
+  RightArrow,
+  LeftArrow,
+  SmallerImageWrapper,
+  WatchWrapper,
+  ButtonsWrapper,
   AvalibilityWrapper,
   ImageContent,
   ImageWrapper,
@@ -29,26 +35,46 @@ import Rating from "../../components/UI/Rating/Rating";
 import Button from "../../components/UI/Button/Button";
 import { twoDecimals } from "../../utils/format";
 import { Specification } from "../../components/Specification/Specification";
+import Footer from "../../components/Footer/Footer";
 
 interface ProductProps {
   product: IProduct;
+  relatedProducts: IProduct[];
   reviews: IReviews[];
   productId: string;
 }
 
-const Product: React.FC<ProductProps> = ({ product, reviews, productId }) => {
+const Product: React.FC<ProductProps> = ({
+  product,
+  reviews,
+  productId,
+  relatedProducts,
+}) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
-  const [limit, setLimit] = useState(4);
-  const [skip, setSkip] = useState(4);
+  const [reviewLimit, setReviewLimit] = useState(100);
+  const [reviewSkip, setReviewSkip] = useState(4);
+  const [watchesLimit, setWatchesLimit] = useState(100);
+  const [watchesSkip, setWatchesSkip] = useState(4);
+  const [watches, setWatches] = useState([...relatedProducts]);
   const [comments, setComments] = useState([...reviews]);
 
   const handleRefetchComments = async (limit, skip) => {
-    setSkip(skip + 4);
+    if (skip > limit) return;
+
+    setReviewSkip(skip + 4);
     const { data } = await axios.get(
       `/api/products/reviews/${productId}?limit=${limit}&skip=${skip}`
     );
     setComments([...comments, ...data]);
   };
+
+  // Reseting all the state after route changes
+  useEffect(() => {
+    setWatches([...relatedProducts]);
+    setComments([...reviews]);
+    setReviewSkip(4);
+    setWatchesSkip(4);
+  }, [reviews, relatedProducts]);
 
   return (
     <>
@@ -116,22 +142,71 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId }) => {
                   <Heading color="#fff" size="h4" margin="0">
                     {review.username}
                   </Heading>
-                  <Moment fromNow ago>
-                    {review.createdAt}
-                  </Moment>{" "}
-                  ago
+                  <p>
+                    <Moment fromNow ago>
+                      {review.createdAt}
+                    </Moment>{" "}
+                    ago
+                  </p>
                 </div>
                 <Rating rating={review.rating} rColor="#be6a15" />
               </Info>
               <ReviewText>{review.body}</ReviewText>
             </Reviews>
           ))}
-          <Button
-            onClick={() => handleRefetchComments(limit, skip)}
-            padding="0.3em 3em"
-          >
-            Load more
-          </Button>
+          <ButtonsWrapper>
+            <Button
+              onClick={() => handleRefetchComments(reviewLimit, reviewSkip)}
+              padding="0.3em 3em"
+              bColor="#be6a15"
+            >
+              More Reviews
+            </Button>
+            <Button padding="0.3em 3em">Add Comment</Button>
+          </ButtonsWrapper>
+
+          <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
+            Related Watches
+          </Heading>
+          <WatchWrapper>
+            <LeftArrow>
+              <RiArrowLeftSLine />
+            </LeftArrow>
+            {watches.map((watch) => (
+              <ImageContent key={watch.name} margin="0 0 3em 0">
+                <SmallerImageWrapper>
+                  <Link href={`/products/${watch._id}`}>
+                    <a>
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${watch.mainProductImage}`}
+                        layout="fill"
+                        quality={100}
+                      />
+                    </a>
+                  </Link>
+                </SmallerImageWrapper>
+                <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
+                  {watch.name}
+                </Heading>
+                <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
+                  ${twoDecimals(watch.price)}
+                </Heading>
+
+                <Button
+                  bColor="#be6a15"
+                  margin="0 0.5em 0 0"
+                  padding="0.3em 3em"
+                >
+                  Add
+                </Button>
+              </ImageContent>
+            ))}
+            <RightArrow>
+              <RiArrowRightSLine className="right" />
+            </RightArrow>
+          </WatchWrapper>
+
+          <Footer />
         </MainContent>
       </Content>
     </>
@@ -145,11 +220,17 @@ export async function getServerSideProps(context) {
   const { data: reviews } = await axios.get(
     `/api/products/reviews/${context.params.id}`
   );
+  const { data: relatedProducts } = await axios.get(
+    `/api/products/${context.params.id}?limit=3&skip=0`
+  );
+
+  console.log(relatedProducts);
 
   return {
     props: {
       product,
       reviews,
+      relatedProducts,
       productId: context.params.id,
     },
   };

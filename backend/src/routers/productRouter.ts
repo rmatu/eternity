@@ -37,9 +37,18 @@ const productRouter = express.Router();
 
 productRouter.get(
   "/",
-  expressAsyncHandler(async (_, res) => {
-    const products = await Product.find({});
-    res.send(products);
+  expressAsyncHandler(async (req, res) => {
+    if (req.query.skip && req.query.limit) {
+      //@ts-ignore
+      const skip = parseInt(req.query.skip);
+      //@ts-ignore
+      const limit = parseInt(req.query.limit);
+
+      const products = await Product.find({}).skip(skip).limit(limit);
+    } else {
+      const products = await Product.find({});
+      res.send(products);
+    }
   })
 );
 
@@ -78,11 +87,36 @@ productRouter.post(
 productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      res.send(product);
+    if (req.query.skip && req.query.limit) {
+      const product = await Product.findById(req.params.id);
+
+      if (!product) {
+        res.status(404).send({ message: "Product not Found" });
+        return;
+      }
+
+      //@ts-ignore
+      const skip = parseInt(req.query.skip);
+      //@ts-ignore
+      const limit = parseInt(req.query.limit);
+
+      const similarProducts = await Product.find({
+        "specification.sex": product.specification.sex,
+      })
+        .skip(skip)
+        .limit(limit);
+      if (similarProducts) {
+        res.send(similarProducts);
+      } else {
+        res.status(404).send({ message: "Similar Products Not Found" });
+      }
     } else {
-      res.status(404).send({ message: "Product Not Found" });
+      const product = await Product.findById(req.params.id);
+      if (product) {
+        res.send(product);
+      } else {
+        res.status(404).send({ message: "Product Not Found" });
+      }
     }
   })
 );
@@ -126,7 +160,6 @@ productRouter.get(
     const skip = parseInt(req.query.skip) || 0;
     //@ts-ignore
     const limit = parseInt(req.query.limit) || 4;
-    console.log(skip, limit);
     const reviews = await Review.find({ product: req.params.id })
       .sort({ _id: -1 })
       .skip(skip)

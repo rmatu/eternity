@@ -29,6 +29,8 @@ export const StyledButton = styled.button<ButtonProps>`
   font-weight: 500;
   background-color: ${({ bColor }) => (bColor ? bColor : "transparent")};
   border: 3px solid #be6a15;
+  text-shadow: 2px 1px 0 rgba(0, 0, 0, 0.3);
+
   cursor: pointer;
   opacity: 90%;
   &:disabled {
