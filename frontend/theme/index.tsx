@@ -67,10 +67,6 @@ body {
   }
 }
 
-#_next{
-  height: px;
-}
-
 
 /* Remove list styles on ul, ol elements with a class attribute */
 ul[class],

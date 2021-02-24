@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Moment from "react-moment";
 import axios from "axios";
 import Head from "next/head";
@@ -7,8 +7,8 @@ import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
 import Heading from "../../components/UI/Heading/Heading";
 import Image from "next/image";
 import { IProduct, IReviews } from "../../types";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
-import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import {
   MainContent,
   ProductInformationWrapper,
@@ -19,8 +19,6 @@ import {
   PriceWrapper,
   Avalibility,
   Id,
-  RightArrow,
-  LeftArrow,
   SmallerImageWrapper,
   WatchWrapper,
   ButtonsWrapper,
@@ -36,6 +34,7 @@ import Button from "../../components/UI/Button/Button";
 import { twoDecimals } from "../../utils/format";
 import { Specification } from "../../components/Specification/Specification";
 import Footer from "../../components/Footer/Footer";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 interface ProductProps {
   product: IProduct;
@@ -57,6 +56,8 @@ const Product: React.FC<ProductProps> = ({
   const [watchesSkip, setWatchesSkip] = useState(4);
   const [watches, setWatches] = useState([...relatedProducts]);
   const [comments, setComments] = useState([...reviews]);
+  const [slidesAmmount, setSlidesAmmount] = useState(3);
+  const size = useWindowSize();
 
   const handleRefetchComments = async (limit, skip) => {
     if (skip > limit) return;
@@ -75,6 +76,16 @@ const Product: React.FC<ProductProps> = ({
     setReviewSkip(4);
     setWatchesSkip(4);
   }, [reviews, relatedProducts]);
+
+  useEffect(() => {
+    if (size.width < 976) {
+      setSlidesAmmount(2);
+    }
+
+    if (size.width < 610) {
+      setSlidesAmmount(1);
+    }
+  }, [size]);
 
   return (
     <>
@@ -169,41 +180,48 @@ const Product: React.FC<ProductProps> = ({
             Related Watches
           </Heading>
           <WatchWrapper>
-            <LeftArrow>
-              <RiArrowLeftSLine />
-            </LeftArrow>
-            {watches.map((watch) => (
-              <ImageContent key={watch.name} margin="0 0 3em 0">
-                <SmallerImageWrapper>
-                  <Link href={`/products/${watch._id}`}>
-                    <a>
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_API_URL}/${watch.mainProductImage}`}
-                        layout="fill"
-                        quality={100}
-                      />
-                    </a>
-                  </Link>
-                </SmallerImageWrapper>
-                <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
-                  {watch.name}
-                </Heading>
-                <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
-                  ${twoDecimals(watch.price)}
-                </Heading>
+            <Swiper
+              tag="section"
+              wrapperTag="ul"
+              spaceBetween={0}
+              slidesPerView={slidesAmmount}
+              navigation
+              pagination
+              onSwiper={(swiper) => {}}
+              onSlideChange={(e) => {}}
+            >
+              {watches.map((watch) => (
+                <SwiperSlide tag="li" key={watch.name}>
+                  <ImageContent margin="0 0 3em 0">
+                    <SmallerImageWrapper>
+                      <Link href={`/products/${watch._id}`}>
+                        <a>
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/${watch.mainProductImage}`}
+                            layout="fill"
+                            quality={100}
+                          />
+                        </a>
+                      </Link>
+                    </SmallerImageWrapper>
+                    <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
+                      {watch.name}
+                    </Heading>
+                    <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
+                      ${twoDecimals(watch.price)}
+                    </Heading>
 
-                <Button
-                  bColor="#be6a15"
-                  margin="0 0.5em 0 0"
-                  padding="0.3em 3em"
-                >
-                  Add
-                </Button>
-              </ImageContent>
-            ))}
-            <RightArrow>
-              <RiArrowRightSLine className="right" />
-            </RightArrow>
+                    <Button
+                      bColor="#be6a15"
+                      margin="0 0.5em 0 0"
+                      padding="0.3em 3em"
+                    >
+                      Add
+                    </Button>
+                  </ImageContent>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </WatchWrapper>
 
           <Footer />
@@ -221,10 +239,8 @@ export async function getServerSideProps(context) {
     `/api/products/reviews/${context.params.id}`
   );
   const { data: relatedProducts } = await axios.get(
-    `/api/products/${context.params.id}?limit=3&skip=0`
+    `/api/products/${context.params.id}?limit=6&skip=0`
   );
-
-  console.log(relatedProducts);
 
   return {
     props: {

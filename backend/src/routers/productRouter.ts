@@ -102,6 +102,7 @@ productRouter.get(
 
       const similarProducts = await Product.find({
         "specification.sex": product.specification.sex,
+        _id: { $ne: product._id },
       })
         .skip(skip)
         .limit(limit);
