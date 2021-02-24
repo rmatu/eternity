@@ -10,17 +10,25 @@ export const Dropdown = () => {
       <TiArrowSortedDown onClick={() => setClicked(!clicked)} />
       {clicked && (
         <Ul>
-          <Link href="#">
-            <Li>Men</Li>
+          <Link href="/men">
+            <a>
+              <Li>Men</Li>
+            </a>
           </Link>
-          <Link href="#">
-            <Li>Women</Li>
+          <Link href="/women">
+            <a>
+              <Li>Women</Li>
+            </a>
           </Link>
-          <Link href="#">
-            <Li>Kids</Li>
+          <Link href="/kids">
+            <a>
+              <Li>Kids</Li>
+            </a>
           </Link>
-          <Link href="#">
-            <Li>Sale</Li>
+          <Link href="/sale">
+            <a>
+              <Li>Sale</Li>
+            </a>
           </Link>
         </Ul>
       )}

@@ -1,40 +1,41 @@
-import { useEffect, useState, useRef } from "react";
-import Moment from "react-moment";
 import axios from "axios";
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Moment from "react-moment";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
 import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
+import { Specification } from "../../components/Specification/Specification";
+import Button from "../../components/UI/Button/Button";
 import Heading from "../../components/UI/Heading/Heading";
-import Image from "next/image";
-import { IProduct, IReviews } from "../../types";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Link from "next/link";
+import Rating from "../../components/UI/Rating/Rating";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import {
-  MainContent,
-  ProductInformationWrapper,
-  LeftSection,
-  RightSection,
-  Content,
-  ProductId,
-  PriceWrapper,
   Avalibility,
-  Id,
-  SmallerImageWrapper,
-  WatchWrapper,
-  ButtonsWrapper,
   AvalibilityWrapper,
+  ButtonsWrapper,
+  Content,
+  Id,
   ImageContent,
   ImageWrapper,
   Info,
-  ReviewText,
+  LeftSection,
+  MainContent,
+  PriceWrapper,
+  ProductId,
+  ProductInformationWrapper,
   Reviews,
+  ReviewText,
+  RightSection,
+  SmallerImageWrapper,
+  WatchWrapper,
 } from "../../layout/productLayout";
-import Rating from "../../components/UI/Rating/Rating";
-import Button from "../../components/UI/Button/Button";
+import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
-import { Specification } from "../../components/Specification/Specification";
-import Footer from "../../components/Footer/Footer";
-import { useWindowSize } from "../../hooks/useWindowSize";
+import { useRouter } from "next/router";
 
 interface ProductProps {
   product: IProduct;
@@ -50,13 +51,15 @@ const Product: React.FC<ProductProps> = ({
   relatedProducts,
 }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+  const [mySwiper, setMySwiper] = useState();
   const [reviewLimit, setReviewLimit] = useState(100);
   const [reviewSkip, setReviewSkip] = useState(4);
-  const [watchesLimit, setWatchesLimit] = useState(100);
+  const [watchesLimit, setWatchesLimit] = useState(30);
   const [watchesSkip, setWatchesSkip] = useState(4);
   const [watches, setWatches] = useState([...relatedProducts]);
   const [comments, setComments] = useState([...reviews]);
   const [slidesAmmount, setSlidesAmmount] = useState(3);
+  const router = useRouter();
   const size = useWindowSize();
 
   const handleRefetchComments = async (limit, skip) => {
@@ -69,19 +72,32 @@ const Product: React.FC<ProductProps> = ({
     setComments([...comments, ...data]);
   };
 
+  const handleRefetchWatches = async (limit, skip) => {
+    if (skip > limit) return;
+
+    setWatchesSkip(skip + 4);
+    const { data } = await axios.get(
+      `/api/products/${router.query.id}?limit=${limit}&skip=${skip}`
+    );
+    setWatches([...watches, ...data]);
+  };
+
   // Reseting all the state after route changes
   useEffect(() => {
     setWatches([...relatedProducts]);
     setComments([...reviews]);
     setReviewSkip(4);
     setWatchesSkip(4);
+    if (mySwiper) {
+      //@ts-ignore
+      mySwiper.slideTo(0);
+    }
   }, [reviews, relatedProducts]);
 
   useEffect(() => {
     if (size.width < 976) {
       setSlidesAmmount(2);
     }
-
     if (size.width < 610) {
       setSlidesAmmount(1);
     }
@@ -187,8 +203,15 @@ const Product: React.FC<ProductProps> = ({
               slidesPerView={slidesAmmount}
               navigation
               pagination
-              onSwiper={(swiper) => {}}
-              onSlideChange={(e) => {}}
+              onSwiper={(swiper) => {
+                //@ts-ignore
+                setMySwiper(swiper);
+              }}
+              onSlideChange={(e) => {
+                if (e.isEnd) {
+                  handleRefetchWatches(watchesLimit, watchesSkip);
+                }
+              }}
             >
               {watches.map((watch) => (
                 <SwiperSlide tag="li" key={watch.name}>
@@ -239,7 +262,7 @@ export async function getServerSideProps(context) {
     `/api/products/reviews/${context.params.id}`
   );
   const { data: relatedProducts } = await axios.get(
-    `/api/products/${context.params.id}?limit=6&skip=0`
+    `/api/products/${context.params.id}?limit=4&skip=0`
   );
 
   return {
