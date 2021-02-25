@@ -319,3 +319,38 @@ export const RightArrow = styled.div`
     display: none;
   }
 `;
+
+export const BottomContentWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const BottomLeftContent = styled.div`
+  width: 70%;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
+`;
+
+export const BottomRightNav = styled.nav`
+  width: 30%;
+  margin-left: 8em;
+  margin-top: 6em;
+
+  h4 {
+    font-weight: 300;
+    padding: 0.3em 0;
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+export const RightNav = styled.ul`
+  position: sticky;
+  position: -webkit-sticky;
+  top: 300px;
+`;

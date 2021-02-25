@@ -68,7 +68,12 @@ const Home = ({ data }) => {
           </Description>
           <ImageContent>
             <ImageWrapper>
-              <Image src={fullUrl} layout="fill" quality={100}></Image>
+              <Image
+                src={fullUrl}
+                alt={`${name} image`}
+                layout="fill"
+                quality={100}
+              ></Image>
             </ImageWrapper>
           </ImageContent>
         </MainContent>
