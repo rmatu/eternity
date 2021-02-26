@@ -41,6 +41,7 @@ import {
 } from "../../layout/productLayout";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
+import { useThrottle } from "../../utils/helpers";
 
 interface ProductProps {
   product: IProduct;
@@ -76,8 +77,10 @@ const Product: React.FC<ProductProps> = ({
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
 
+  const scrollThrottle = useThrottle(() => handleScroll(), 100);
+
   const handleClickScroll = (offset) => {
-    window.scrollTo(0, offset + 400);
+    window.scrollTo(0, offset + 500);
   };
 
   const handleRefetchComments = async (limit, skip) => {
@@ -101,15 +104,16 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleScroll = () => {
+    console.log("here");
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", scrollThrottle, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", scrollThrottle);
     };
   }, []);
 
@@ -135,32 +139,32 @@ const Product: React.FC<ProductProps> = ({
   }, [size]);
 
   useEffect(() => {
+    console.log("xd");
     if (
-      (scrollPosition >= specRef.current.offsetTop + 400 &&
-        scrollPosition < descRef.current.offsetTop + 400) ||
-      scrollPosition === 0
+      scrollPosition >= specRef.current.offsetTop + 500 &&
+      scrollPosition < descRef.current.offsetTop + 500
     ) {
       setSpecActive(true);
     } else {
       setSpecActive(false);
     }
     if (
-      scrollPosition >= descRef.current.offsetTop + 400 &&
-      scrollPosition < revRef.current.offsetTop + 400
+      scrollPosition >= descRef.current.offsetTop + 500 &&
+      scrollPosition < revRef.current.offsetTop + 500
     ) {
       setDescActive(true);
     } else {
       setDescActive(false);
     }
     if (
-      scrollPosition >= revRef.current.offsetTop + 400 &&
-      scrollPosition < relRef.current.offsetTop + 400
+      scrollPosition >= revRef.current.offsetTop + 500 &&
+      scrollPosition < relRef.current.offsetTop + 500
     ) {
       setRevActive(true);
     } else {
       setRevActive(false);
     }
-    if (scrollPosition >= relRef.current.offsetTop + 400) {
+    if (scrollPosition >= relRef.current.offsetTop + 500) {
       setRelActive(true);
     } else {
       setRelActive(false);
