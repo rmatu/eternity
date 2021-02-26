@@ -79,7 +79,6 @@ const Product: React.FC<ProductProps> = ({
   const descRef = useRef<HTMLDivElement>(null);
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
-
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
 
   const handleClickScroll = (offset) => {
@@ -107,6 +106,7 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleScroll = () => {
+    console.log("here");
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
@@ -195,9 +195,7 @@ const Product: React.FC<ProductProps> = ({
             <RightSection>
               <PriceWrapper>
                 <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
-                  <PriceTag>
-                    <PriceTag>${twoDecimals(product.price)}</PriceTag>
-                  </PriceTag>
+                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
                 </Heading>
                 <Button
                   bColor="#be6a15"

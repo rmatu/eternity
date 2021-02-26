@@ -370,7 +370,11 @@ export const RightNav = styled.ul`
   top: 300px;
 
   .stroke {
+<<<<<<< HEAD
     width: 80%;
+=======
+    width: 80%;
+>>>>>>> feature/3-description-screen
   }
 `;
 
