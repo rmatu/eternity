@@ -2,7 +2,8 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Footer from "../../components/Footer/Footer";
@@ -16,6 +17,9 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   Avalibility,
   AvalibilityWrapper,
+  BottomContentWrapper,
+  BottomLeftContent,
+  BottomRightNav,
   ButtonsWrapper,
   Content,
   Id,
@@ -29,17 +33,14 @@ import {
   ProductInformationWrapper,
   Reviews,
   ReviewText,
+  RightLi,
+  RightNav,
   RightSection,
-  BottomContentWrapper,
-  BottomLeftContent,
-  BottomRightNav,
   SmallerImageWrapper,
   WatchWrapper,
-  RightNav,
 } from "../../layout/productLayout";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
-import { useRouter } from "next/router";
 
 interface ProductProps {
   product: IProduct;
@@ -55,6 +56,10 @@ const Product: React.FC<ProductProps> = ({
   relatedProducts,
 }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+  const [specActive, setSpecActive] = useState(false);
+  const [descActive, setDescActive] = useState(false);
+  const [revActive, setRevActive] = useState(false);
+  const [relActive, setRelActive] = useState(false);
   const [mySwiper, setMySwiper] = useState();
   const [reviewLimit, setReviewLimit] = useState(100);
   const [reviewSkip, setReviewSkip] = useState(4);
@@ -66,21 +71,14 @@ const Product: React.FC<ProductProps> = ({
   const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter();
   const size = useWindowSize();
-  const specRef = useRef();
-  const descRef = useRef();
-  const revRef = useRef();
-  const relRef = useRef();
+  const specRef = useRef<HTMLDivElement>(null);
+  const descRef = useRef<HTMLDivElement>(null);
+  const revRef = useRef<HTMLDivElement>(null);
+  const relRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    //@ts-ignore
-    console.log(specRef.current.offsetTop);
-    //@ts-ignore
-    console.log(descRef.current.offsetTop);
-    //@ts-ignore
-    console.log(revRef.current.offsetTop);
-    //@ts-ignore
-    console.log(relRef.current.offsetTop);
-  }, []);
+  const handleClickScroll = (offset) => {
+    window.scrollTo(0, offset + 400);
+  };
 
   const handleRefetchComments = async (limit, skip) => {
     if (skip > limit) return;
@@ -135,6 +133,39 @@ const Product: React.FC<ProductProps> = ({
       setSlidesAmmount(1);
     }
   }, [size]);
+
+  useEffect(() => {
+    if (
+      (scrollPosition >= specRef.current.offsetTop + 400 &&
+        scrollPosition < descRef.current.offsetTop + 400) ||
+      scrollPosition === 0
+    ) {
+      setSpecActive(true);
+    } else {
+      setSpecActive(false);
+    }
+    if (
+      scrollPosition >= descRef.current.offsetTop + 400 &&
+      scrollPosition < revRef.current.offsetTop + 400
+    ) {
+      setDescActive(true);
+    } else {
+      setDescActive(false);
+    }
+    if (
+      scrollPosition >= revRef.current.offsetTop + 400 &&
+      scrollPosition < relRef.current.offsetTop + 400
+    ) {
+      setRevActive(true);
+    } else {
+      setRevActive(false);
+    }
+    if (scrollPosition >= relRef.current.offsetTop + 400) {
+      setRelActive(true);
+    } else {
+      setRelActive(false);
+    }
+  }, [scrollPosition]);
 
   return (
     <>
@@ -304,18 +335,30 @@ const Product: React.FC<ProductProps> = ({
             </BottomLeftContent>
             <BottomRightNav>
               <RightNav>
-                <Heading color="#fff" size="h4">
+                <RightLi
+                  active={specActive}
+                  onClick={() => handleClickScroll(specRef.current.offsetTop)}
+                >
                   Specification
-                </Heading>
-                <Heading color="#fff" size="h4">
+                </RightLi>
+                <RightLi
+                  active={descActive}
+                  onClick={() => handleClickScroll(descRef.current.offsetTop)}
+                >
                   Description
-                </Heading>
-                <Heading color="#fff" size="h4">
+                </RightLi>
+                <RightLi
+                  active={revActive}
+                  onClick={() => handleClickScroll(revRef.current.offsetTop)}
+                >
                   Reviews
-                </Heading>
-                <Heading color="#fff" size="h4" margin="0 0 1em 0">
+                </RightLi>
+                <RightLi
+                  active={relActive}
+                  onClick={() => handleClickScroll(relRef.current.offsetTop)}
+                >
                   Related Watches
-                </Heading>
+                </RightLi>
                 <Heading size="h2" margin="0" color="#be6a15">
                   ${twoDecimals(product.price)}
                 </Heading>

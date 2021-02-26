@@ -323,6 +323,7 @@ export const RightArrow = styled.div`
 export const BottomContentWrapper = styled.div`
   position: relative;
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
 `;
 
@@ -335,8 +336,7 @@ export const BottomLeftContent = styled.div`
 `;
 
 export const BottomRightNav = styled.nav`
-  width: 30%;
-  margin-left: 8em;
+  width: 15%;
   margin-top: 6em;
 
   h4 {
@@ -353,4 +353,17 @@ export const RightNav = styled.ul`
   position: sticky;
   position: -webkit-sticky;
   top: 300px;
+`;
+
+export const RightLi = styled.li<{ active: boolean }>`
+  font-size: 1.5rem;
+  padding: 0.3em 0;
+  transition: all 0.1s;
+
+  color: ${({ active }) => (active ? "#fff" : "#a5a4a4")};
+
+  :hover {
+    color: white;
+    cursor: pointer;
+  }
 `;

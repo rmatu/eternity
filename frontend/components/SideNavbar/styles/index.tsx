@@ -26,6 +26,7 @@ export const Links = styled.ul`
   letter-spacing: 0.1rem;
 
   a {
+    transition: all 0.1s;
     opacity: 70%;
   }
 

@@ -96,7 +96,8 @@ select {
 html{
   font-size: 80%;
   box-sizing: border-box;
- 
+  scroll-behavior: smooth;
+  
 input:focus,
 select:focus,
 textarea:focus,
