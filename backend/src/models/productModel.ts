@@ -9,6 +9,7 @@ export interface IProduct extends Document {
   rating: number;
   numReviews: number;
   mainProductImage: string;
+  restImages: string[];
   specification: {
     sex: string;
     claspType: string;
@@ -39,6 +40,12 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true },
     numReviews: { type: Number, required: true },
     mainProductImage: { type: String, required: true },
+    restImages: [
+      {
+        type: String,
+        default: [],
+      },
+    ],
     specification: {
       sex: { type: String },
       claspType: { type: String },

@@ -1,15 +1,19 @@
 import express from "express";
-import multer from "multer";
 import expressAsyncHandler from "express-async-handler";
 
 import Product from "../models/productModel";
 import Review from "../models/reviewModel";
 import User from "../models/userModel";
 
+import multer from "multer";
+import fs from "fs";
 // Multer config
 const storage = multer.diskStorage({
-  destination: (_, __, cb) => {
-    cb(null, "./uploads/");
+  destination: (req, _, cb) => {
+    const pathBrand = req.body.brand.toLowerCase().replace(/\s+/g, "-");
+    const pathModel = req.body.name.toLowerCase().replace(/\s+/g, "-");
+    fs.mkdirSync(`./uploads/${pathBrand}/${pathModel}`, { recursive: true });
+    cb(null, `./uploads/${pathBrand}/${pathModel}`);
   },
   filename: (_, file, cb) => {
     cb(null, Date.now() + file.originalname);
@@ -23,10 +27,14 @@ const upload = multer({
   },
   fileFilter: (_, file, cb) => {
     // accept a file
-    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    if (
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/png"
+    ) {
       cb(null, true);
     } else {
-      // accept a file
+      // decline a file
       cb(null, false);
     }
   },
@@ -54,8 +62,17 @@ productRouter.get(
 
 productRouter.post(
   "/product",
-  upload.single("mainProductImage"),
+  upload.array("images", 10),
   expressAsyncHandler(async (req, res) => {
+    const mainPhotoUrl = req.files
+      //@ts-ignore
+      .filter((el: any) => el.path.includes(req.body.mainImagePath))
+      .map((el: any) => el.path)[0];
+    const restPhotosUrls = req.files
+      //@ts-ignore
+      .filter((el: any) => !el.path.includes(req.body.mainImagePath))
+      .map((el: any) => el.path);
+
     const product = new Product({
       name: req.body.name,
       imagePath: req.body.imagePath,
@@ -65,7 +82,8 @@ productRouter.post(
       countInStock: req.body.countInStock,
       rating: req.body.rating,
       numReviews: req.body.numReviews,
-      mainProductImage: req.file.path,
+      mainProductImage: mainPhotoUrl,
+      restImages: [...restPhotosUrls],
       specification: {
         sex: req.body.sex,
         claspType: req.body.claspType,
