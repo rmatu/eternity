@@ -2,8 +2,9 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactComponent as Stroke } from "../../assets/stroke.svg";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Footer from "../../components/Footer/Footer";
@@ -14,6 +15,7 @@ import Button from "../../components/UI/Button/Button";
 import Heading from "../../components/UI/Heading/Heading";
 import Rating from "../../components/UI/Rating/Rating";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import { BiHeart } from "react-icons/bi";
 import {
   Avalibility,
   AvalibilityWrapper,
@@ -28,6 +30,7 @@ import {
   Info,
   LeftSection,
   MainContent,
+  PriceTag,
   PriceWrapper,
   ProductId,
   ProductInformationWrapper,
@@ -104,7 +107,6 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleScroll = () => {
-    console.log("here");
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
@@ -130,16 +132,10 @@ const Product: React.FC<ProductProps> = ({
   }, [reviews, relatedProducts]);
 
   useEffect(() => {
-    if (size.width < 976) {
-      setSlidesAmmount(2);
-    }
-    if (size.width < 610) {
-      setSlidesAmmount(1);
-    }
+    size.width > 610 ? setSlidesAmmount(2) : setSlidesAmmount(1);
   }, [size]);
 
   useEffect(() => {
-    console.log("xd");
     if (
       scrollPosition >= specRef.current.offsetTop + 500 &&
       scrollPosition < descRef.current.offsetTop + 500
@@ -199,7 +195,9 @@ const Product: React.FC<ProductProps> = ({
             <RightSection>
               <PriceWrapper>
                 <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
-                  ${twoDecimals(product.price)}
+                  <PriceTag>
+                    <PriceTag>${twoDecimals(product.price)}</PriceTag>
+                  </PriceTag>
                 </Heading>
                 <Button
                   bColor="#be6a15"
@@ -316,12 +314,14 @@ const Product: React.FC<ProductProps> = ({
                               />
                             </a>
                           </Link>
+                          <BiHeart />
                         </SmallerImageWrapper>
                         <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
                           {watch.name}
                         </Heading>
+
                         <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
-                          ${twoDecimals(watch.price)}
+                          <PriceTag>${twoDecimals(watch.price)}</PriceTag>
                         </Heading>
 
                         <Button
@@ -363,8 +363,9 @@ const Product: React.FC<ProductProps> = ({
                 >
                   Related Watches
                 </RightLi>
-                <Heading size="h2" margin="0" color="#be6a15">
-                  ${twoDecimals(product.price)}
+                <Stroke className="stroke" />
+                <Heading size="h2" margin="0.2em 0 0 0" color="#be6a15">
+                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
                 </Heading>
                 <ProductId>
                   <Rating

@@ -235,6 +235,7 @@ export const WatchWrapper = styled.div`
 
 export const SmallerImageWrapper = styled.div`
   position: relative;
+  transition: all 0.2s;
   width: 300px;
   height: 500px;
   background: rgb(37, 44, 46);
@@ -254,12 +255,26 @@ export const SmallerImageWrapper = styled.div`
     rgba(0, 0, 0, 1) 53%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
+
   img {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
   }
-  transition: all 0.2s;
+
+  svg {
+    transition: all 0.1s;
+    position: absolute;
+    right: 0;
+    top: 2em;
+    height: 2em;
+    width: 2em;
+
+    :hover {
+      fill: #be6a15;
+      cursor: pointer;
+    }
+  }
 
   :hover {
     transform: scale(1.02);
@@ -353,6 +368,10 @@ export const RightNav = styled.ul`
   position: sticky;
   position: -webkit-sticky;
   top: 300px;
+
+  .stroke {
+    width: 80%;
+  }
 `;
 
 export const RightLi = styled.li<{ active: boolean }>`
@@ -366,4 +385,8 @@ export const RightLi = styled.li<{ active: boolean }>`
     color: white;
     cursor: pointer;
   }
+`;
+
+export const PriceTag = styled.span`
+  font-style: italic;
 `;
