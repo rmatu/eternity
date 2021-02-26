@@ -353,6 +353,10 @@ export const RightNav = styled.ul`
   position: sticky;
   position: -webkit-sticky;
   top: 300px;
+
+  .stroke {
+    width: 90%;
+  }
 `;
 
 export const RightLi = styled.li<{ active: boolean }>`
@@ -366,4 +370,8 @@ export const RightLi = styled.li<{ active: boolean }>`
     color: white;
     cursor: pointer;
   }
+`;
+
+export const PriceTag = styled.span`
+  font-style: italic;
 `;

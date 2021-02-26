@@ -2,6 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactComponent as Stroke } from "../../assets/stroke.svg";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
@@ -34,6 +35,7 @@ import {
   Reviews,
   ReviewText,
   RightLi,
+  PriceTag,
   RightNav,
   RightSection,
   SmallerImageWrapper,
@@ -41,6 +43,7 @@ import {
 } from "../../layout/productLayout";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
+import { useThrottle } from "../../utils/helpers";
 
 interface ProductProps {
   product: IProduct;
@@ -75,9 +78,10 @@ const Product: React.FC<ProductProps> = ({
   const descRef = useRef<HTMLDivElement>(null);
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
+  const scrollThrottle = useThrottle(() => handleScroll(), 100);
 
   const handleClickScroll = (offset) => {
-    window.scrollTo(0, offset + 400);
+    window.scrollTo(0, offset + 500);
   };
 
   const handleRefetchComments = async (limit, skip) => {
@@ -101,15 +105,16 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleScroll = () => {
+    console.log("here");
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", scrollThrottle, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", scrollThrottle);
     };
   }, []);
 
@@ -136,8 +141,8 @@ const Product: React.FC<ProductProps> = ({
 
   useEffect(() => {
     if (
-      (scrollPosition >= specRef.current.offsetTop + 400 &&
-        scrollPosition < descRef.current.offsetTop + 400) ||
+      (scrollPosition >= specRef.current.offsetTop + 500 &&
+        scrollPosition < descRef.current.offsetTop + 500) ||
       scrollPosition === 0
     ) {
       setSpecActive(true);
@@ -145,22 +150,22 @@ const Product: React.FC<ProductProps> = ({
       setSpecActive(false);
     }
     if (
-      scrollPosition >= descRef.current.offsetTop + 400 &&
-      scrollPosition < revRef.current.offsetTop + 400
+      scrollPosition >= descRef.current.offsetTop + 500 &&
+      scrollPosition < revRef.current.offsetTop + 500
     ) {
       setDescActive(true);
     } else {
       setDescActive(false);
     }
     if (
-      scrollPosition >= revRef.current.offsetTop + 400 &&
-      scrollPosition < relRef.current.offsetTop + 400
+      scrollPosition >= revRef.current.offsetTop + 500 &&
+      scrollPosition < relRef.current.offsetTop + 500
     ) {
       setRevActive(true);
     } else {
       setRevActive(false);
     }
-    if (scrollPosition >= relRef.current.offsetTop + 400) {
+    if (scrollPosition >= relRef.current.offsetTop + 500) {
       setRelActive(true);
     } else {
       setRelActive(false);
@@ -195,7 +200,7 @@ const Product: React.FC<ProductProps> = ({
             <RightSection>
               <PriceWrapper>
                 <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
-                  ${twoDecimals(product.price)}
+                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
                 </Heading>
                 <Button
                   bColor="#be6a15"
@@ -317,7 +322,7 @@ const Product: React.FC<ProductProps> = ({
                           {watch.name}
                         </Heading>
                         <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
-                          ${twoDecimals(watch.price)}
+                          <PriceTag>${twoDecimals(watch.price)}</PriceTag>
                         </Heading>
 
                         <Button
@@ -359,8 +364,9 @@ const Product: React.FC<ProductProps> = ({
                 >
                   Related Watches
                 </RightLi>
-                <Heading size="h2" margin="0" color="#be6a15">
-                  ${twoDecimals(product.price)}
+                <Stroke className="stroke" />
+                <Heading size="h2" margin="0.5em 0 0 0" color="#be6a15">
+                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
                 </Heading>
                 <ProductId>
                   <Rating
