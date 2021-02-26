@@ -7,6 +7,7 @@ import User from "../models/userModel";
 
 import multer from "multer";
 import fs from "fs";
+
 // Multer config
 const storage = multer.diskStorage({
   destination: (req, _, cb) => {
