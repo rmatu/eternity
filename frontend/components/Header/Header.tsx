@@ -1,14 +1,27 @@
 import { useState } from "react";
 import { BiCart, BiHeart, BiSearch } from "react-icons/bi";
-import { Logo, Nav, SvgWrapper, LeftWrapper, Ul, Li } from "./styles";
+import {
+  Logo,
+  Nav,
+  SvgWrapper,
+  LeftWrapper,
+  Ul,
+  Li,
+  Qty,
+  CartContainer,
+} from "./styles";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 //@ts-ignore
 import User from "../../assets/user.svg";
 import { Dropdown } from "../UI/Dropdown/Dropdown";
 import Hamburger from "../UI/Hamburger/Hamburger";
 import Button from "../UI/Button/Button";
+import { CartState } from "../../redux/cart/cartTypes";
+import { AppState } from "../../redux/rootReducer";
 
 export const Header = () => {
+  const { items }: CartState = useSelector((state: AppState) => state.cart);
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Nav>
@@ -21,9 +34,16 @@ export const Header = () => {
         <Dropdown />
         <BiSearch />
         <Link href="/cart">
-          <a>
-            <BiCart />
-          </a>
+          <CartContainer>
+            <a>
+              <BiCart />
+            </a>
+            {items.length > 0 && (
+              <Qty>
+                <p>{items.length}</p>
+              </Qty>
+            )}
+          </CartContainer>
         </Link>
         <Link href="/favorites">
           <a>

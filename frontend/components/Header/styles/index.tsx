@@ -36,6 +36,8 @@ export const Special = styled.span`
 `;
 
 export const SvgWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   svg {
     fill: #fff;
     margin: 0 1em;
@@ -143,5 +145,33 @@ export const Ul = styled.ul<UlProps>`
 
   @media (min-width: 500px) {
     display: none;
+  }
+`;
+
+export const Qty = styled.div`
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: #be6a15;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  top: -0.9em;
+  right: 0;
+
+  p {
+    color: #fff;
+    font-size: 90%;
+    font-weight: 700;
+  }
+`;
+
+export const CartContainer = styled.div`
+  position: relative;
+  svg {
+    :hover {
+      cursor: pointer;
+    }
   }
 `;

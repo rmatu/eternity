@@ -46,6 +46,8 @@ import {
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { useThrottle } from "../../utils/helpers";
+import { useDispatch } from "react-redux";
+import * as cartActions from "../../redux/cart/cartActions";
 
 interface ProductProps {
   product: IProduct;
@@ -75,8 +77,11 @@ const Product: React.FC<ProductProps> = ({
   const [slidesAmmount, setSlidesAmmount] = useState(2);
   const [mainSlidesAmmount, setMainSlidesAmmount] = useState(3);
   const [scrollPosition, setScrollPosition] = useState(0);
+
   const router = useRouter();
   const size = useWindowSize();
+  const dispatch = useDispatch();
+
   const specRef = useRef<HTMLDivElement>(null);
   const descRef = useRef<HTMLDivElement>(null);
   const revRef = useRef<HTMLDivElement>(null);
@@ -85,6 +90,10 @@ const Product: React.FC<ProductProps> = ({
 
   const handleClickScroll = (offset) => {
     window.scrollTo(0, offset + 500);
+  };
+
+  const handleAddToCart = (productId) => {
+    dispatch(cartActions.addToCart(productId));
   };
 
   const handleRefetchComments = async (limit, skip) => {
@@ -203,6 +212,9 @@ const Product: React.FC<ProductProps> = ({
                   bColor="#be6a15"
                   margin="0 0 1em 2em"
                   padding="0.3em 3em"
+                  onClick={() => {
+                    handleAddToCart(product._id);
+                  }}
                 >
                   Add
                 </Button>
@@ -353,6 +365,9 @@ const Product: React.FC<ProductProps> = ({
                           bColor="#be6a15"
                           margin="0 0.5em 0 0"
                           padding="0.3em 3em"
+                          onClick={() => {
+                            handleAddToCart(watch._id);
+                          }}
                         >
                           Add
                         </Button>
@@ -404,6 +419,9 @@ const Product: React.FC<ProductProps> = ({
                   bColor="#be6a15"
                   margin="2em 0 1em 0"
                   padding="0.3em 3em"
+                  onClick={() => {
+                    handleAddToCart(product._id);
+                  }}
                 >
                   Add
                 </Button>

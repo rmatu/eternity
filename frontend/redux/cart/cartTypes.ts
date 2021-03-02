@@ -6,6 +6,10 @@ export const CART_EMPTY = "CART_EMPTY";
 
 export interface CartAddItem {
   type: typeof CART_ADD_ITEM;
+  payload: {
+    productId: string;
+    qty: number;
+  };
 }
 
 export interface CartRemoveItem {
@@ -24,7 +28,14 @@ export interface CartEmpty {
   type: typeof CART_EMPTY;
 }
 
-export interface CartState {}
+interface CartItem {
+  productId: string;
+  qty: number;
+}
+
+export interface CartState {
+  items: CartItem[];
+}
 
 export type CartActionTypes =
   | CartAddItem
