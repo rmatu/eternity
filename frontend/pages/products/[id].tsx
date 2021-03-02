@@ -28,6 +28,7 @@ import {
   ImageContent,
   ImageWrapper,
   Info,
+  CarouselImages,
   LeftSection,
   MainContent,
   PriceTag,
@@ -72,6 +73,7 @@ const Product: React.FC<ProductProps> = ({
   const [watches, setWatches] = useState([...relatedProducts]);
   const [comments, setComments] = useState([...reviews]);
   const [slidesAmmount, setSlidesAmmount] = useState(2);
+  const [mainSlidesAmmount, setMainSlidesAmmount] = useState(3);
   const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter();
   const size = useWindowSize();
@@ -106,7 +108,6 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleScroll = () => {
-    console.log("here");
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
@@ -133,6 +134,7 @@ const Product: React.FC<ProductProps> = ({
 
   useEffect(() => {
     size.width > 610 ? setSlidesAmmount(2) : setSlidesAmmount(1);
+    size.width > 610 ? setMainSlidesAmmount(3) : setMainSlidesAmmount(2);
   }, [size]);
 
   useEffect(() => {
@@ -215,6 +217,7 @@ const Product: React.FC<ProductProps> = ({
               </AvalibilityWrapper>
             </RightSection>
           </ProductInformationWrapper>
+
           <ImageContent>
             <ImageWrapper>
               <Image
@@ -222,13 +225,36 @@ const Product: React.FC<ProductProps> = ({
                 alt={`${product.name} image`}
                 layout="fill"
                 quality={100}
-              ></Image>
+              />
             </ImageWrapper>
+            <BiHeart />
           </ImageContent>
+
+          <Swiper
+            tag="section"
+            wrapperTag="ul"
+            spaceBetween={20}
+            navigation
+            pagination
+            slidesPerView={mainSlidesAmmount}
+          >
+            {product.restImages.map((imagePath) => (
+              <SwiperSlide key={imagePath} tag="li">
+                <CarouselImages>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/${imagePath}`}
+                    alt={`${product.name} thumb screen`}
+                    layout="fill"
+                    quality={100}
+                  />
+                </CarouselImages>
+              </SwiperSlide>
+            ))}
+          </Swiper>
           <BottomContentWrapper>
             <BottomLeftContent>
               <div ref={specRef}>
-                <Heading color="#fff" size="h1" margin="0 0 0.5em 0">
+                <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
                   Specification
                 </Heading>
               </div>
@@ -238,6 +264,7 @@ const Product: React.FC<ProductProps> = ({
                 <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
                   Description
                 </Heading>
+                {product.description}
               </div>
 
               <div ref={revRef}>

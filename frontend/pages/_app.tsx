@@ -6,8 +6,8 @@ import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
 
-import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
-SwiperCore.use([Navigation, Pagination, A11y]);
+import SwiperCore, { Navigation, Pagination, A11y, Thumbs } from "swiper";
+SwiperCore.use([Navigation, Pagination, Thumbs, A11y]);
 
 import axios from "axios";
 axios.defaults.baseURL =

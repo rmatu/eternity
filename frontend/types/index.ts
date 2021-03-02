@@ -8,6 +8,7 @@ export interface IProduct {
   rating: number;
   numReviews: number;
   mainProductImage: string;
+  restImages: string[];
   specification: {
     sex: string;
     claspType: string;

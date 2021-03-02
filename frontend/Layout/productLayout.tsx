@@ -7,13 +7,13 @@ export const Content = styled.div`
   width: 100%;
 
   .swiper-container {
-    width: 100%;
+    max-width: 100%;
   }
 
   .swiper-pagination-fraction,
   .swiper-pagination-custom,
   .swiper-container-horizontal > .swiper-pagination-bullets {
-    bottom: 0px;
+    bottom: -6px;
   }
 
   .swiper-pagination-bullet {
@@ -135,12 +135,34 @@ export const PriceWrapper = styled.div`
 `;
 
 export const ImageContent = styled.div<{ margin?: string }>`
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: ${({ margin }) => (margin ? margin : null)};
+
+  svg {
+    transition: all 0.1s;
+    position: absolute;
+    height: 2em;
+    width: 2em;
+    top: 3em;
+    right: 3em;
+
+    :hover {
+      cursor: pointer;
+      fill: #be6a15;
+    }
+  }
+
+  @media (max-width: 700px) {
+    svg {
+      top: 1em;
+      right: 1em;
+    }
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -286,6 +308,32 @@ export const SmallerImageWrapper = styled.div`
   }
 `;
 
+export const CarouselImages = styled.div`
+  transition: all 0.2s;
+  width: 200px;
+  height: 200px;
+
+  img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+
+    :hover {
+      transform: scale(1.02);
+    }
+  }
+
+  @media (max-width: 850px) {
+    width: 200px;
+    height: 200px;
+
+    img {
+      background-color: #1a1a1b;
+      border-radius: 20px;
+    }
+  }
+`;
+
 export const LeftArrow = styled.div`
   position: absolute;
   left: 0;
@@ -370,11 +418,7 @@ export const RightNav = styled.ul`
   top: 300px;
 
   .stroke {
-<<<<<<< HEAD
-    width: 80%;
-=======
-    width: 80%;
->>>>>>> feature/3-description-screen
+    width: 90%;
   }
 `;
 
