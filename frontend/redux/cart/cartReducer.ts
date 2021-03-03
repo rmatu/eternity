@@ -1,8 +1,9 @@
 import * as actions from "./cartTypes";
 import { CartState, CartActionTypes } from "./cartTypes";
+import { getLocalStorage } from "../../utils/helpers";
 
 const cartDefaultState: CartState = {
-  items: [],
+  items: getLocalStorage("cartItems"),
 };
 
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
@@ -11,7 +12,6 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
       const existItem = state.items.find(
         (x) => x.productId === action.payload.productId
       );
-
       if (existItem) {
         return {
           ...state,

@@ -418,7 +418,7 @@ export const RightNav = styled.ul`
   top: 300px;
 
   .stroke {
-    width: 90%;
+    width: 40%;
   }
 `;
 

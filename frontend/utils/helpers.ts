@@ -8,3 +8,13 @@ export const useThrottle = (callback, delay) => {
   );
   return debouncedFn;
 };
+
+export const getLocalStorage = (item) => {
+  if (typeof localStorage !== "undefined") {
+    return localStorage.getItem(item)
+      ? JSON.parse(localStorage.getItem(item))
+      : [];
+  } else {
+    return [];
+  }
+};
