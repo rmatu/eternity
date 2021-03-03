@@ -8,7 +8,8 @@ import {
   Ul,
   Li,
   Qty,
-  CartContainer,
+  MobileQty,
+  SvgContainer,
 } from "./styles";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -21,7 +22,12 @@ import { CartState } from "../../redux/cart/cartTypes";
 import { AppState } from "../../redux/rootReducer";
 
 export const Header = () => {
-  const { items }: CartState = useSelector((state: AppState) => state.cart);
+  const { items: cartItems }: CartState = useSelector(
+    (state: AppState) => state.cart
+  );
+  const { items: favoritesItems }: CartState = useSelector(
+    (state: AppState) => state.favorites
+  );
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Nav>
@@ -34,21 +40,28 @@ export const Header = () => {
         <Dropdown />
         <BiSearch />
         <Link href="/cart">
-          <CartContainer>
+          <SvgContainer>
             <a>
               <BiCart />
             </a>
-            {items.length > 0 && (
-              <Qty>
-                <p>{items.length}</p>
+            {cartItems.length > 0 && (
+              <Qty cart>
+                <p>{cartItems.length}</p>
               </Qty>
             )}
-          </CartContainer>
+          </SvgContainer>
         </Link>
         <Link href="/favorites">
-          <a>
-            <BiHeart />
-          </a>
+          <SvgContainer>
+            <a>
+              <BiHeart />
+              {favoritesItems.length > 0 && (
+                <Qty>
+                  <p>{favoritesItems.length}</p>
+                </Qty>
+              )}
+            </a>
+          </SvgContainer>
         </Link>
         <Link href="/account">
           <a>
@@ -58,8 +71,12 @@ export const Header = () => {
       </SvgWrapper>
       <Hamburger open={open} setOpen={() => setOpen(!open)} />
       <Ul open={open}>
-        <Li>Cart</Li>
-        <Li>Favorites</Li>
+        <Li>
+          <a>Cart</a>
+        </Li>
+        <Li>
+          <a>Favorites</a>
+        </Li>
         <Li>Sale</Li>
         <Li>
           <Link href="/account">

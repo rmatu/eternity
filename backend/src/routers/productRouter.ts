@@ -53,10 +53,22 @@ productRouter.get(
       //@ts-ignore
       const limit = parseInt(req.query.limit);
 
-      const products = await Product.find({}).skip(skip).limit(limit);
+      // const products = await Product.find({}).skip(skip).limit(limit);
     } else {
       const products = await Product.find({});
       res.send(products);
+    }
+  })
+);
+
+productRouter.get(
+  "/main-product",
+  expressAsyncHandler(async (_, res) => {
+    const product = await Product.find({ mainProduct: true });
+    if (!product) {
+      return res.status(404).send({ message: "Product not Found" });
+    } else {
+      return res.send(product);
     }
   })
 );

@@ -1,17 +1,20 @@
-import * as actions from "./cartTypes";
-import { CartState, CartActionTypes } from "./cartTypes";
+import * as actions from "./favoritesTypes";
+import { FavoritesState, FavoritesActionTypes } from "./favoritesTypes";
 import { getLocalStorage } from "../../utils/helpers";
 import { localStorageNames } from "../../constants";
 
-const cartDefaultState: CartState = {
-  items: getLocalStorage(localStorageNames.CART_ITEMS),
+const favoritesDefaultState: FavoritesState = {
+  items: getLocalStorage(localStorageNames.FAVORITES),
 };
 
-const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
+const favoritesReducer = (
+  state = favoritesDefaultState,
+  action: FavoritesActionTypes
+) => {
   switch (action.type) {
-    case actions.CART_ADD_ITEM:
+    case actions.FAVORITES_ADD_ITEM:
       const existItem = state.items.find(
-        (x) => x.productId === action.payload.productId
+        (productId) => productId === action.payload
       );
       if (existItem) {
         return {
@@ -30,4 +33,4 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
   }
 };
 
-export default cartReducer;
+export default favoritesReducer;

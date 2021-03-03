@@ -47,8 +47,8 @@ import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { useThrottle } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
-import * as cartActions from "../../redux/cart/cartActions";
-
+import { dispatchToPlace } from "../../utils/reduxHelpers";
+import { localStorageNames } from "../../constants";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -90,10 +90,6 @@ const Product: React.FC<ProductProps> = ({
 
   const handleClickScroll = (offset) => {
     window.scrollTo(0, offset + 500);
-  };
-
-  const handleAddToCart = (productId) => {
-    dispatch(cartActions.addToCart(productId));
   };
 
   const handleRefetchComments = async (limit, skip) => {
@@ -213,7 +209,11 @@ const Product: React.FC<ProductProps> = ({
                   margin="0 0 1em 2em"
                   padding="0.3em 3em"
                   onClick={() => {
-                    handleAddToCart(product._id);
+                    dispatchToPlace(
+                      product._id,
+                      localStorageNames.CART_ITEMS,
+                      dispatch
+                    );
                   }}
                 >
                   Add
@@ -239,7 +239,15 @@ const Product: React.FC<ProductProps> = ({
                 quality={100}
               />
             </ImageWrapper>
-            <BiHeart />
+            <BiHeart
+              onClick={() => {
+                dispatchToPlace(
+                  product._id,
+                  localStorageNames.FAVORITES,
+                  dispatch
+                );
+              }}
+            />
           </ImageContent>
 
           <Swiper
@@ -262,6 +270,7 @@ const Product: React.FC<ProductProps> = ({
                 </CarouselImages>
               </SwiperSlide>
             ))}
+            <br />
           </Swiper>
           <BottomContentWrapper>
             <BottomLeftContent>
@@ -351,7 +360,15 @@ const Product: React.FC<ProductProps> = ({
                               />
                             </a>
                           </Link>
-                          <BiHeart />
+                          <BiHeart
+                            onClick={() => {
+                              dispatchToPlace(
+                                watch._id,
+                                localStorageNames.FAVORITES,
+                                dispatch
+                              );
+                            }}
+                          />
                         </SmallerImageWrapper>
                         <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
                           {watch.name}
@@ -366,7 +383,11 @@ const Product: React.FC<ProductProps> = ({
                           margin="0 0.5em 0 0"
                           padding="0.3em 3em"
                           onClick={() => {
-                            handleAddToCart(watch._id);
+                            dispatchToPlace(
+                              watch._id,
+                              localStorageNames.CART_ITEMS,
+                              dispatch
+                            );
                           }}
                         >
                           Add
@@ -420,7 +441,11 @@ const Product: React.FC<ProductProps> = ({
                   margin="2em 0 1em 0"
                   padding="0.3em 3em"
                   onClick={() => {
-                    handleAddToCart(product._id);
+                    dispatchToPlace(
+                      product._id,
+                      localStorageNames.CART_ITEMS,
+                      dispatch
+                    );
                   }}
                 >
                   Add

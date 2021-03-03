@@ -148,12 +148,12 @@ export const Ul = styled.ul<UlProps>`
   }
 `;
 
-export const Qty = styled.div`
+export const Qty = styled.div<{ cart?: boolean }>`
   display: flex;
   position: absolute;
   align-items: center;
   justify-content: center;
-  background-color: #be6a15;
+  background-color: ${({ cart }) => (cart ? "#be6a15" : "#d72323")};
   border-radius: 50%;
   width: 18px;
   height: 18px;
@@ -167,11 +167,23 @@ export const Qty = styled.div`
   }
 `;
 
-export const CartContainer = styled.div`
+export const SvgContainer = styled.div`
   position: relative;
   svg {
     :hover {
       cursor: pointer;
     }
   }
+`;
+
+export const MobileQty = styled.div<{ cart?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${({ cart }) => (cart ? "#be6a15" : "#d72323")};
+  width: 18px;
+  height: 18px;
+  margin-left: 0.25em;
+  font-weight: 500;
 `;

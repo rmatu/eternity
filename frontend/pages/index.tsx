@@ -17,7 +17,10 @@ import { twoDecimals } from "../utils/format";
 import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
 import Rating from "../components/UI/Rating/Rating";
+import { useDispatch } from "react-redux";
 import { SideNavbar } from "../components/SideNavbar/SideNavbar";
+import { dispatchToPlace } from "../utils/reduxHelpers";
+import { localStorageNames } from "../constants";
 
 const Home = ({ data }) => {
   const {
@@ -29,7 +32,9 @@ const Home = ({ data }) => {
     name,
     _id,
   }: IProduct = data[0];
+
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${mainProductImage}`;
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -55,7 +60,13 @@ const Home = ({ data }) => {
               <Rating rating={rating} margin="0 0 0.5em 0" />
               <p>{description}</p>
               <ButtonsRow>
-                <Button margin="2em 0 0 0" bColor="#be6a15">
+                <Button
+                  onClick={() =>
+                    dispatchToPlace(_id, localStorageNames.CART_ITEMS, dispatch)
+                  }
+                  margin="2em 0 0 0"
+                  bColor="#be6a15"
+                >
                   Add
                 </Button>
                 <Link href={`/products/${_id}`}>
@@ -83,7 +94,7 @@ const Home = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const { data } = await axios.get("/api/products");
+  const { data } = await axios.get("/api/products/main-product");
 
   return {
     props: {
