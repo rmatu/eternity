@@ -153,16 +153,16 @@ export const Qty = styled.div<{ cart?: boolean }>`
   position: absolute;
   align-items: center;
   justify-content: center;
-  background-color: ${({ cart }) => (cart ? "#be6a15" : "#d72323")};
+  background-color: ${({ cart }) => (cart ? "#be6a15" : "#bb1e1e")};
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  top: -0.9em;
+  width: 17px;
+  height: 17px;
+  top: -0.8em;
   right: 0;
 
   p {
     color: #fff;
-    font-size: 90%;
+    font-size: 80%;
     font-weight: 700;
   }
 `;
@@ -181,7 +181,7 @@ export const MobileQty = styled.div<{ cart?: boolean }>`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: ${({ cart }) => (cart ? "#be6a15" : "#d72323")};
+  background-color: ${({ cart }) => (cart ? "#fe5000" : "#d72323")};
   width: 18px;
   height: 18px;
   margin-left: 0.25em;

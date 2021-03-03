@@ -8,7 +8,6 @@ import {
   Ul,
   Li,
   Qty,
-  MobileQty,
   SvgContainer,
 } from "./styles";
 import Link from "next/link";
@@ -71,12 +70,16 @@ export const Header = () => {
       </SvgWrapper>
       <Hamburger open={open} setOpen={() => setOpen(!open)} />
       <Ul open={open}>
-        <Li>
-          <a>Cart</a>
-        </Li>
-        <Li>
-          <a>Favorites</a>
-        </Li>
+        <Link href="/cart">
+          <Li>
+            <a>Cart</a>
+          </Li>
+        </Link>
+        <Link href="/favorites">
+          <Li>
+            <a>Favorites</a>
+          </Li>
+        </Link>
         <Li>Sale</Li>
         <Li>
           <Link href="/account">

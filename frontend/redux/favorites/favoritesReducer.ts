@@ -17,9 +17,12 @@ const favoritesReducer = (
         (productId) => productId === action.payload
       );
       if (existItem) {
+        const filteredList = state.items.filter(
+          (productId) => productId !== action.payload
+        );
         return {
           ...state,
-          items: [...state.items],
+          items: [...filteredList],
         };
       } else {
         return {

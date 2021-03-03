@@ -62,7 +62,7 @@ export const MainContent = styled.div`
 
 export const ProductInformationWrapper = styled.section`
   margin-top: 0;
-  padding: 2em 0;
+  padding: 0 0 2em 0;
   display: flex;
   justify-content: space-between;
 
@@ -317,10 +317,8 @@ export const CarouselImages = styled.div`
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
-
-    :hover {
-      transform: scale(1.02);
-    }
+    background-color: #1a1a1b;
+    border-radius: 20px;
   }
 
   @media (max-width: 850px) {
@@ -400,7 +398,7 @@ export const BottomLeftContent = styled.div`
 
 export const BottomRightNav = styled.nav`
   width: 15%;
-  margin-top: 6em;
+  margin-top: 9em;
 
   h4 {
     font-weight: 300;
@@ -415,6 +413,7 @@ export const BottomRightNav = styled.nav`
 export const RightNav = styled.ul`
   position: sticky;
   position: -webkit-sticky;
+
   top: 300px;
 
   .stroke {

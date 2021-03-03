@@ -18,3 +18,12 @@ export const dispatchToPlace = (productId, localStorageName, dispatch) => {
       return;
   }
 };
+
+export const checkIfFavorite = (productId: string, items: string[]): string => {
+  const itemIsFavorite = items.find((id) => productId === id);
+  if (itemIsFavorite) {
+    return "#be6a15";
+  } else {
+    return "#fff";
+  }
+};

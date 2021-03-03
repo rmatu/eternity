@@ -46,9 +46,12 @@ import {
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { useThrottle } from "../../utils/helpers";
-import { useDispatch } from "react-redux";
-import { dispatchToPlace } from "../../utils/reduxHelpers";
+import { useDispatch, useSelector } from "react-redux";
+import { checkIfFavorite, dispatchToPlace } from "../../utils/reduxHelpers";
 import { localStorageNames } from "../../constants";
+import { AppState } from "../../redux/rootReducer";
+import { FavoritesState } from "../../redux/favorites/favoritesTypes";
+import Favorite from "../../components/UI/Favorite/Favorite";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -239,7 +242,8 @@ const Product: React.FC<ProductProps> = ({
                 quality={100}
               />
             </ImageWrapper>
-            <BiHeart
+            <Favorite
+              productId={product._id}
               onClick={() => {
                 dispatchToPlace(
                   product._id,
@@ -250,7 +254,7 @@ const Product: React.FC<ProductProps> = ({
             />
           </ImageContent>
 
-          <Swiper
+          {/* <Swiper
             tag="section"
             wrapperTag="ul"
             spaceBetween={20}
@@ -271,7 +275,7 @@ const Product: React.FC<ProductProps> = ({
               </SwiperSlide>
             ))}
             <br />
-          </Swiper>
+          </Swiper> */}
           <BottomContentWrapper>
             <BottomLeftContent>
               <div ref={specRef}>
@@ -360,7 +364,8 @@ const Product: React.FC<ProductProps> = ({
                               />
                             </a>
                           </Link>
-                          <BiHeart
+                          <Favorite
+                            productId={watch._id}
                             onClick={() => {
                               dispatchToPlace(
                                 watch._id,
