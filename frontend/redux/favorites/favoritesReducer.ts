@@ -16,6 +16,7 @@ const favoritesReducer = (
       const existItem = state.items.find(
         (productId) => productId === action.payload
       );
+      // If item exist remove it from the items list
       if (existItem) {
         const filteredList = state.items.filter(
           (productId) => productId !== action.payload

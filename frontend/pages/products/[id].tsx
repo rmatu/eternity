@@ -52,6 +52,7 @@ import { localStorageNames } from "../../constants";
 import { AppState } from "../../redux/rootReducer";
 import { FavoritesState } from "../../redux/favorites/favoritesTypes";
 import Favorite from "../../components/UI/Favorite/Favorite";
+import Popup from "../../components/UI/Popup/Popup";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -66,21 +67,21 @@ const Product: React.FC<ProductProps> = ({
   relatedProducts,
 }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
-  const [specActive, setSpecActive] = useState(false);
-  const [descActive, setDescActive] = useState(false);
-  const [revActive, setRevActive] = useState(false);
-  const [relActive, setRelActive] = useState(false);
+  const [specActive, setSpecActive] = useState<boolean>(false);
+  const [descActive, setDescActive] = useState<boolean>(false);
+  const [revActive, setRevActive] = useState<boolean>(false);
+  const [relActive, setRelActive] = useState<boolean>(false);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
   const [mySwiper, setMySwiper] = useState();
-  const [reviewLimit, setReviewLimit] = useState(100);
-  const [reviewSkip, setReviewSkip] = useState(4);
-  const [watchesLimit, setWatchesLimit] = useState(30);
-  const [watchesSkip, setWatchesSkip] = useState(4);
+  const [reviewLimit, setReviewLimit] = useState<number>(100);
+  const [reviewSkip, setReviewSkip] = useState<number>(4);
+  const [watchesLimit, setWatchesLimit] = useState<number>(30);
+  const [watchesSkip, setWatchesSkip] = useState<number>(4);
   const [watches, setWatches] = useState([...relatedProducts]);
   const [comments, setComments] = useState([...reviews]);
-  const [slidesAmmount, setSlidesAmmount] = useState(2);
-  const [mainSlidesAmmount, setMainSlidesAmmount] = useState(3);
-  const [scrollPosition, setScrollPosition] = useState(0);
-
+  const [slidesAmmount, setSlidesAmmount] = useState<number>(2);
+  const [mainSlidesAmmount, setMainSlidesAmmount] = useState<number>(3);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const router = useRouter();
   const size = useWindowSize();
   const dispatch = useDispatch();
@@ -212,6 +213,10 @@ const Product: React.FC<ProductProps> = ({
                   margin="0 0 1em 2em"
                   padding="0.3em 3em"
                   onClick={() => {
+                    setShowPopup(true);
+                    setTimeout(() => {
+                      setShowPopup(false);
+                    }, 5000);
                     dispatchToPlace(
                       product._id,
                       localStorageNames.CART_ITEMS,
@@ -388,6 +393,10 @@ const Product: React.FC<ProductProps> = ({
                           margin="0 0.5em 0 0"
                           padding="0.3em 3em"
                           onClick={() => {
+                            setShowPopup(true);
+                            setTimeout(() => {
+                              setShowPopup(false);
+                            }, 5000);
                             dispatchToPlace(
                               watch._id,
                               localStorageNames.CART_ITEMS,
@@ -468,6 +477,7 @@ const Product: React.FC<ProductProps> = ({
           <Footer />
         </MainContent>
       </Content>
+      <Popup showPopup={showPopup}>Item added to cart successfully!</Popup>
     </>
   );
 };

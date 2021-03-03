@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "babel-plugin-inline-react-svg": "^1.1.2",
+    "babel-plugin-macros": "^3.0.1",
     "babel-plugin-styled-components": "^1.12.0",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.1",

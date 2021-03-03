@@ -24,7 +24,7 @@ export const StyledButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
   padding: ${({ padding }) => (padding ? padding : "0.5em 3em")};
-  border-radius: 2em;
+  border-radius: 1em;
   font-size: 1.2rem;
   font-weight: 500;
   background-color: ${({ bColor }) => (bColor ? bColor : "transparent")};
