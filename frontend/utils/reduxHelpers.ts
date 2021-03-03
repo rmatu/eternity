@@ -19,11 +19,14 @@ export const dispatchToPlace = (productId, localStorageName, dispatch) => {
   }
 };
 
-export const checkIfFavorite = (productId: string, items: string[]): string => {
+export const checkIfFavorite = (
+  productId: string,
+  items: string[]
+): boolean => {
   const itemIsFavorite = items.find((id) => productId === id);
   if (itemIsFavorite) {
-    return "#be6a15";
+    return true;
   } else {
-    return "#fff";
+    return false;
   }
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BiCart, BiHeart, BiSearch } from "react-icons/bi";
+import { BiCart, BiSearch } from "react-icons/bi";
+import { HiOutlineHeart } from "react-icons/hi";
 import {
   Logo,
   Nav,
@@ -53,7 +54,7 @@ export const Header = () => {
         <Link href="/favorites">
           <SvgContainer>
             <a>
-              <BiHeart />
+              <HiOutlineHeart />
               {favoritesItems.length > 0 && (
                 <Qty>
                   <p>{favoritesItems.length}</p>
@@ -64,7 +65,9 @@ export const Header = () => {
         </Link>
         <Link href="/account">
           <a>
-            <User />
+            <div className="user">
+              <User />
+            </div>
           </a>
         </Link>
       </SvgWrapper>

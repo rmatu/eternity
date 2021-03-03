@@ -53,6 +53,7 @@ import { AppState } from "../../redux/rootReducer";
 import { FavoritesState } from "../../redux/favorites/favoritesTypes";
 import Favorite from "../../components/UI/Favorite/Favorite";
 import Popup from "../../components/UI/Popup/Popup";
+import AddComment from "../../components/AddComment/AddComment";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -67,6 +68,7 @@ const Product: React.FC<ProductProps> = ({
   relatedProducts,
 }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+  const [showComment, setShowComment] = useState<boolean>(false);
   const [specActive, setSpecActive] = useState<boolean>(false);
   const [descActive, setDescActive] = useState<boolean>(false);
   const [revActive, setRevActive] = useState<boolean>(false);
@@ -330,8 +332,14 @@ const Product: React.FC<ProductProps> = ({
                 >
                   More Reviews
                 </Button>
-                <Button padding="0.3em 3em">Add Comment</Button>
+                <Button
+                  onClick={() => setShowComment(!showComment)}
+                  padding="0.3em 3em"
+                >
+                  Add Comment
+                </Button>
               </ButtonsWrapper>
+              <AddComment visible={showComment} />
               <div ref={relRef}>
                 <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
                   Related Watches

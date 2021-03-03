@@ -144,7 +144,7 @@ export const ImageContent = styled.div<{ margin?: string }>`
   margin: ${({ margin }) => (margin ? margin : null)};
 
   svg {
-    transition: all 0.1s;
+    transition: all 0.2s;
     position: absolute;
     height: 2em;
     width: 2em;
@@ -154,6 +154,7 @@ export const ImageContent = styled.div<{ margin?: string }>`
     :hover {
       cursor: pointer;
       fill: #be6a15;
+      stroke: #be6a15;
     }
   }
 
@@ -285,7 +286,7 @@ export const SmallerImageWrapper = styled.div`
   }
 
   svg {
-    transition: all 0.1s;
+    transition: all 0.2s;
     position: absolute;
     right: 0;
     top: 2em;
@@ -294,6 +295,7 @@ export const SmallerImageWrapper = styled.div`
 
     :hover {
       fill: #be6a15;
+      stroke: #be6a15;
       cursor: pointer;
     }
   }

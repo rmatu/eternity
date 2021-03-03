@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BiHeart } from "react-icons/bi";
+import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 import { FavoritesState } from "../../../redux/favorites/favoritesTypes";
 import { AppState } from "../../../redux/rootReducer";
 import { useSelector } from "react-redux";
@@ -12,18 +12,21 @@ interface FavoriteProps {
 }
 
 const Favorite: React.FC<FavoriteProps> = ({ productId, onClick }) => {
-  const [fillColor, setFillColor] = useState<string>("#fff");
   const { items: favoritesItems }: FavoritesState = useSelector(
     (state: AppState) => state.favorites
   );
 
-  useEffect(() => {
-    setFillColor(checkIfFavorite(productId, favoritesItems));
-  }, [favoritesItems]);
+  if (checkIfFavorite(productId, favoritesItems)) {
+    return (
+      <Wrapper onClick={onClick}>
+        <HiHeart fill="#BE6A15" />
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper onClick={onClick}>
-      <BiHeart fill={fillColor} />
+      <HiOutlineHeart />
     </Wrapper>
   );
 };
