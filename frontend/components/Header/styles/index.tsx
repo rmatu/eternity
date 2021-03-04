@@ -38,11 +38,13 @@ export const Special = styled.span`
 export const SvgWrapper = styled.div`
   display: flex;
   flex-direction: row;
+
   .user {
     svg {
       fill: #fff;
     }
   }
+
   svg {
     margin: 0 1em;
     height: 2em;

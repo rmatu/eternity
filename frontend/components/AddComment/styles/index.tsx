@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Form } from "formik";
 
 export const Wrapper = styled.div<{ visible: boolean }>`
   margin-top: 4em;
@@ -9,25 +10,21 @@ export const Wrapper = styled.div<{ visible: boolean }>`
   width: 100%;
 
   @media (max-width: 500px) {
-    margin-top: 0;
-  }
-
-  button {
-    margin-left: 100%;
+    margin-top: 1em;
   }
 `;
 
 export const TopDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
-export const TextArea = styled.textarea`
-  padding: 1em;
-  background-color: #1a1a1b;
-  border-radius: 1em;
-  border-color: #1a1a1b;
+export const BottomDiv = styled.div`
   width: 100%;
-  height: 5em;
-  color: white;
+  margin-top: 0.6em;
+  display: flex;
+  justify-content: flex-end;
 `;
+
+export const StyledForm = styled(Form)``;

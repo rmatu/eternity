@@ -35,8 +35,7 @@ export const StyledButton = styled.button<ButtonProps>`
   opacity: 90%;
   &:disabled {
     cursor: not-allowed;
-    background-color: transparent;
-    opacity: 80%;
+    opacity: 60%;
   }
   &:hover {
     opacity: 100%;
