@@ -39,6 +39,7 @@ export const Error = styled.div<ErrorProps>`
   position: absolute;
   bottom: 0;
   left: 0;
+  display: none;
   font-weight: 700;
   font-size: 1rem;
 `;

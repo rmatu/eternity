@@ -4,9 +4,9 @@ export const StyledInput = styled.input`
   background-color: transparent;
   border: none;
   width: 85%;
-  margin-left: 2em;
+  margin-left: 1em;
   padding-right: 1em;
-  color: ${({ theme }) => theme.colors.gray};
+  color: #2e3136;
   border: none;
   background-image: none;
   background-color: transparent;
@@ -15,25 +15,11 @@ export const StyledInput = styled.input`
   box-shadow: none;
 `;
 
-export const IconWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: 0.8em auto;
-  right: 1em;
-  svg {
-    cursor: pointer;
-    fill: ${({ theme }) => theme.colors.gray};
-    height: 2rem;
-    width: 2rem;
-  }
-`;
-
 export const Wrapper = styled.div`
   width: 100%;
   background-color: #fff;
-  border-radius: 2rem;
-  padding: 1rem;
+  border-radius: 1rem;
+  padding: 0.5rem;
   font-weight: 700;
   position: relative;
   transition: all 0.1s ease;

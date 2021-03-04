@@ -1,16 +1,17 @@
 import Head from "next/head";
 import { Header } from "../components/Header/Header";
 
-const Account = () => {
+const Register = () => {
   return (
     <>
       <Head>
         <title>Eternity</title>
-        <meta name="description" content="Account page" />
+        <meta name="description" content="Login page" />
       </Head>
       <Header />
+      <p>Register</p>
     </>
   );
 };
 
-export default Account;
+export default Register;

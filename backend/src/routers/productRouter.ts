@@ -207,6 +207,17 @@ productRouter.get(
 productRouter.post(
   "/:id/reviews",
   expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      res.status(404).send({ message: "Product doesn't exist" });
+      return;
+    }
+
+    // Updating the number of reviews
+    product.numReviews++;
+    await product.save();
+
     const review = new Review({
       body: req.body.body,
       username: req.body.username,
