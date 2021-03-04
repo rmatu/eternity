@@ -186,7 +186,7 @@ productRouter.put(
 );
 
 productRouter.get(
-  "/reviews/:id",
+  "/:id/reviews",
   expressAsyncHandler(async (req, res) => {
     //@ts-ignore
     const skip = parseInt(req.query.skip) || 0;
@@ -201,6 +201,21 @@ productRouter.get(
     } else {
       res.status(404).send({ message: "Product Not Found" });
     }
+  })
+);
+
+productRouter.post(
+  "/:id/reviews",
+  expressAsyncHandler(async (req, res) => {
+    const review = new Review({
+      body: req.body.body,
+      username: req.body.username,
+      rating: req.body.rating,
+      product: req.params.id,
+      user: req.body.userId,
+    });
+    const createdReview = await review.save();
+    res.send(createdReview);
   })
 );
 

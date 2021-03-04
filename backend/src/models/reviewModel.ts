@@ -3,7 +3,7 @@ import mongoose, { Document } from "mongoose";
 export interface IReview extends Document {
   body: string;
   username: string;
-  rating: string;
+  rating: number;
   product: string;
   user: string;
 }

@@ -103,7 +103,7 @@ const Product: React.FC<ProductProps> = ({
 
     setReviewSkip(skip + 4);
     const { data } = await axios.get(
-      `/api/products/reviews/${productId}?limit=${limit}&skip=${skip}`
+      `/api/products/${productId}/reviews/?limit=${limit}&skip=${skip}`
     );
     setComments([...comments, ...data]);
   };
@@ -495,7 +495,7 @@ export async function getServerSideProps(context) {
     `/api/products/${context.params.id}`
   );
   const { data: reviews } = await axios.get(
-    `/api/products/reviews/${context.params.id}`
+    `/api/products/${context.params.id}/reviews`
   );
   const { data: relatedProducts } = await axios.get(
     `/api/products/${context.params.id}?limit=4&skip=0`
