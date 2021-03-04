@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   background-color: #fff;
   border-radius: 1rem;
   padding: 0.5rem;
-  font-weight: 700;
+  font-weight: 400;
   position: relative;
   transition: all 0.1s ease;
   margin-bottom: 2rem;
@@ -42,4 +42,16 @@ export const Error = styled.div<ErrorProps>`
   left: 0;
   font-weight: 700;
   font-size: 1rem;
+`;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  top: 0.3em;
+  right: 1em;
+  svg {
+    fill: #2e3136;
+    cursor: pointer;
+    height: 2.1rem;
+    width: 2.1rem;
+  }
 `;

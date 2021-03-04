@@ -1,10 +1,14 @@
+import { useState } from "react";
 import * as Yup from "yup";
 import { Field, Formik } from "formik";
 import Head from "next/head";
 import Link from "next/link";
 import { RiUserFollowLine } from "react-icons/ri";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/Header/Header";
 import Heading from "../components/UI/Heading/Heading";
+import { useDispatch } from "react-redux";
+import { signin } from "../redux/user/userActions";
 import Input from "../components/UI/Input/Input";
 import {
   Content,
@@ -24,6 +28,9 @@ const SignInSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <>
       <Head>
@@ -36,14 +43,16 @@ const Login = () => {
           isInitialValid={false}
           validationSchema={SignInSchema}
           initialValues={{ username: "", password: "" }}
-          onSubmit={async (values, { setSubmitting, setErrors }) => {}}
+          onSubmit={async (values, { setSubmitting, setErrors }) => {
+            await dispatch(signin(values.username, values.password));
+          }}
         >
           {({ isSubmitting, isValid, setFieldValue }) => (
             <LoginForm>
               <IconWrapper>
                 <RiUserFollowLine />
               </IconWrapper>
-              <Heading size="h4" margin="0 0 0 0.4em" color="#fff">
+              <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
                 Username
               </Heading>
               <Field
@@ -52,15 +61,31 @@ const Login = () => {
                 placeholder="Your username..."
                 component={Input}
               />
-              <Heading size="h4" margin="0 0 0 0.4em" color="#fff">
+              <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
                 Password
               </Heading>
+
               <Field
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Your password..."
                 component={Input}
-              />
+              >
+                {showPassword ? (
+                  <AiOutlineEye
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  />
+                )}
+              </Field>
+
               <ButtonWrapper>
                 <Button
                   loading={isSubmitting ? "Sending..." : null}

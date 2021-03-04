@@ -17,7 +17,7 @@ export const LoginForm = styled(Form)`
 
   h4 {
     font-size: 1.2rem;
-    font-weight: 300;
+    font-weight: 500;
   }
 `;
 
@@ -27,7 +27,7 @@ export const IconWrapper = styled.div`
   border-radius: 100%;
   height: 5rem;
   width: 5rem;
-  margin: 1em auto 3em auto;
+  margin: 1em auto 1em auto;
   svg {
     height: 4rem;
     width: 4rem;

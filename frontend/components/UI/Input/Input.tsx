@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledInput, Wrapper, Error } from "./styles";
+import { StyledInput, Wrapper, Error, IconWrapper } from "./styles";
 
 interface InputProps {
   field: any;
@@ -15,7 +15,8 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <Wrapper>
-      <StyledInput {...field} {...props} />
+      <StyledInput {...field} {...props}></StyledInput>
+      <IconWrapper>{children}</IconWrapper>
       <Error show={errors[field.name] && touched[field.name]}>
         {errors[field.name]}
       </Error>
