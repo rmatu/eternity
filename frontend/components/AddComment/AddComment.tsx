@@ -1,18 +1,19 @@
 import { useState } from "react";
 import Button from "../UI/Button/Button";
 import CommentRating from "../UI/CommentRating/CommentRating";
+import axios from "axios";
 import Popup from "../UI/Popup/Popup";
-import { Wrapper, TopDiv, TextArea, BottomDiv, StyledForm } from "./styles";
+import { Wrapper, TopDiv, BottomDiv, StyledForm } from "./styles";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
-import Textarea from "../UI/Textarea/Textarea";
+import Textarea from "../UI/TextArea/TextArea";
 
 interface AddCommentProps {
   visible: boolean;
 }
 
 export const ReviewSchema = Yup.object().shape({
-  // rating: Yup.number().min(1, "Please select the Rating"),
+  rating: Yup.number().min(1, "Please select the Rating"),
   review: Yup.string().required("Empty Review").min(5, "To short"),
 });
 
@@ -23,9 +24,6 @@ const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
 
   const handleAddComment = async (values) => {
     console.log(values);
-    if (rating === 0) {
-      console.log("kekw");
-    }
     setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
@@ -34,39 +32,39 @@ const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
 
   return (
     <Wrapper visible={visible}>
-      <TopDiv>
-        <p>Your comment</p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <p>Rating:</p>
-          <CommentRating
-            rating={rating}
-            setRating={setRating}
-            rColor="#be6a15"
-            margin={"0.2em 0 0 0.4em"}
-          />
-        </div>
-      </TopDiv>
-
       <Formik
-        initialValues={{ review: "" }}
+        isInitialValid={false}
+        initialValues={{ review: "", rating }}
         validationSchema={ReviewSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) =>
-          handleAddComment(values)
+          await handleAddComment(values)
         }
       >
-        {({ isSubmitting, isValid }) => (
+        {({ isSubmitting, isValid, setFieldValue }) => (
           <StyledForm>
-            {console.log(isValid)}
+            <TopDiv>
+              <p>Your comment</p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <p>Rating:</p>
+                <CommentRating
+                  rating={rating}
+                  setFieldValue={setFieldValue}
+                  setRating={setRating}
+                  rColor="#be6a15"
+                  margin={"0.2em 0 0 0.4em"}
+                />
+              </div>
+            </TopDiv>
             <Field
               type="textarea"
               name="review"
-              placeholder="Review"
+              placeholder="Type here..."
               component={Textarea}
             />
             <BottomDiv>
