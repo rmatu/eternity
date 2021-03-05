@@ -1,11 +1,14 @@
 import axios from "axios";
-import * as userActions from "./userTypes";
+import { Dispatch } from "redux";
 import { localStorageNames } from "../../constants";
+import { AppActions } from "../actions";
+import * as userActions from "./userTypes";
 
-export const signin = (email, password) => async (dispatch) => {
+export const signin = (email: string, password: string) => async (
+  dispatch: Dispatch<AppActions>
+) => {
   dispatch({
     type: userActions.USER_SIGNIN_REQUEST,
-    payload: { email, password },
   });
   try {
     const { data } = await axios.post("/api/users/signin", { email, password });
@@ -14,6 +17,29 @@ export const signin = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: userActions.USER_SIGNIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const register = (
+  email: string,
+  name: string,
+  password: string
+) => async (dispatch: Dispatch<AppActions>) => {
+  try {
+    const { data } = await axios.post("/api/users/register", {
+      name,
+      email,
+      password,
+    });
+    dispatch({ type: userActions.USER_REGISTER_SUCCESS, payload: data });
+    localStorage.setItem(localStorageNames.USER_INFO, JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: userActions.USER_REGISTER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

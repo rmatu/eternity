@@ -34,6 +34,17 @@ export interface UserSigninFail {
   type: typeof USER_SIGNIN_FAIL;
   payload: string;
 }
+export interface UserRegisterRequest {
+  type: typeof USER_REGISTER_REQUEST;
+}
+export interface UserRegisterSuccess {
+  type: typeof USER_REGISTER_SUCCESS;
+  payload: User;
+}
+export interface UserRegisterFail {
+  type: typeof USER_REGISTER_FAIL;
+  payload: string;
+}
 
 interface User {
   _id: string;
@@ -52,5 +63,8 @@ export interface UserState {
 export type UserActionTypes =
   | UserSigninRequest
   | UserSigninSuccess
-  | UserCleanUp
-  | UserSigninFail;
+  | UserSigninFail
+  | UserRegisterRequest
+  | UserRegisterSuccess
+  | UserRegisterFail
+  | UserCleanUp;

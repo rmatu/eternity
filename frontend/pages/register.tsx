@@ -1,26 +1,28 @@
-import { useState } from "react";
-import Head from "next/head";
-import { Header } from "../components/Header/Header";
 import { Field, Formik } from "formik";
-import * as Yup from "yup";
+import Head from "next/head";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { RiUserFollowLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import Input from "../components/UI/Input/Input";
+import * as Yup from "yup";
+import { Header } from "../components/Header/Header";
+import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
+import Input from "../components/UI/Input/Input";
 import Popup from "../components/UI/Popup/Popup";
-import { UserState } from "../redux/user/userTypes";
-import { AppState } from "../redux/rootReducer";
 import {
+  BottomTextWrapper,
+  ButtonWrapper,
   Content,
   IconWrapper,
   LoginForm,
-  BottomTextWrapper,
   SpanWrapper,
-  ButtonWrapper,
 } from "../layout/loginLayout";
-import { RiUserFollowLine } from "react-icons/ri";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import Button from "../components/UI/Button/Button";
-import Link from "next/link";
+import { AppState } from "../redux/rootReducer";
+import { register } from "../redux/user/userActions";
+import { UserState } from "../redux/user/userTypes";
 
 export const SignUpSchema = Yup.object().shape({
   name: Yup.string()
@@ -44,10 +46,17 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { user, error }: UserState = useSelector(
     (state: AppState) => state.user
   );
+
+  useEffect(() => {
+    if (user) {
+      router.push("/account");
+    }
+  }, [user]);
 
   return (
     <>
@@ -66,7 +75,12 @@ const Register = () => {
             password: "",
             confirmPassword: "",
           }}
-          onSubmit={async (values, { setSubmitting, setErrors }) => {}}
+          onSubmit={async (
+            { name, email, password },
+            { setSubmitting, setErrors }
+          ) => {
+            await dispatch(register(email, name, password));
+          }}
         >
           {({ isSubmitting, isValid, setFieldValue }) => (
             <LoginForm>
