@@ -14,7 +14,7 @@ export const Wrapper = styled.nav<WrapperProps>`
   height: 100%;
   width: ${({ width }) => (width ? width : "")};
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1320px) {
     display: none;
   }
 `;

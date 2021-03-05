@@ -8,7 +8,7 @@ export const StyledDropdown = styled.div`
     cursor: pointer;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1320px) {
     display: none;
   }
 `;

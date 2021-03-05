@@ -15,8 +15,37 @@ export const LoginForm = styled(Form)`
   width: 400px;
   padding: 3em;
   border-radius: 1em;
-  background-color: #363333;
+  position: relative;
 
+  ::before {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    background: linear-gradient(#1d1b1b, #000000);
+    content: "";
+    z-index: -1;
+    border-radius: 1em;
+  }
+
+  background: rgb(54, 51, 51);
+  background: -moz-linear-gradient(
+    342deg,
+    rgba(54, 51, 51, 1) 20%,
+    rgba(0, 0, 0, 1) 75%
+  );
+  background: -webkit-linear-gradient(
+    342deg,
+    rgba(54, 51, 51, 1) 20%,
+    rgba(0, 0, 0, 1) 75%
+  );
+  background: linear-gradient(
+    342deg,
+    rgba(54, 51, 51, 1) 20%,
+    rgba(0, 0, 0, 1) 75%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#363333",endColorstr="#000000",GradientType=1);
   h4 {
     font-size: 1.2rem;
     font-weight: 500;
