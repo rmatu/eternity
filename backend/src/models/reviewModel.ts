@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 
 export interface IReview extends Document {
   body: string;
-  username: string;
+  name: string;
   rating: number;
   product: string;
   user: string;
@@ -11,7 +11,7 @@ export interface IReview extends Document {
 export const reviewSchema = new mongoose.Schema(
   {
     body: { type: String, required: true },
-    username: { type: String, required: true },
+    name: { type: String, required: true },
     rating: { type: Number, required: true },
     product: {
       type: mongoose.Schema.Types.ObjectId,

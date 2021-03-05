@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ReactComponent as Stroke } from "../../assets/stroke.svg";
 import AddComment from "../../components/AddComment/AddComment";
@@ -46,6 +46,8 @@ import {
   SmallerImageWrapper,
   WatchWrapper,
 } from "../../layout/productLayout";
+import { AppState } from "../../redux/rootReducer";
+import { UserState } from "../../redux/user/userTypes";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { useThrottle } from "../../utils/helpers";
@@ -89,6 +91,8 @@ const Product: React.FC<ProductProps> = ({
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
+
+  const { user }: UserState = useSelector((state: AppState) => state.user);
 
   const handleClickScroll = (offset) => {
     window.scrollTo(0, offset + 500);
@@ -306,7 +310,7 @@ const Product: React.FC<ProductProps> = ({
                   <Info>
                     <div>
                       <Heading color="#fff" size="h4" margin="0">
-                        {review.username}
+                        {review.name}
                       </Heading>
                       <p>
                         <Moment fromNow ago>
@@ -329,13 +333,24 @@ const Product: React.FC<ProductProps> = ({
                   More Reviews
                 </Button>
                 <Button
-                  onClick={() => setShowComment(!showComment)}
+                  onClick={() => {
+                    if (!user) {
+                      router.push(
+                        `/login?redirect=products/${router.query.id}`
+                      );
+                    } else {
+                      setShowComment(!showComment);
+                    }
+                  }}
                   padding="0.3em 3em"
                 >
                   Add Comment
                 </Button>
               </ButtonsWrapper>
-              <AddComment visible={showComment} />
+              <AddComment
+                productId={router.query.id as string}
+                visible={showComment}
+              />
               <div ref={relRef}>
                 <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
                   Related Watches

@@ -7,23 +7,31 @@ import { Wrapper, TopDiv, BottomDiv, StyledForm } from "./styles";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import Textarea from "../UI/TextArea/TextArea";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../../redux/user/userActions";
+import { UserState } from "../../redux/user/userTypes";
+import { AppState } from "../../redux/rootReducer";
 
 interface AddCommentProps {
   visible: boolean;
+  productId: string;
 }
 
 export const ReviewSchema = Yup.object().shape({
   rating: Yup.number().min(1, "Please select the Rating"),
-  review: Yup.string().required("Empty Review").min(5, "To short"),
+  body: Yup.string().required("Empty Review").min(5, "To short"),
 });
 
-const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
+const AddComment: React.FC<AddCommentProps> = ({ visible, productId }) => {
   const [rating, setRating] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [popupMessage, setPopupMessage] = useState<string>("");
+  const { user, error }: UserState = useSelector(
+    (state: AppState) => state.user
+  );
+  const dispatch = useDispatch();
 
-  const handleAddComment = async (values) => {
-    console.log(values);
+  const handleAddComment = async ({ body, rating }) => {
+    dispatch(addComment(body, user.name, rating, productId, user._id));
     setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
@@ -34,11 +42,13 @@ const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
     <Wrapper visible={visible}>
       <Formik
         isInitialValid={false}
-        initialValues={{ review: "", rating }}
+        initialValues={{ body: "", rating }}
         validationSchema={ReviewSchema}
-        onSubmit={async (values, { setSubmitting, setErrors }) =>
-          await handleAddComment(values)
-        }
+        onSubmit={async (values, { setSubmitting, setErrors, resetForm }) => {
+          await handleAddComment(values);
+          resetForm();
+          setRating(0);
+        }}
       >
         {({ isSubmitting, isValid, setFieldValue }) => (
           <StyledForm>
@@ -63,7 +73,7 @@ const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
             </TopDiv>
             <Field
               type="textarea"
-              name="review"
+              name="body"
               placeholder="Type here..."
               component={Textarea}
             />
@@ -75,14 +85,14 @@ const AddComment: React.FC<AddCommentProps> = ({ visible }) => {
                 bColor="#be6a15"
                 padding="0.2em 3em"
               >
-                Send
+                Add Comment
               </Button>
             </BottomDiv>
           </StyledForm>
         )}
       </Formik>
 
-      <Popup showPopup={showPopup}>{popupMessage}</Popup>
+      <Popup showPopup={showPopup}>Comment added successfuly!</Popup>
     </Wrapper>
   );
 };

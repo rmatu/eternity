@@ -167,7 +167,7 @@ productRouter.put(
     if (product) {
       const review = new Review({
         body: req.body.body,
-        username: user.name,
+        name: user.name,
         rating: req.body.rating,
         product: product._id,
         user: user._id,
@@ -220,7 +220,7 @@ productRouter.post(
 
     const review = new Review({
       body: req.body.body,
-      username: req.body.username,
+      name: req.body.name,
       rating: req.body.rating,
       product: req.params.id,
       user: req.body.userId,

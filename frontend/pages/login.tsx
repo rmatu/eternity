@@ -42,7 +42,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/account");
+      router.push((router.query.redirect as string) || "/account");
     }
   }, [user]);
 

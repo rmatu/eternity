@@ -26,6 +26,6 @@ export interface IProduct {
 export interface IReviews {
   body: string;
   rating: number;
-  username: string;
+  name: string;
   createdAt: string;
 }

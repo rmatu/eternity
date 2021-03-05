@@ -12,12 +12,27 @@ export const USER_DETAILS_REQUEST = "USER_DETAILS_REQUEST";
 export const USER_DETAILS_SUCCESS = "USER_DETAILS_SUCCESS";
 export const USER_DETAILS_FAIL = "USER_DETAILS_FAIL";
 
+export const USER_ADD_COMMENT_REQUEST = "USER_ADD_COMMENT_REQUEST";
+export const USER_ADD_COMMENT_SUCCESS = "USER_ADD_COMMENT_SUCCESS";
+export const USER_ADD_COMMENT_FAIL = "USER_ADD_COMMENT_FAIL";
+
 export const USER_UPDATE_PROFILE_REQUEST = "USER_UPDATE_PROFILE_REQUEST";
 export const USER_UPDATE_PROFILE_SUCCESS = "USER_UPDATE_PROFILE_SUCCESS";
 export const USER_UPDATE_PROFILE_FAIL = "USER_UPDATE_PROFILE_FAIL";
 export const USER_UPDATE_PROFILE_RESET = "USER_UPDATE_PROFILE_RESET";
 
 export const USER_CLEAN_UP = "USER_CLEAN_UP";
+
+export interface UserAddCommentRequest {
+  type: typeof USER_ADD_COMMENT_REQUEST;
+}
+export interface UserAddCommentSuccess {
+  type: typeof USER_ADD_COMMENT_SUCCESS;
+}
+export interface UserAddCommentFail {
+  type: typeof USER_ADD_COMMENT_FAIL;
+  payload: string;
+}
 
 export interface UserCleanUp {
   type: typeof USER_CLEAN_UP;
@@ -67,4 +82,7 @@ export type UserActionTypes =
   | UserRegisterRequest
   | UserRegisterSuccess
   | UserRegisterFail
+  | UserAddCommentRequest
+  | UserAddCommentSuccess
+  | UserAddCommentFail
   | UserCleanUp;
