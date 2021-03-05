@@ -32,18 +32,18 @@ export const LoginForm = styled(Form)`
   background: rgb(54, 51, 51);
   background: -moz-linear-gradient(
     342deg,
-    rgba(54, 51, 51, 1) 20%,
-    rgba(0, 0, 0, 1) 75%
+    rgba(54, 51, 51, 1) 10%,
+    rgba(0, 0, 0, 1) 55%
   );
   background: -webkit-linear-gradient(
     342deg,
-    rgba(54, 51, 51, 1) 20%,
-    rgba(0, 0, 0, 1) 75%
+    rgba(54, 51, 51, 1) 10%,
+    rgba(0, 0, 0, 1) 55%
   );
   background: linear-gradient(
     342deg,
-    rgba(54, 51, 51, 1) 20%,
-    rgba(0, 0, 0, 1) 75%
+    rgba(54, 51, 51, 1) 10%,
+    rgba(0, 0, 0, 1) 55%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#363333",endColorstr="#000000",GradientType=1);
   h4 {

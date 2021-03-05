@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { useState } from "react";
 import { BiCart, BiSearch } from "react-icons/bi";
 import { BiCheck } from "react-icons/bi";
 import { HiOutlineHeart } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 //@ts-ignore
 import User from "../../assets/user.svg";
 import { CartState } from "../../redux/cart/cartTypes";
+import { toggleNavbar, cleanUp } from "../../redux/navbar/navbarActions";
+import { NavbarState } from "../../redux/navbar/navbarTypes";
 import { AppState } from "../../redux/rootReducer";
 import { UserState } from "../../redux/user/userTypes";
 import Button from "../UI/Button/Button";
@@ -31,8 +32,10 @@ export const Header = () => {
     (state: AppState) => state.favorites
   );
   const { user }: UserState = useSelector((state: AppState) => state.user);
+  const { open }: NavbarState = useSelector((state: AppState) => state.navbar);
 
-  const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
   return (
     <Nav>
       <LeftWrapper>
@@ -67,7 +70,7 @@ export const Header = () => {
             </a>
           </SvgContainer>
         </Link>
-        <Link href="/account">
+        <Link href={user ? "/account" : "/login"}>
           <a>
             <SvgContainer>
               <div className="user">
@@ -78,22 +81,31 @@ export const Header = () => {
           </a>
         </Link>
       </SvgWrapper>
-      <Hamburger open={open} setOpen={() => setOpen(!open)} />
+      <Hamburger
+        open={open}
+        setOpen={() => {
+          dispatch(toggleNavbar());
+        }}
+      />
       <Ul open={open}>
         <Link href="/cart">
           <Li>
-            <a>Cart</a>
+            <a onClick={() => dispatch(cleanUp())}>Cart</a>
           </Li>
         </Link>
         <Link href="/favorites">
           <Li>
-            <a>Favorites</a>
+            <a onClick={() => dispatch(cleanUp())}>Favorites</a>
           </Li>
         </Link>
         <Li>Sale</Li>
         <Li>
           <Link href={user ? "/account" : "/login"}>
-            <Button margin="1em 0" bColor="">
+            <Button
+              onClick={() => dispatch(cleanUp())}
+              margin="1em 0"
+              bColor=""
+            >
               {user ? "Account" : "Sign in"}
             </Button>
           </Link>
