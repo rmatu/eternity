@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Field, Formik } from "formik";
 import Head from "next/head";
@@ -7,8 +7,8 @@ import { RiUserFollowLine } from "react-icons/ri";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Header } from "../components/Header/Header";
 import Heading from "../components/UI/Heading/Heading";
-import { useDispatch } from "react-redux";
-import { signin } from "../redux/user/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanUp, signin } from "../redux/user/userActions";
 import Input from "../components/UI/Input/Input";
 import {
   Content,
@@ -19,9 +19,13 @@ import {
   ButtonWrapper,
 } from "../layout/loginLayout";
 import Button from "../components/UI/Button/Button";
+import { useRouter } from "next/router";
+import { UserState } from "../redux/user/userTypes";
+import { AppState } from "../redux/rootReducer";
+import Popup from "../components/UI/Popup/Popup";
 
 const SignInSchema = Yup.object().shape({
-  username: Yup.string().required("Username or email is required."),
+  email: Yup.string().email("Invalid email").required("Email is required."),
   password: Yup.string()
     .required("The password is required.")
     .min(3, "The password is to short"),
@@ -29,7 +33,33 @@ const SignInSchema = Yup.object().shape({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { user, error }: UserState = useSelector(
+    (state: AppState) => state.user
+  );
+
+  useEffect(() => {
+    if (user) {
+      router.push("/account");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (error !== null) {
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 5000);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(cleanUp());
+    };
+  }, []);
 
   return (
     <>
@@ -42,9 +72,9 @@ const Login = () => {
         <Formik
           isInitialValid={false}
           validationSchema={SignInSchema}
-          initialValues={{ username: "", password: "" }}
+          initialValues={{ email: "", password: "" }}
           onSubmit={async (values, { setSubmitting, setErrors }) => {
-            await dispatch(signin(values.username, values.password));
+            await dispatch(signin(values.email, values.password));
           }}
         >
           {({ isSubmitting, isValid, setFieldValue }) => (
@@ -53,12 +83,12 @@ const Login = () => {
                 <RiUserFollowLine />
               </IconWrapper>
               <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
-                Username
+                Email
               </Heading>
               <Field
-                type="text"
-                name="username"
-                placeholder="Your username..."
+                type="email"
+                name="email"
+                placeholder="Your email..."
                 component={Input}
               />
               <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
@@ -110,6 +140,9 @@ const Login = () => {
             </LoginForm>
           )}
         </Formik>
+        <Popup error={true} showPopup={showPopup}>
+          {error}
+        </Popup>
       </Content>
     </>
   );

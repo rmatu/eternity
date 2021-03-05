@@ -18,6 +18,7 @@ export const StyledInput = styled.input`
 export const Wrapper = styled.div`
   width: 100%;
   background-color: #fff;
+  border: 1px solid gray;
   border-radius: 1rem;
   padding: 0.5rem;
   font-weight: 400;

@@ -10,8 +10,11 @@ userRouter.post(
   "/signin",
   expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
+    const x = await argon2.hash(req.body.password);
+    console.log(x);
     if (user) {
-      if (argon2.verify(req.body.password, user.password)) {
+      const valid = await argon2.verify(user.password, req.body.password);
+      if (valid) {
         res.send({
           _id: user._id,
           name: user.name,

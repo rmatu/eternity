@@ -9,11 +9,13 @@ export const Content = styled.div`
   width: 100%;
 `;
 
+//#472d2d
+
 export const LoginForm = styled(Form)`
   width: 400px;
   padding: 3em;
   border-radius: 1em;
-  background-color: #1a1a1b;
+  background-color: #363333;
 
   h4 {
     font-size: 1.2rem;
@@ -46,9 +48,11 @@ export const SpanWrapper = styled.div<{ bold?: any; center?: any }>`
   font-weight: 700;
   margin-left: 0.5rem;
   transition: all 0.2s;
+  color: #df7c19;
+
   &:hover {
     cursor: pointer;
-    color: #be6a15;
+    color: #f1881e;
   }
   text-decoration: none;
 `;

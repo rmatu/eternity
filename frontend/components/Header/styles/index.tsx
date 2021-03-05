@@ -180,6 +180,16 @@ export const SvgContainer = styled.div`
       cursor: pointer;
     }
   }
+  .check {
+    stroke: #fff;
+    fill: #fff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -0.8em;
+    right: -1.1em;
+    stroke: transparent;
+  }
 `;
 
 export const MobileQty = styled.div<{ cart?: boolean }>`

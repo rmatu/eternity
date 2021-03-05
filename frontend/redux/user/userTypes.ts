@@ -17,6 +17,12 @@ export const USER_UPDATE_PROFILE_SUCCESS = "USER_UPDATE_PROFILE_SUCCESS";
 export const USER_UPDATE_PROFILE_FAIL = "USER_UPDATE_PROFILE_FAIL";
 export const USER_UPDATE_PROFILE_RESET = "USER_UPDATE_PROFILE_RESET";
 
+export const USER_CLEAN_UP = "USER_CLEAN_UP";
+
+export interface UserCleanUp {
+  type: typeof USER_CLEAN_UP;
+}
+
 export interface UserSigninRequest {
   type: typeof USER_SIGNIN_REQUEST;
 }
@@ -38,7 +44,7 @@ interface User {
 }
 
 export interface UserState {
-  user: User;
+  user: User | null;
   loading: boolean;
   error: string | null;
 }
@@ -46,4 +52,5 @@ export interface UserState {
 export type UserActionTypes =
   | UserSigninRequest
   | UserSigninSuccess
+  | UserCleanUp
   | UserSigninFail;

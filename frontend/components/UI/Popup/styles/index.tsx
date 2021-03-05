@@ -13,7 +13,7 @@ export const Wrapper = styled.div<WrapperProps>`
   padding: 1em 2em;
   border-radius: 1em;
   margin: 0 1em 1em 0;
-  background-color: #be6a15;
+  background-color: ${({ error }) => (error ? "#FF5757" : "#be6a15")};
   color: white;
   font-weight: 500;
   transform: ${({ showPopup }) =>

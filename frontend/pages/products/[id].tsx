@@ -2,20 +2,24 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactComponent as Stroke } from "../../assets/stroke.svg";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import Moment from "react-moment";
+import { useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { ReactComponent as Stroke } from "../../assets/stroke.svg";
+import AddComment from "../../components/AddComment/AddComment";
 import Footer from "../../components/Footer/Footer";
 import { Header } from "../../components/Header/Header";
 import { SideNavbar } from "../../components/SideNavbar/SideNavbar";
 import { Specification } from "../../components/Specification/Specification";
 import Button from "../../components/UI/Button/Button";
+import Favorite from "../../components/UI/Favorite/Favorite";
 import Heading from "../../components/UI/Heading/Heading";
+import Popup from "../../components/UI/Popup/Popup";
 import Rating from "../../components/UI/Rating/Rating";
+import { localStorageNames } from "../../constants";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { BiHeart } from "react-icons/bi";
 import {
   Avalibility,
   AvalibilityWrapper,
@@ -28,7 +32,6 @@ import {
   ImageContent,
   ImageWrapper,
   Info,
-  CarouselImages,
   LeftSection,
   MainContent,
   PriceTag,
@@ -46,14 +49,7 @@ import {
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { useThrottle } from "../../utils/helpers";
-import { useDispatch, useSelector } from "react-redux";
-import { checkIfFavorite, dispatchToPlace } from "../../utils/reduxHelpers";
-import { localStorageNames } from "../../constants";
-import { AppState } from "../../redux/rootReducer";
-import { FavoritesState } from "../../redux/favorites/favoritesTypes";
-import Favorite from "../../components/UI/Favorite/Favorite";
-import Popup from "../../components/UI/Popup/Popup";
-import AddComment from "../../components/AddComment/AddComment";
+import { dispatchToPlace } from "../../utils/reduxHelpers";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];

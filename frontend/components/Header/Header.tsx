@@ -1,25 +1,27 @@
+import Link from "next/link";
 import { useState } from "react";
 import { BiCart, BiSearch } from "react-icons/bi";
+import { BiCheck } from "react-icons/bi";
 import { HiOutlineHeart } from "react-icons/hi";
-import {
-  Logo,
-  Nav,
-  SvgWrapper,
-  LeftWrapper,
-  Ul,
-  Li,
-  Qty,
-  SvgContainer,
-} from "./styles";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 //@ts-ignore
 import User from "../../assets/user.svg";
-import { Dropdown } from "../UI/Dropdown/Dropdown";
-import Hamburger from "../UI/Hamburger/Hamburger";
-import Button from "../UI/Button/Button";
 import { CartState } from "../../redux/cart/cartTypes";
 import { AppState } from "../../redux/rootReducer";
+import { UserState } from "../../redux/user/userTypes";
+import Button from "../UI/Button/Button";
+import { Dropdown } from "../UI/Dropdown/Dropdown";
+import Hamburger from "../UI/Hamburger/Hamburger";
+import {
+  LeftWrapper,
+  Li,
+  Logo,
+  Nav,
+  Qty,
+  SvgContainer,
+  SvgWrapper,
+  Ul,
+} from "./styles";
 
 export const Header = () => {
   const { items: cartItems }: CartState = useSelector(
@@ -28,6 +30,8 @@ export const Header = () => {
   const { items: favoritesItems }: CartState = useSelector(
     (state: AppState) => state.favorites
   );
+  const { user }: UserState = useSelector((state: AppState) => state.user);
+
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Nav>
@@ -65,9 +69,12 @@ export const Header = () => {
         </Link>
         <Link href="/account">
           <a>
-            <div className="user">
-              <User />
-            </div>
+            <SvgContainer>
+              <div className="user">
+                <User />
+                {user && <BiCheck className="check" />}
+              </div>
+            </SvgContainer>
           </a>
         </Link>
       </SvgWrapper>
@@ -85,9 +92,9 @@ export const Header = () => {
         </Link>
         <Li>Sale</Li>
         <Li>
-          <Link href="/account">
+          <Link href={user ? "/account" : "/login"}>
             <Button margin="1em 0" bColor="">
-              Account
+              {user ? "Account" : "Sign in"}
             </Button>
           </Link>
         </Li>
