@@ -122,6 +122,11 @@ export const DescriptionContent = styled.div`
     font-size: 1.125rem;
   }
 
+  h2 {
+    color: #bebdbd;
+    font-weight: 300;
+  }
+
   @media (max-width: 850px) {
     max-width: 800px;
   }
