@@ -99,7 +99,7 @@ const Product: React.FC<ProductProps> = ({
   );
 
   const handleClickScroll = (offset: number) => {
-    window.scrollTo(0, offset + vhToPixels(50));
+    window.scrollTo(0, offset + 500);
   };
 
   const handleDeleteComment = async (review) => {
@@ -368,6 +368,7 @@ const Product: React.FC<ProductProps> = ({
               <AddComment
                 productId={router.query.id as string}
                 visible={showComment}
+                setComments={setComments}
               />
               <div ref={relRef}>
                 <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">

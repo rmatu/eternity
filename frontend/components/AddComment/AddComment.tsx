@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Button from "../UI/Button/Button";
 import CommentRating from "../UI/CommentRating/CommentRating";
 import axios from "axios";
@@ -11,10 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../../redux/user/userActions";
 import { UserState } from "../../redux/user/userTypes";
 import { AppState } from "../../redux/rootReducer";
+import { IReviews } from "../../types";
 
 interface AddCommentProps {
   visible: boolean;
   productId: string;
+  setComments: Dispatch<SetStateAction<IReviews[]>>;
 }
 
 export const ReviewSchema = Yup.object().shape({
@@ -22,7 +24,11 @@ export const ReviewSchema = Yup.object().shape({
   body: Yup.string().required("Empty Review").min(5, "To short"),
 });
 
-const AddComment: React.FC<AddCommentProps> = ({ visible, productId }) => {
+const AddComment: React.FC<AddCommentProps> = ({
+  visible,
+  productId,
+  setComments,
+}) => {
   const [rating, setRating] = useState<number>(0);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const { user, error }: UserState = useSelector(
@@ -31,7 +37,11 @@ const AddComment: React.FC<AddCommentProps> = ({ visible, productId }) => {
   const dispatch = useDispatch();
 
   const handleAddComment = async ({ body, rating }) => {
-    dispatch(addComment(body, user.name, rating, productId, user._id));
+    await dispatch(addComment(body, user.name, rating, productId, user._id));
+    const { data: reviews } = await axios.get(
+      `/api/products/${productId}/reviews/?limit=4&skip=0`
+    );
+    setComments([...reviews]);
     setShowPopup(true);
     setTimeout(() => {
       setShowPopup(false);
