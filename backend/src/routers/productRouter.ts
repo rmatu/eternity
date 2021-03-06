@@ -7,6 +7,7 @@ import User from "../models/userModel";
 
 import multer from "multer";
 import fs from "fs";
+import { isAuth } from "../utils";
 
 // Multer config
 const storage = multer.diskStorage({
@@ -227,6 +228,23 @@ productRouter.post(
     });
     const createdReview = await review.save();
     res.send(createdReview);
+  })
+);
+
+productRouter.delete(
+  "/:id/reviews",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const review = await Review.findOneAndDelete({
+      user: req.user._id,
+      _id: req.body._id,
+    });
+    if (!review) {
+      res.status(404).send({ message: "Review not found" });
+      return;
+    }
+
+    res.send(review);
   })
 );
 
