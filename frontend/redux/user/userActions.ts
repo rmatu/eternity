@@ -2,6 +2,7 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import { localStorageNames } from "../../constants";
 import { AppActions } from "../actions";
+import { AppState } from "../rootReducer";
 import * as userActions from "./userTypes";
 
 export const signin = (email: string, password: string) => async (
@@ -74,6 +75,36 @@ export const addComment = (
   } catch (error) {
     dispatch({
       type: userActions.USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteComment = (commentId: string, productId: string) => async (
+  dispatch: Dispatch<AppActions>,
+  getState: () => AppState
+) => {
+  dispatch({
+    type: userActions.USER_DELETE_COMMENT_REQUEST,
+  });
+  const { user } = getState().user;
+
+  try {
+    await axios.delete(`/api/products/${productId}/reviews`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      data: {
+        commentId,
+      },
+    });
+    dispatch({ type: userActions.USER_DELETE_COMMENT_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: userActions.USER_DELETE_COMMENT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

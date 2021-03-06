@@ -50,8 +50,10 @@ import { AppState } from "../../redux/rootReducer";
 import { UserState } from "../../redux/user/userTypes";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
-import { useThrottle } from "../../utils/helpers";
+import { useThrottle, vhToPixels } from "../../utils/helpers";
 import { dispatchToPlace } from "../../utils/reduxHelpers";
+import { GoTrashcan } from "react-icons/go";
+import { deleteComment } from "../../redux/user/userActions";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -92,13 +94,23 @@ const Product: React.FC<ProductProps> = ({
   const relRef = useRef<HTMLDivElement>(null);
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
 
-  const { user }: UserState = useSelector((state: AppState) => state.user);
+  const { user, error }: UserState = useSelector(
+    (state: AppState) => state.user
+  );
 
-  const handleClickScroll = (offset) => {
-    window.scrollTo(0, offset + 500);
+  const handleClickScroll = (offset: number) => {
+    window.scrollTo(0, offset + vhToPixels(50));
   };
 
-  const handleRefetchComments = async (limit, skip) => {
+  const handleDeleteComment = async (review) => {
+    await dispatch(deleteComment(review._id, router.query.id as string));
+    const { data: reviews } = await axios.get(
+      `/api/products/${productId}/reviews/?limit=4&skip=0`
+    );
+    setComments([...reviews]);
+  };
+
+  const handleRefetchComments = async (limit: number, skip: number) => {
     if (skip > limit) return;
 
     setReviewSkip(skip + 4);
@@ -108,7 +120,7 @@ const Product: React.FC<ProductProps> = ({
     setComments([...comments, ...data]);
   };
 
-  const handleRefetchWatches = async (limit, skip) => {
+  const handleRefetchWatches = async (limit: number, skip: number) => {
     if (skip > limit) return;
 
     setWatchesSkip(skip + 4);
@@ -322,6 +334,12 @@ const Product: React.FC<ProductProps> = ({
                     <Rating rating={review.rating} rColor="#be6a15" />
                   </Info>
                   <ReviewText>{review.body}</ReviewText>
+                  {user._id === review.user ? (
+                    <GoTrashcan
+                      onClick={async () => handleDeleteComment(review)}
+                      className="trashcan"
+                    />
+                  ) : null}
                 </Reviews>
               ))}
               <ButtonsWrapper>
@@ -506,7 +524,7 @@ export async function getServerSideProps(context) {
     `/api/products/${context.params.id}`
   );
   const { data: reviews } = await axios.get(
-    `/api/products/${context.params.id}/reviews`
+    `/api/products/${context.params.id}/reviews?limit=4&skip=0`
   );
   const { data: relatedProducts } = await axios.get(
     `/api/products/${context.params.id}?limit=4&skip=0`

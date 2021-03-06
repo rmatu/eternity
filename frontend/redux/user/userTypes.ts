@@ -16,12 +16,27 @@ export const USER_ADD_COMMENT_REQUEST = "USER_ADD_COMMENT_REQUEST";
 export const USER_ADD_COMMENT_SUCCESS = "USER_ADD_COMMENT_SUCCESS";
 export const USER_ADD_COMMENT_FAIL = "USER_ADD_COMMENT_FAIL";
 
+export const USER_DELETE_COMMENT_REQUEST = "USER_DELETE_COMMENT_REQUEST";
+export const USER_DELETE_COMMENT_SUCCESS = "USER_DELETE_COMMENT_SUCCESS";
+export const USER_DELETE_COMMENT_FAIL = "USER_DELETE_COMMENT_FAIL";
+
 export const USER_UPDATE_PROFILE_REQUEST = "USER_UPDATE_PROFILE_REQUEST";
 export const USER_UPDATE_PROFILE_SUCCESS = "USER_UPDATE_PROFILE_SUCCESS";
 export const USER_UPDATE_PROFILE_FAIL = "USER_UPDATE_PROFILE_FAIL";
 export const USER_UPDATE_PROFILE_RESET = "USER_UPDATE_PROFILE_RESET";
 
 export const USER_CLEAN_UP = "USER_CLEAN_UP";
+
+export interface UserDeleteCommentRequest {
+  type: typeof USER_DELETE_COMMENT_REQUEST;
+}
+export interface UserDeleteCommentSucceess {
+  type: typeof USER_DELETE_COMMENT_SUCCESS;
+}
+export interface UserDeleteCommentFail {
+  type: typeof USER_DELETE_COMMENT_FAIL;
+  payload: string;
+}
 
 export interface UserAddCommentRequest {
   type: typeof USER_ADD_COMMENT_REQUEST;
@@ -85,4 +100,7 @@ export type UserActionTypes =
   | UserAddCommentRequest
   | UserAddCommentSuccess
   | UserAddCommentFail
+  | UserDeleteCommentRequest
+  | UserDeleteCommentSucceess
+  | UserDeleteCommentFail
   | UserCleanUp;

@@ -196,6 +196,14 @@ export const ImageWrapper = styled.div`
 
 export const Reviews = styled.div`
   padding: 2em 0;
+  position: relative;
+
+  .trashcan {
+    position: absolute;
+    top: 5em;
+    right: 0;
+    cursor: pointer;
+  }
 `;
 
 export const Info = styled.div`

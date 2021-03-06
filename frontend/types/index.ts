@@ -24,8 +24,11 @@ export interface IProduct {
 }
 
 export interface IReviews {
+  _id: string;
   body: string;
   rating: number;
   name: string;
   createdAt: string;
+  user: string;
+  product: string;
 }

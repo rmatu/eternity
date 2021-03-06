@@ -237,12 +237,22 @@ productRouter.delete(
   expressAsyncHandler(async (req, res) => {
     const review = await Review.findOneAndDelete({
       user: req.user._id,
-      _id: req.body._id,
+      _id: req.body.commentId,
     });
     if (!review) {
       res.status(404).send({ message: "Review not found" });
       return;
     }
+
+    const product = await Product.findById(review.product);
+
+    if (!product) {
+      res.status(404).send({ message: "Product not found" });
+      return;
+    }
+
+    product.numReviews--;
+    await product.save();
 
     res.send(review);
   })

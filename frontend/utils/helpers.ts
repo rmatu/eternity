@@ -24,3 +24,7 @@ export const getLocalStorage = (item) => {
     return [];
   }
 };
+
+export const vhToPixels = (vh: number) => {
+  return Math.round(window.innerHeight / (100 / vh));
+};
