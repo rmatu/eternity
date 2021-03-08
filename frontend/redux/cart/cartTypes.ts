@@ -28,7 +28,7 @@ export interface CartEmpty {
   type: typeof CART_EMPTY;
 }
 
-interface CartItem {
+export interface CartItem {
   productId: string;
   qty: number;
 }

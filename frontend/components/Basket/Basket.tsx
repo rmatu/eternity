@@ -1,5 +1,4 @@
-import React from "react";
-import { AppState } from "../../redux/rootReducer";
+import { useState, useEffect } from "react";
 import {
   Wrapper,
   Row,
@@ -17,15 +16,30 @@ import Heading from "../UI/Heading/Heading";
 import Image from "next/image";
 import Button from "../UI/Button/Button";
 import { IProduct } from "../../types";
+import { CartItem } from "../../redux/cart/cartTypes";
+import { mergeTwoArraysOfObject } from "../../utils/helpers";
 
 interface BasketProps {
   products: IProduct[];
+  cartItems: CartItem[];
 }
 
-const Basket: React.FC<BasketProps> = ({}) => {
+const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
+  const [basket, setBasket] = useState([]);
+
+  // I'm doing it this way, because i want to make sure, that this is the current price for an item.
+  // This shop is supposed to be changing frequently by the Administrator.
+  // For example, user adds item to the cart, quits for 2 weeks, than comes back.
+  // Whole product info would be stored in redux, and the price might not be current for this item
+  // I'm storing the product id and qty in redux, then fetching the data, and merging it with the qty
+
+  useEffect(() => {
+    setBasket(mergeTwoArraysOfObject(products, cartItems));
+  }, []);
+
   return (
     <>
-      {/* <Heading size="h1" margin="0 0 1em 0" color="#fff">
+      <Heading size="h1" margin="0 0 1em 0" color="#fff">
         My Basket
       </Heading>
 
@@ -50,13 +64,13 @@ const Basket: React.FC<BasketProps> = ({}) => {
       </Info>
 
       <Wrapper>
-        {items.map((item) => (
-          <Row>
+        {basket.map((item) => (
+          <Row key={item._id}>
             <Product>
               <ImageWrapper>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${item.product.mainProductImage}`}
-                  alt={`${item.product.name} image`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/${item.mainProductImage}`}
+                  alt={`${item.name} image`}
                   layout="fill"
                   quality={100}
                 />
@@ -67,10 +81,10 @@ const Basket: React.FC<BasketProps> = ({}) => {
                 <p>{item.qty}</p>
               </InfoItem>
               <InfoItem>
-                <p>{twoDecimals(item.product.price)}</p>
+                <p>{twoDecimals(item.price)}</p>
               </InfoItem>
               <InfoItem>
-                <p>{twoDecimals(item.product.price * item.qty)}</p>
+                <p>{twoDecimals(item.price * item.qty)}</p>
               </InfoItem>
               <InfoItem>
                 <p>Remove</p>
@@ -85,17 +99,15 @@ const Basket: React.FC<BasketProps> = ({}) => {
           <Heading size="h1" color="#fff">
             Total:{" "}
             {`$${twoDecimals(
-              items
-                .map((el) => el.product.price * el.qty)
-                .reduce((a, b) => a + b, 0)
+              basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0)
             )}`}
-            {`(${items.length} items)`}
+            {`(${basket.length} items)`}
           </Heading>
         </div>
         <div>
           <Button>Buy</Button>
         </div>
-      </BottomRow> */}
+      </BottomRow>
     </>
   );
 };

@@ -28,3 +28,14 @@ export const getLocalStorage = (item) => {
 export const vhToPixels = (vh: number) => {
   return Math.round(window.innerHeight / (100 / vh));
 };
+
+export const mergeTwoArraysOfObject = (arr1, arr2) => {
+  let result = [];
+  arr1.forEach(function (o) {
+    arr2.forEach(function (c) {
+      if (o._id === c.productId) result.push(Object.assign({}, o, c));
+    });
+  });
+
+  return result;
+};

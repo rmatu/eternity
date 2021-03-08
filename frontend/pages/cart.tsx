@@ -19,7 +19,6 @@ import PageLoader from "../components/PageLoader/PageLoader";
 const Cart = () => {
   const { items }: CartState = useSelector((state: AppState) => state.cart);
   const [products, setProducts] = useState<IProduct[]>([]);
-  console.log(products);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,6 +28,7 @@ const Cart = () => {
           cartItems,
         },
       });
+      //@ts-ignore
       setProducts([...data]);
     }
     fetchData();
@@ -48,7 +48,7 @@ const Cart = () => {
       <Content>
         <SideCartNav />
         <BasketWrapper>
-          <Basket products={products} />
+          <Basket cartItems={items} products={products} />
         </BasketWrapper>
       </Content>
     </>
