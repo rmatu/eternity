@@ -114,13 +114,13 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
       <BottomRow>
         <div>
           <Heading size="h1" color="#fff">
-            Total:{" "}
-            <PriceWrapper>
-              {`$${twoDecimals(
-                basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0)
-              )}`}
-            </PriceWrapper>
+            Total:
           </Heading>
+          <PriceWrapper>
+            {`$${twoDecimals(
+              basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0)
+            )}`}
+          </PriceWrapper>
           <ItemsCount>{`(${basket.length} items)`}</ItemsCount>
         </div>
         <div>

@@ -156,6 +156,7 @@ export const ItemsCount = styled.p`
 `;
 
 export const PriceWrapper = styled.h1`
+  margin-left: 0.1em;
   color: #be6a15;
   font-size: 3.25rem;
 `;
