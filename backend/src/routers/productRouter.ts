@@ -63,6 +63,22 @@ productRouter.get(
 );
 
 productRouter.get(
+  "/cartItems",
+  expressAsyncHandler(async (req, res) => {
+    const products = await Product.find({ _id: { $in: req.body.cartItems } });
+    if (!products) {
+      res.status(404).send({ message: "Products not found" });
+      return;
+    }
+
+    console.log(products.length !== req.body.cartItems.length);
+
+    res.send(products);
+    return;
+  })
+);
+
+productRouter.get(
   "/main-product",
   expressAsyncHandler(async (_, res) => {
     const product = await Product.find({ mainProduct: true });
