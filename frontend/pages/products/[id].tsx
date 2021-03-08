@@ -232,7 +232,7 @@ const Product: React.FC<ProductProps> = ({
                       setShowPopup(false);
                     }, 5000);
                     dispatchToPlace(
-                      product,
+                      product._id,
                       localStorageNames.CART_ITEMS,
                       dispatch
                     );
@@ -436,7 +436,7 @@ const Product: React.FC<ProductProps> = ({
                               setShowPopup(false);
                             }, 5000);
                             dispatchToPlace(
-                              watch,
+                              watch._id,
                               localStorageNames.CART_ITEMS,
                               dispatch
                             );
@@ -494,7 +494,7 @@ const Product: React.FC<ProductProps> = ({
                   padding="0.3em 3em"
                   onClick={() => {
                     dispatchToPlace(
-                      product,
+                      product._id,
                       localStorageNames.CART_ITEMS,
                       dispatch
                     );

@@ -11,7 +11,7 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
   switch (action.type) {
     case actions.CART_ADD_ITEM:
       const existItem = state.items.find(
-        (x) => x.product._id === action.payload.product._id
+        (x) => x.productId === action.payload.productId
       );
       if (existItem) {
         return {

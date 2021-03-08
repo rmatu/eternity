@@ -5,7 +5,7 @@ import { UserState } from "../redux/user/userTypes";
 import { useSelector } from "react-redux";
 import { AppState } from "../redux/rootReducer";
 import { useRouter } from "next/router";
-import Loader from "../components/UI/Loader/Loader";
+import PageLoader from "../components/PageLoader/PageLoader";
 
 const Account = () => {
   const { user }: UserState = useSelector((state: AppState) => state.user);
@@ -18,25 +18,7 @@ const Account = () => {
   }, []);
 
   if (!user) {
-    return (
-      <>
-        <Head>
-          <title>Eternity</title>
-          <meta name="description" content="Account page" />
-        </Head>
-        <Header />
-        <div
-          style={{
-            height: "90vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Loader />
-        </div>
-      </>
-    );
+    return <PageLoader />;
   }
 
   return (

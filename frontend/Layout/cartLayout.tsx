@@ -13,5 +13,4 @@ export const Content = styled.div`
 
 export const BasketWrapper = styled.div`
   width: 100%;
-  margin-right: 5em;
 `;

@@ -1,5 +1,3 @@
-import { IProduct } from "../../types";
-
 export const CART_ADD_ITEM = "CART_ADD_ITEM";
 export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM";
 export const CART_SAVE_SHIPPING_ADDRESS = "CART_SAVE_SHIPPING_ADDRESS";
@@ -9,7 +7,7 @@ export const CART_EMPTY = "CART_EMPTY";
 export interface CartAddItem {
   type: typeof CART_ADD_ITEM;
   payload: {
-    product: IProduct;
+    productId: string;
     qty: number;
   };
 }
@@ -31,7 +29,7 @@ export interface CartEmpty {
 }
 
 interface CartItem {
-  product: IProduct;
+  productId: string;
   qty: number;
 }
 
