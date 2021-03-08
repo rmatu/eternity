@@ -62,7 +62,11 @@ const Home = ({ data }) => {
               <ButtonsRow>
                 <Button
                   onClick={() =>
-                    dispatchToPlace(_id, localStorageNames.CART_ITEMS, dispatch)
+                    dispatchToPlace(
+                      data[0],
+                      localStorageNames.CART_ITEMS,
+                      dispatch
+                    )
                   }
                   margin="2em 0 0 0"
                   bColor="#be6a15"

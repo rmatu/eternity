@@ -232,7 +232,7 @@ const Product: React.FC<ProductProps> = ({
                       setShowPopup(false);
                     }, 5000);
                     dispatchToPlace(
-                      product._id,
+                      product,
                       localStorageNames.CART_ITEMS,
                       dispatch
                     );
@@ -334,7 +334,7 @@ const Product: React.FC<ProductProps> = ({
                     <Rating rating={review.rating} rColor="#be6a15" />
                   </Info>
                   <ReviewText>{review.body}</ReviewText>
-                  {user._id === review.user ? (
+                  {user && user._id === review.user ? (
                     <GoTrashcan
                       onClick={async () => handleDeleteComment(review)}
                       className="trashcan"
@@ -436,7 +436,7 @@ const Product: React.FC<ProductProps> = ({
                               setShowPopup(false);
                             }, 5000);
                             dispatchToPlace(
-                              watch._id,
+                              watch,
                               localStorageNames.CART_ITEMS,
                               dispatch
                             );
@@ -494,7 +494,7 @@ const Product: React.FC<ProductProps> = ({
                   padding="0.3em 3em"
                   onClick={() => {
                     dispatchToPlace(
-                      product._id,
+                      product,
                       localStorageNames.CART_ITEMS,
                       dispatch
                     );
