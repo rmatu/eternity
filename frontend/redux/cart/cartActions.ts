@@ -18,3 +18,36 @@ export const addToCart = (productId: string, qty: number = 1) => async (
   });
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
 };
+
+export const removeItem = (productId: string) => async (
+  dispatch: Dispatch<AppActions>,
+  getState: () => AppState
+) => {
+  dispatch({
+    type: actions.CART_REMOVE_ITEM,
+    payload: productId,
+  });
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+};
+
+export const subQty = (productId: string) => async (
+  dispatch: Dispatch<AppActions>,
+  getState: () => AppState
+) => {
+  dispatch({
+    type: actions.CART_SUB_QTY,
+    payload: productId,
+  });
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+};
+
+export const addQty = (productId: string) => async (
+  dispatch: Dispatch<AppActions>,
+  getState: () => AppState
+) => {
+  dispatch({
+    type: actions.CART_ADD_QTY,
+    payload: productId,
+  });
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+};

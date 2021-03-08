@@ -18,7 +18,7 @@ import PageLoader from "../components/PageLoader/PageLoader";
 
 const Cart = () => {
   const { items }: CartState = useSelector((state: AppState) => state.cart);
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[] | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,8 +34,21 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  if (products.length === 0) {
+  if (!products) {
     return <PageLoader />;
+  }
+
+  if (items.length === 0) {
+    return (
+      <>
+        <Head>
+          <title>Eternity</title>
+          <meta name="Cart" content="User's cart" />
+        </Head>
+        <Header />
+        <Content>Empty Cart</Content>
+      </>
+    );
   }
 
   return (

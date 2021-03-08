@@ -50,7 +50,7 @@ import { AppState } from "../../redux/rootReducer";
 import { UserState } from "../../redux/user/userTypes";
 import { IProduct, IReviews } from "../../types";
 import { twoDecimals } from "../../utils/format";
-import { useThrottle, vhToPixels } from "../../utils/helpers";
+import { useThrottle } from "../../utils/helpers";
 import { dispatchToPlace } from "../../utils/reduxHelpers";
 import { GoTrashcan } from "react-icons/go";
 import { deleteComment } from "../../redux/user/userActions";

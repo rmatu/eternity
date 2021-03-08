@@ -24,7 +24,40 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
           items: [...state.items, action.payload],
         };
       }
-
+    case actions.CART_REMOVE_ITEM:
+      const newArray = state.items.filter(
+        (item) => item.productId !== action.payload
+      );
+      return {
+        ...state,
+        items: [...newArray],
+      };
+    case actions.CART_ADD_QTY:
+      const idx = state.items.findIndex(
+        (item) => item.productId === action.payload
+      );
+      const newArr = state.items;
+      newArr[idx].qty++;
+      return {
+        ...state,
+        items: [...newArr],
+      };
+    case actions.CART_SUB_QTY:
+      const index = state.items.findIndex(
+        (item) => item.productId === action.payload
+      );
+      const newArra = state.items;
+      if (state.items[index].qty === 0) {
+        return {
+          ...state,
+          items: [...state.items],
+        };
+      }
+      newArra[index].qty--;
+      return {
+        ...state,
+        items: [...newArra],
+      };
     default:
       return state;
   }
