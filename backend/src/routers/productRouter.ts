@@ -62,17 +62,17 @@ productRouter.get(
   })
 );
 
-productRouter.get(
+productRouter.post(
   "/cartItems",
   expressAsyncHandler(async (req, res) => {
-    const products = await Product.find({ _id: { $in: req.body.cartItems } });
+    const products = await Product.find({
+      _id: { $in: req.body.data.cartItems },
+    });
     if (!products) {
       res.status(404).send({ message: "Products not found" });
       return;
     }
-
-    console.log(products.length !== req.body.cartItems.length);
-
+    console.log(products);
     res.send(products);
     return;
   })
