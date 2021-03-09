@@ -6,7 +6,7 @@ export const Content = styled.div`
   min-height: calc(100vh - 7em);
   width: 100%;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
   }
 `;

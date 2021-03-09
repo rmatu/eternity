@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
   width: 20em;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     margin-top: 0.5em;
     justify-content: center;
     width: 100%;
@@ -31,7 +31,7 @@ export const StraightLine = styled.div<{ active: boolean }>`
   background-color: ${({ active }) => (active ? "#be6a15" : "#87888a")};
   margin: auto;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     flex-direction: row;
     height: 2px;
     width: 1em;
@@ -42,7 +42,7 @@ export const Ul = styled.ul`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1000px) {
     flex-direction: row;
   }
 `;

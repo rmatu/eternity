@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Wrapper,
   Row,
@@ -11,6 +12,9 @@ import {
   ProductInfo,
   ItemsCount,
   PriceWrapper,
+  HeaderWrapper,
+  BottomRowInfo,
+  MobileInfo,
   QtyWrapper,
 } from "./styles";
 import { twoDecimals } from "../../utils/format";
@@ -46,9 +50,11 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
 
   return (
     <>
-      <Heading size="h1" margin="0 0 0.5em 0" color="#fff">
-        My Basket
-      </Heading>
+      <HeaderWrapper>
+        <Heading size="h1" margin="0 0 0.5em 0" color="#fff">
+          My Basket
+        </Heading>
+      </HeaderWrapper>
 
       <Info>
         <Product mLeft="3em">
@@ -74,14 +80,18 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
         {basket.map((item) => (
           <Row key={item._id}>
             <Product>
-              <ImageWrapper>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/${item.mainProductImage}`}
-                  alt={`${item.name} image`}
-                  layout="fill"
-                  quality={100}
-                />
-              </ImageWrapper>
+              <Link href={`/products/${item._id}`}>
+                <a>
+                  <ImageWrapper>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/${item.mainProductImage}`}
+                      alt={`${item.name} image`}
+                      layout="fill"
+                      quality={100}
+                    />
+                  </ImageWrapper>
+                </a>
+              </Link>
               <ProductInfo>
                 <Heading size="h4" color="#fff">
                   {item.name}
@@ -91,6 +101,9 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
             </Product>
             <InfoContainer>
               <InfoItem>
+                <MobileInfo>
+                  <p>Quantity</p>
+                </MobileInfo>
                 <QtyWrapper>
                   <FaMinus onClick={() => dispatch(subQty(item._id))} />
                   <p>{item.qty}</p>
@@ -98,12 +111,21 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
                 </QtyWrapper>
               </InfoItem>
               <InfoItem weight="300">
+                <MobileInfo>
+                  <p>Price</p>
+                </MobileInfo>
                 <p>${twoDecimals(item.price)}</p>
               </InfoItem>
               <InfoItem>
+                <MobileInfo>
+                  <p>Total</p>
+                </MobileInfo>
                 <p>${twoDecimals(item.price * item.qty)}</p>
               </InfoItem>
               <InfoItem trash>
+                <MobileInfo>
+                  <p>Remove</p>
+                </MobileInfo>
                 <GoTrashcan onClick={() => dispatch(removeItem(item._id))} />
               </InfoItem>
             </InfoContainer>
@@ -112,7 +134,7 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
       </Wrapper>
 
       <BottomRow>
-        <div>
+        <BottomRowInfo>
           <Heading size="h1" color="#fff">
             Total:
           </Heading>
@@ -121,8 +143,10 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
               basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0)
             )}`}
           </PriceWrapper>
-          <ItemsCount>{`(${basket.length} items)`}</ItemsCount>
-        </div>
+          <ItemsCount>{`(${basket
+            .map((el) => el.qty)
+            .reduce((a, b) => a + b, 0)} items)`}</ItemsCount>
+        </BottomRowInfo>
         <div>
           <Button>Buy</Button>
         </div>

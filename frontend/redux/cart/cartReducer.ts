@@ -47,7 +47,7 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
         (item) => item.productId === action.payload
       );
       const newArra = state.items;
-      if (state.items[index].qty === 0) {
+      if (state.items[index].qty === 1) {
         return {
           ...state,
           items: [...state.items],

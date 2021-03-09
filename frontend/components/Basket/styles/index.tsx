@@ -17,6 +17,15 @@ export const Wrapper = styled.div`
     background: #525861;
     border-radius: 0 0 0 8px;
   }
+
+  @media (max-width: 674px) {
+    height: calc(100vh - 32em);
+  }
+
+  @media (max-width: 500px) {
+    padding-right: 1em;
+    height: calc(100vh - 26em);
+  }
 `;
 
 export const Row = styled.div`
@@ -35,6 +44,10 @@ export const Row = styled.div`
     font-size: 1.3em;
     font-weight: 500;
   }
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 export const Product = styled.div<{ mLeft?: string }>`
@@ -42,8 +55,15 @@ export const Product = styled.div<{ mLeft?: string }>`
   justify-content: center;
   align-items: center;
   margin-left: ${({ mLeft }) => mLeft};
+  margin-right: 0.5em;
   p {
     font-size: 1.5rem;
+  }
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    margin-bottom: 1em;
+    margin-right: 0;
   }
 `;
 
@@ -52,13 +72,21 @@ export const InfoContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   min-width: 55%;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
-export const InfoItem = styled.div<{
+interface InfoProps {
   orange?: boolean;
   trash?: boolean;
   weight?: string;
-}>`
+}
+
+export const InfoItem = styled.div<InfoProps>`
   display: flex;
   align-items: center;
 
@@ -77,9 +105,21 @@ export const InfoItem = styled.div<{
       fill: ${({ trash }) => (trash ? "#ff5757" : "#be6a15")};
     }
   }
+
+  @media (max-width: 1000px) {
+    justify-content: space-between;
+    width: 100%;
+
+    p {
+      font-weight: 500;
+    }
+
+    padding: 0.5em 0;
+  }
 `;
 
 export const ImageWrapper = styled.div`
+  transition: all 0.1s ease-in-out;
   position: relative;
   width: 200px;
   height: 300px;
@@ -105,6 +145,9 @@ export const ImageWrapper = styled.div`
     max-width: 100%;
     max-height: 100%;
   }
+  :hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const Info = styled.div`
@@ -117,14 +160,23 @@ export const Info = styled.div`
   p {
     font-size: 1.5rem;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const BottomRow = styled.div`
   margin-top: 2em;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   h1 {
     display: inline-block;
+  }
+
+  @media (max-width: 674px) {
+    flex-direction: column;
   }
 `;
 
@@ -146,6 +198,10 @@ export const QtyWrapper = styled.div`
 
 export const ProductInfo = styled.div`
   margin-left: 2em;
+
+  @media (max-width: 1000px) {
+    margin-left: 0;
+  }
 `;
 
 export const ItemsCount = styled.p`
@@ -159,4 +215,34 @@ export const PriceWrapper = styled.h1`
   margin-left: 0.1em;
   color: #be6a15;
   font-size: 3.25rem;
+`;
+
+export const MobileInfo = styled.div`
+  @media (min-width: 1000px) {
+    font-size: 1.3rem;
+    display: none;
+  }
+`;
+
+export const BottomRowInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 500px) {
+    h1,
+    p {
+      font-size: 2rem;
+    }
+  }
+`;
+
+export const HeaderWrapper = styled.div`
+  @media (max-width: 500px) {
+    h1 {
+      font-size: 2rem;
+      margin-top: 0.5em;
+      margin-bottom: 0;
+    }
+  }
 `;
