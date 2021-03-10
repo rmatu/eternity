@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { IProduct } from "../../types";
 import { AppActions } from "../actions";
 import { AppState } from "../rootReducer";
+import { localStorageNames } from "../../constants";
 
 import * as actions from "./cartTypes";
 
@@ -16,7 +16,10 @@ export const addToCart = (productId: string, qty: number = 1) => async (
       qty,
     },
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+  localStorage.setItem(
+    localStorageNames.CART_ITEMS,
+    JSON.stringify(getState().cart.items)
+  );
 };
 
 export const removeItem = (productId: string) => async (
@@ -27,7 +30,10 @@ export const removeItem = (productId: string) => async (
     type: actions.CART_REMOVE_ITEM,
     payload: productId,
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+  localStorage.setItem(
+    localStorageNames.CART_ITEMS,
+    JSON.stringify(getState().cart.items)
+  );
 };
 
 export const subQty = (productId: string) => async (
@@ -38,7 +44,10 @@ export const subQty = (productId: string) => async (
     type: actions.CART_SUB_QTY,
     payload: productId,
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+  localStorage.setItem(
+    localStorageNames.CART_ITEMS,
+    JSON.stringify(getState().cart.items)
+  );
 };
 
 export const addQty = (productId: string) => async (
@@ -49,7 +58,10 @@ export const addQty = (productId: string) => async (
     type: actions.CART_ADD_QTY,
     payload: productId,
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
+  localStorage.setItem(
+    localStorageNames.CART_ITEMS,
+    JSON.stringify(getState().cart.items)
+  );
 };
 
 export const setStep = (step: number) => ({
@@ -59,7 +71,13 @@ export const setStep = (step: number) => ({
 
 export const saveShippingAddress = (
   shippingAddress: actions.ShippingAddress
-) => ({
-  type: actions.CART_SAVE_SHIPPING_ADDRESS,
-  payload: shippingAddress,
-});
+) => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
+  dispatch({
+    type: actions.CART_SAVE_SHIPPING_ADDRESS,
+    payload: shippingAddress,
+  });
+  localStorage.setItem(
+    localStorageNames.SHIPPING_ADDRESS,
+    JSON.stringify(getState().cart.shippingAddress)
+  );
+};

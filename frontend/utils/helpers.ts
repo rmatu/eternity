@@ -17,6 +17,11 @@ export const getLocalStorage = (item) => {
         ? JSON.parse(localStorage.getItem(item))
         : null;
     }
+    if (item === localStorageNames.SHIPPING_ADDRESS) {
+      return localStorage.getItem(item)
+        ? JSON.parse(localStorage.getItem(item))
+        : {};
+    }
     return localStorage.getItem(item)
       ? JSON.parse(localStorage.getItem(item))
       : [];

@@ -32,7 +32,9 @@ const ShippingSchema = Yup.object().shape({
 });
 
 const Step2 = () => {
-  const { step }: CartState = useSelector((state: AppState) => state.cart);
+  const { step, shippingAddress }: CartState = useSelector(
+    (state: AppState) => state.cart
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,16 +52,8 @@ const Step2 = () => {
         <SideCartNav step={step} />
         <ShippingWrapper>
           <Formik
-            isInitialValid={false}
             validationSchema={ShippingSchema}
-            initialValues={{
-              fullName: "",
-              address: "",
-              city: "",
-              postalCode: "",
-              country: "",
-              email: "",
-            }}
+            initialValues={shippingAddress}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               console.log(values);
               dispatch(saveShippingAddress(values));

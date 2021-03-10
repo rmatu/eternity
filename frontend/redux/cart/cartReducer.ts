@@ -6,14 +6,7 @@ import { localStorageNames } from "../../constants";
 const cartDefaultState: CartState = {
   items: getLocalStorage(localStorageNames.CART_ITEMS),
   step: 1,
-  shippingAddress: {
-    address: "",
-    city: "",
-    country: "",
-    email: "",
-    fullName: "",
-    postalCode: "",
-  },
+  shippingAddress: getLocalStorage(localStorageNames.SHIPPING_ADDRESS),
 };
 
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
