@@ -28,7 +28,12 @@ import { GoTrashcan } from "react-icons/go";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import Rating from "../UI/Rating/Rating";
-import { addQty, removeItem, subQty } from "../../redux/cart/cartActions";
+import {
+  addQty,
+  setStep,
+  removeItem,
+  subQty,
+} from "../../redux/cart/cartActions";
 interface BasketProps {
   products: IProduct[];
   cartItems: CartItem[];
@@ -47,6 +52,10 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
   useEffect(() => {
     setBasket(mergeTwoArraysOfObject(products, cartItems));
   }, [products, cartItems]);
+
+  useEffect(() => {
+    dispatch(setStep(1));
+  }, []);
 
   return (
     <>
@@ -148,7 +157,11 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
             .reduce((a, b) => a + b, 0)} items)`}</ItemsCount>
         </BottomRowInfo>
         <div>
-          <Button>Buy</Button>
+          <Link href="/cart/step-2">
+            <a>
+              <Button>Buy</Button>
+            </a>
+          </Link>
         </div>
       </BottomRow>
     </>

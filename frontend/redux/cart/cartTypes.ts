@@ -5,7 +5,12 @@ export const CART_SAVE_PAYMENT_METHOD = "CART_SAVE_PAYMENT_METHOD";
 export const CART_EMPTY = "CART_EMPTY";
 export const CART_ADD_QTY = "CART_ADD_QTY";
 export const CART_SUB_QTY = "CART_SUB_QTY";
+export const CART_CHANGE_STEP = "CART_CHANGE_STEP";
 
+export interface CartChangeStep {
+  type: typeof CART_CHANGE_STEP;
+  payload: number;
+}
 export interface CartAddQty {
   type: typeof CART_ADD_QTY;
   payload: string;
@@ -47,6 +52,7 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
+  step: number;
 }
 
 export type CartActionTypes =
@@ -56,4 +62,5 @@ export type CartActionTypes =
   | CartSavePaymentMethod
   | CartAddQty
   | CartSubQty
+  | CartChangeStep
   | CartEmpty;

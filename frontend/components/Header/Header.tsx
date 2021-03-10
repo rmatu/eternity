@@ -46,7 +46,7 @@ export const Header = () => {
       <SvgWrapper>
         <Dropdown />
         <BiSearch />
-        <Link href="/cart">
+        <Link href="/cart/step-1">
           <SvgContainer>
             <a>
               <BiCart />
@@ -88,7 +88,7 @@ export const Header = () => {
         }}
       />
       <Ul open={open}>
-        <Link href="/cart">
+        <Link href="/cart/step-1">
           <Li>
             <a onClick={() => dispatch(cleanUp())}>Cart</a>
           </Li>

@@ -58,6 +58,7 @@ export const Product = styled.div<{ mLeft?: string }>`
   margin-right: 0.5em;
   p {
     font-size: 1.5rem;
+    color: #fff;
   }
 
   @media (max-width: 1000px) {

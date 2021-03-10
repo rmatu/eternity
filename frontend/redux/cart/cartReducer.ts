@@ -5,6 +5,7 @@ import { localStorageNames } from "../../constants";
 
 const cartDefaultState: CartState = {
   items: getLocalStorage(localStorageNames.CART_ITEMS),
+  step: 1,
 };
 
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
@@ -57,6 +58,11 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
       return {
         ...state,
         items: [...newArra],
+      };
+    case actions.CART_CHANGE_STEP:
+      return {
+        ...state,
+        step: action.payload,
       };
     default:
       return state;

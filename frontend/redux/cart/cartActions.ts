@@ -51,3 +51,8 @@ export const addQty = (productId: string) => async (
   });
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.items));
 };
+
+export const setStep = (step: number) => ({
+  type: actions.CART_CHANGE_STEP,
+  payload: step,
+});

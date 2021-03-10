@@ -23,6 +23,8 @@ export const Step = styled.li<{ active: boolean }>`
     font-weight: 700;
     font-size: 1.2rem;
   }
+
+  cursor: ${({ active }) => (active ? "pointer" : "not-allowed")};
 `;
 
 export const StraightLine = styled.div<{ active: boolean }>`
