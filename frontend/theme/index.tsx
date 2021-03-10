@@ -16,7 +16,7 @@ input:-webkit-autofill,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: #757575;
+    -webkit-text-fill-color: #000;
   }
   a {
     text-decoration: none;

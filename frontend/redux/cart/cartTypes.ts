@@ -35,6 +35,7 @@ export interface CartRemoveItem {
 
 export interface CartSaveShippingAddress {
   type: typeof CART_SAVE_SHIPPING_ADDRESS;
+  payload: ShippingAddress;
 }
 
 export interface CartSavePaymentMethod {
@@ -50,9 +51,18 @@ export interface CartItem {
   qty: number;
 }
 
+export interface ShippingAddress {
+  fullName: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
 export interface CartState {
   items: CartItem[];
   step: number;
+  shippingAddress: ShippingAddress;
 }
 
 export type CartActionTypes =

@@ -56,3 +56,10 @@ export const setStep = (step: number) => ({
   type: actions.CART_CHANGE_STEP,
   payload: step,
 });
+
+export const saveShippingAddress = (
+  shippingAddress: actions.ShippingAddress
+) => ({
+  type: actions.CART_SAVE_SHIPPING_ADDRESS,
+  payload: shippingAddress,
+});
