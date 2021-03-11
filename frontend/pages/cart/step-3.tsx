@@ -12,12 +12,14 @@ import {
   Content,
   PlaceOrderWrapper,
   ShippingInfo,
+  TotalPrice,
   BolderSpan,
   OrderSummary,
   OrderInfoWrapper,
   OrderInfoRow,
   ItemRow,
   ImageContent,
+  ProductName,
   ImageWrapper,
 } from "../../layout/cartLayout";
 import { setStep } from "../../redux/cart/cartActions";
@@ -107,19 +109,49 @@ const Step3 = () => {
                 <Heading size="h4" margin="0 0 0.5em 0" color="#fff">
                   Ordered Items
                 </Heading>
+                {/* <ItemRow>
+                  <ProductName center width="100px">
+                    <p>
+                      <BolderSpan>Image</BolderSpan>
+                    </p>
+                  </ProductName>
+                  <ProductName>
+                    <p>
+                      <BolderSpan>Name</BolderSpan>
+                    </p>
+                  </ProductName>
+                  <TotalPrice>
+                    <p>
+                      <BolderSpan>Total</BolderSpan>
+                    </p>
+                  </TotalPrice>
+                </ItemRow> */}
                 {basket.map((el) => (
-                  <ItemRow>
-                    <ImageContent>
-                      <ImageWrapper>
-                        <Image
-                          alt={`${el.name} image`}
-                          src={`${process.env.NEXT_PUBLIC_API_URL}/${el.mainProductImage}`}
-                          layout="fill"
-                          quality={100}
-                        />
-                      </ImageWrapper>
-                    </ImageContent>
-                  </ItemRow>
+                  <>
+                    <ItemRow>
+                      <ImageContent>
+                        <ImageWrapper>
+                          <Image
+                            alt={`${el.name} image`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/${el.mainProductImage}`}
+                            layout="fill"
+                            quality={100}
+                          />
+                        </ImageWrapper>
+                      </ImageContent>
+                      <ProductName>
+                        <p>{el.name}</p>
+                      </ProductName>
+                      <TotalPrice>
+                        <p>
+                          {`${el.qty} x $` +
+                            twoDecimals(el.price) +
+                            ` = $` +
+                            twoDecimals(el.price * el.qty)}
+                        </p>
+                      </TotalPrice>
+                    </ItemRow>
+                  </>
                 ))}
               </ShippingInfo>
             </div>

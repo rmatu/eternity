@@ -143,13 +143,14 @@ export const PlaceOrderWrapper = styled.div`
 export const OrderInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  max-width: 1400px;
 `;
 
 export const ShippingInfo = styled.div`
   padding: 1em;
   border: 1px solid #363333;
   border-radius: 1em;
-  max-width: 1000px;
+  max-width: 1100px;
   width: 100%;
   margin-top: 1em;
   max-height: 500px;
@@ -250,4 +251,20 @@ export const ImageWrapper = styled.div`
     max-width: 100%;
     max-height: 100%;
   }
+`;
+
+export const ProductName = styled.div<{ width?: string; center?: boolean }>`
+  max-width: ${({ width }) => (width ? width : "200px")};
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: ${({ center }) => (center ? "center" : "")};
+`;
+
+export const TotalPrice = styled.div`
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;

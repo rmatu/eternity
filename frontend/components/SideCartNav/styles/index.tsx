@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 20em;
+  justify-content: center;
+  margin-right: 4em;
+  width: 16em;
 
   @media (max-width: 1000px) {
     margin-top: 0.5em;
     justify-content: center;
+    margin-right: 0;
     width: 100%;
   }
 `;
