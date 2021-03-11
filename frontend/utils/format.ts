@@ -4,7 +4,7 @@
  */
 
 export const twoDecimals = (number) => {
-  return Math.floor(number / 100).toFixed(2);
+  return (number / 100).toFixed(2);
 };
 
 /**

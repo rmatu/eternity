@@ -35,12 +35,6 @@ const SideCartNav: React.FC<SideCartNavProps> = ({ step }) => {
           <Step active={step >= 3} onClick={() => handleClick(3)}>
             <p>3</p>
           </Step>
-
-          <StraightLine active={step >= 4} />
-
-          <Step active={step >= 4} onClick={() => handleClick(4)}>
-            <p>4</p>
-          </Step>
         </Ul>
       </Nav>
     </Wrapper>

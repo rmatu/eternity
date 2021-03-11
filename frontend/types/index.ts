@@ -23,6 +23,10 @@ export interface IProduct {
   };
 }
 
+export interface IBasket extends IProduct {
+  qty: number;
+}
+
 export interface IReviews {
   _id: string;
   body: string;

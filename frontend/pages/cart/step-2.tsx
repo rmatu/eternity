@@ -1,26 +1,23 @@
-import { useEffect } from "react";
-import Head from "next/head";
-import { Header } from "../../components/Header/Header";
-import {
-  Content,
-  ShippingWrapper,
-  ShippingForm,
-  IconWrapper,
-  SpanWrapper,
-  ButtonWrapper,
-  BottomTextWrapper,
-} from "../../layout/cartLayout";
-import SideCartNav from "../../components/SideCartNav/SideCartNav";
-
-import { AppState } from "../../redux/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-import { CartState } from "../../redux/cart/cartTypes";
-import { saveShippingAddress, setStep } from "../../redux/cart/cartActions";
 import { Field, Formik } from "formik";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { Header } from "../../components/Header/Header";
+import SideCartNav from "../../components/SideCartNav/SideCartNav";
+import Button from "../../components/UI/Button/Button";
 import Heading from "../../components/UI/Heading/Heading";
 import Input from "../../components/UI/Input/Input";
-import Button from "../../components/UI/Button/Button";
-import * as Yup from "yup";
+import {
+  ButtonWrapper,
+  Content,
+  ShippingForm,
+  ShippingWrapper,
+} from "../../layout/cartLayout";
+import { saveShippingAddress, setStep } from "../../redux/cart/cartActions";
+import { CartState } from "../../redux/cart/cartTypes";
+import { AppState } from "../../redux/rootReducer";
 
 const ShippingSchema = Yup.object().shape({
   fullName: Yup.string().required("Full Name is required."),
@@ -36,6 +33,7 @@ const Step2 = () => {
     (state: AppState) => state.cart
   );
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(setStep(2));
@@ -45,7 +43,7 @@ const Step2 = () => {
     <>
       <Head>
         <title>Eternity</title>
-        <meta name="Cart" content="User's cart" />
+        <meta name="Cart" content="User's shipping information" />
       </Head>
       <Header />
       <Content>
@@ -54,12 +52,12 @@ const Step2 = () => {
           <Formik
             validationSchema={ShippingSchema}
             initialValues={shippingAddress}
-            onSubmit={async (values, { setSubmitting, setErrors }) => {
-              console.log(values);
+            onSubmit={async (values) => {
               dispatch(saveShippingAddress(values));
+              router.push("/cart/step-3");
             }}
           >
-            {({ isSubmitting, isValid, setFieldValue }) => (
+            {({ isSubmitting, isValid }) => (
               <ShippingForm>
                 <Heading size="h1" margin="0 0 1em 0" color="#fff">
                   Shipping Address

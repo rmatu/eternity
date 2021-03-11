@@ -7,6 +7,7 @@ const cartDefaultState: CartState = {
   items: getLocalStorage(localStorageNames.CART_ITEMS),
   step: 1,
   shippingAddress: getLocalStorage(localStorageNames.SHIPPING_ADDRESS),
+  shippingPrice: 499,
 };
 
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {

@@ -63,6 +63,7 @@ export interface CartState {
   items: CartItem[];
   step: number;
   shippingAddress: ShippingAddress;
+  shippingPrice: number;
 }
 
 export type CartActionTypes =

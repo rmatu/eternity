@@ -6,11 +6,12 @@ import { Content, BasketWrapper, EmptyCart } from "../../layout/cartLayout";
 import SideCartNav from "../../components/SideCartNav/SideCartNav";
 import Basket from "../../components/Basket/Basket";
 import { AppState } from "../../redux/rootReducer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { CartState } from "../../redux/cart/cartTypes";
 import { IProduct } from "../../types";
 import PageLoader from "../../components/PageLoader/PageLoader";
 import Heading from "../../components/UI/Heading/Heading";
+import { setStep } from "../../redux/cart/cartActions";
 
 // BIG DISCLAIMER
 // Because localStorage can't be red from the server this page has to be
@@ -22,6 +23,7 @@ const Step1 = () => {
     (state: AppState) => state.cart
   );
   const [products, setProducts] = useState<IProduct[] | null>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchData() {
@@ -35,6 +37,10 @@ const Step1 = () => {
       setProducts([...data]);
     }
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    dispatch(setStep(1));
   }, []);
 
   if (!products) {

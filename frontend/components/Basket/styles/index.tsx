@@ -149,6 +149,11 @@ export const ImageWrapper = styled.div`
   :hover {
     transform: scale(1.05);
   }
+
+  @media (max-width: 400px) {
+    width: 200px;
+    height: 250px;
+  }
 `;
 
 export const Info = styled.div`

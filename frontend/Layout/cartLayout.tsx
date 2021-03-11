@@ -127,3 +127,127 @@ export const ShippingWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+/* ==========================================================================
+                        Step-3
+========================================================================== */
+
+export const PlaceOrderWrapper = styled.div`
+  width: 100%;
+
+  p {
+    font-size: 1.1rem;
+  }
+`;
+
+export const OrderInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ShippingInfo = styled.div`
+  padding: 1em;
+  border: 1px solid #363333;
+  border-radius: 1em;
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 1em;
+  max-height: 500px;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #0d141f;
+    border-radius: 0 8px 8px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #525861;
+    border-radius: 0 8px 8px 0;
+  }
+`;
+
+export const BolderSpan = styled.span`
+  font-weight: 700;
+  color: #fff;
+`;
+
+export const OrderSummary = styled.div`
+  margin-top: 1em;
+  max-width: 300px;
+  max-height: 200px;
+  width: 100%;
+  padding: 1em;
+  border: 1px solid #363333;
+  border-radius: 1em;
+  margin-left: 3em;
+`;
+
+export const OrderInfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ItemRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0;
+`;
+
+export const ImageContent = styled.div<{ margin?: string }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: ${({ margin }) => (margin ? margin : null)};
+
+  svg {
+    transition: all 0.2s;
+    position: absolute;
+    height: 2em;
+    width: 2em;
+    top: 3em;
+    right: 3em;
+
+    :hover {
+      cursor: pointer;
+      fill: #be6a15;
+      stroke: #be6a15;
+    }
+  }
+
+  @media (max-width: 700px) {
+    svg {
+      top: 1em;
+      right: 1em;
+    }
+  }
+`;
+
+export const ImageWrapper = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: rgb(37, 44, 46);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(37, 44, 46, 1) 20%,
+    rgba(0, 0, 0, 1) 53%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
+  img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
+`;
