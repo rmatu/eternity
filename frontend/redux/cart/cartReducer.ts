@@ -71,6 +71,11 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
         ...state,
         shippingAddress: action.payload,
       };
+    case actions.CART_EMPTY:
+      return {
+        ...state,
+        items: [],
+      };
     default:
       return state;
   }

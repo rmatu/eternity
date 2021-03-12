@@ -16,7 +16,6 @@ export interface IOrder extends Document {
     postalCode: string;
     country: string;
   };
-  paymentMethod: string;
   paymentResult: {
     id: string;
     status: string;
@@ -53,7 +52,6 @@ const orderSchema = new mongoose.Schema(
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
     },
-    paymentMethod: { type: String, required: true },
     paymentResult: {
       id: String,
       status: String,

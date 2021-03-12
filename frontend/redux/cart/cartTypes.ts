@@ -1,7 +1,6 @@
 export const CART_ADD_ITEM = "CART_ADD_ITEM";
 export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM";
 export const CART_SAVE_SHIPPING_ADDRESS = "CART_SAVE_SHIPPING_ADDRESS";
-export const CART_SAVE_PAYMENT_METHOD = "CART_SAVE_PAYMENT_METHOD";
 export const CART_EMPTY = "CART_EMPTY";
 export const CART_ADD_QTY = "CART_ADD_QTY";
 export const CART_SUB_QTY = "CART_SUB_QTY";
@@ -38,10 +37,6 @@ export interface CartSaveShippingAddress {
   payload: ShippingAddress;
 }
 
-export interface CartSavePaymentMethod {
-  type: typeof CART_SAVE_PAYMENT_METHOD;
-}
-
 export interface CartEmpty {
   type: typeof CART_EMPTY;
 }
@@ -70,7 +65,6 @@ export type CartActionTypes =
   | CartAddItem
   | CartRemoveItem
   | CartSaveShippingAddress
-  | CartSavePaymentMethod
   | CartAddQty
   | CartSubQty
   | CartChangeStep

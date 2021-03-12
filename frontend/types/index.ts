@@ -36,3 +36,32 @@ export interface IReviews {
   user: string;
   product: string;
 }
+
+export interface IOrder {
+  orderItems: {
+    name: string;
+    qty: number;
+    image: string;
+    price: number;
+    product: string;
+  }[];
+  shippingAddress: {
+    fullName: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  paymentResult: {
+    id: string;
+    status: string;
+    updateTime: string;
+  };
+  itemsPrice: number;
+  shippingPrice: number;
+  totalPrice: number;
+  user: string;
+  paidAt: Date;
+  isDelivered: boolean;
+  deliveredAt: Date;
+}

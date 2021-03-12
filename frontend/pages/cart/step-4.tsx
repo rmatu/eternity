@@ -34,6 +34,9 @@ import { PayPalButton } from "react-paypal-button-v2";
 import Loader from "../../components/UI/Loader/Loader";
 import Button from "../../components/UI/Button/Button";
 import Modal from "../../components/UI/Modal/Modal";
+import { createOrder } from "../../redux/order/orderActions";
+import { UserState } from "../../redux/user/userTypes";
+import { OrderState } from "../../redux/order/orderTypes";
 
 const Step4 = () => {
   const {
@@ -42,10 +45,13 @@ const Step4 = () => {
     items,
     shippingPrice,
   }: CartState = useSelector((state: AppState) => state.cart);
+  const { user }: UserState = useSelector((state: AppState) => state.user);
+  const {}: OrderState = useSelector((state: AppState) => state.order);
   const [products, setProducts] = useState<IProduct[] | null>(null);
-  const [basket, setBasket] = useState<IBasket[] | null>([]);
+  const [basket, setBasket] = useState<IBasket[]>([]);
   const [sdkReady, setSdkReady] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [paymentSucceed, setPaymentSuceed] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -68,9 +74,37 @@ const Step4 = () => {
     }
   }, [dispatch, sdkReady]);
 
-  const successPaymentHandler = (paymentResult) => {
+  const successPaymentHandler = async (paymentResult) => {
     setOpenModal(false);
     console.log(paymentResult);
+    await dispatch(
+      createOrder({
+        orderItems: basket.map((el) => ({
+          image: el.mainProductImage,
+          name: el.name,
+          price: el.price,
+          product: el._id,
+          qty: el.qty,
+        })),
+        shippingAddress: {
+          fullName: shippingAddress.fullName,
+          address: shippingAddress.address,
+          city: shippingAddress.city,
+          postalCode: shippingAddress.postalCode,
+          country: shippingAddress.country,
+        },
+        itemsPrice: basket
+          .map((el) => el.price * el.qty)
+          .reduce((a, b) => a + b, 0),
+        shippingPrice: shippingPrice,
+        totalPrice:
+          basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0) +
+          shippingPrice,
+        user: user._id,
+        paidAt: paymentResult.update_time,
+      })
+    );
+    setPaymentSuceed(true);
   };
 
   // To make sure, that at this step every product has current price
@@ -224,6 +258,7 @@ const Step4 = () => {
             </OrderSummary>
           </OrderInfoWrapper>
         </PlaceOrderWrapper>
+        {paymentSucceed && <p>Kozak Przeszło</p>}
       </Content>
       <Modal opened={openModal} close={() => setOpenModal(false)}>
         {!sdkReady ? (
