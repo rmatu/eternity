@@ -11,6 +11,7 @@ import { CartState } from "../../redux/cart/cartTypes";
 import { AppState } from "../../redux/rootReducer";
 import { UserState } from "../../redux/user/userTypes";
 import { useRouter } from "next/router";
+import Footer from "../../components/Footer/Footer";
 
 const Step2 = () => {
   const { step }: CartState = useSelector((state: AppState) => state.cart);

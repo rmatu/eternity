@@ -50,8 +50,4 @@ export const WrappedModal = styled.div<WrappedModalProps>`
       cursor: pointer;
     }
   }
-
-  @media (max-width: 510px) {
-    padding: 3em 1.5em 3em 1.5em;
-  }
 `;

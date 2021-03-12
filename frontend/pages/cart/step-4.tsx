@@ -37,6 +37,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import { createOrder } from "../../redux/order/orderActions";
 import { UserState } from "../../redux/user/userTypes";
 import { OrderState } from "../../redux/order/orderTypes";
+import Footer from "../../components/Footer/Footer";
 
 const Step4 = () => {
   const {
@@ -147,7 +148,7 @@ const Step4 = () => {
         <SideCartNav step={step} />
 
         <PlaceOrderWrapper>
-          <Heading size="h1" color="#fff">
+          <Heading size="h1" margin="0.5em 0 0 0" color="#fff">
             Place Order
           </Heading>
           <OrderInfoWrapper>
@@ -257,6 +258,7 @@ const Step4 = () => {
               )}
             </OrderSummary>
           </OrderInfoWrapper>
+          <Footer />
         </PlaceOrderWrapper>
         {paymentSucceed && <p>Kozak Przeszło</p>}
       </Content>

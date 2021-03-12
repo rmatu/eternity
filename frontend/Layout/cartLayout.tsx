@@ -143,6 +143,11 @@ export const OrderInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   max-width: 1400px;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ShippingInfo = styled.div`
@@ -164,6 +169,10 @@ export const ShippingInfo = styled.div`
     background: #525861;
     border-radius: 0 8px 8px 0;
   }
+
+  @media (max-width: 1200px) {
+    max-height: 290px;
+  }
 `;
 
 export const BolderSpan = styled.span`
@@ -181,6 +190,12 @@ export const ItemRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0.5em 0;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const ImageContent = styled.div<{ margin?: string }>`
@@ -267,16 +282,8 @@ export const OrderSummary = styled.div`
   border-radius: 1em;
   margin-left: 2em;
 
-  overflow: auto;
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    background: #0d141f;
-    border-radius: 0 8px 8px 0;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #525861;
-    border-radius: 0 8px 8px 0;
+  @media (max-width: 1200px) {
+    margin-left: 0;
   }
 `;
 
@@ -294,8 +301,12 @@ export const PaypalInfo = styled.div`
   div {
     padding: 0 1em;
     width: 100%;
-
     padding: 0 2em;
+  }
+
+  @media (max-width: 500px) {
+    margin-top: 0;
+    padding: 17em 0 0 0;
   }
 `;
 
@@ -305,6 +316,10 @@ export const TotalPrice = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media (max-width: 500px) {
+    justify-content: center;
+  }
 `;
 
 export const LogginWrapper = styled.div`
@@ -314,6 +329,7 @@ export const LogginWrapper = styled.div`
   text-align: center;
   flex-direction: column;
   width: 100%;
+  height: 80vh;
 
   p {
     font-size: 1.1rem;
