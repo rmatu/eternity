@@ -27,6 +27,9 @@ app.get("/", (_, res) => {
   res.send("Server is ready");
 });
 
+app.get("/api/config/paypal", (_, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
+});
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 

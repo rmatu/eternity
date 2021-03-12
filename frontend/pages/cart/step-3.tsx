@@ -2,12 +2,13 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../../components/Header/Header";
 import PageLoader from "../../components/PageLoader/PageLoader";
 import SideCartNav from "../../components/SideCartNav/SideCartNav";
 import Heading from "../../components/UI/Heading/Heading";
+import Rating from "../../components/UI/Rating/Rating";
 import {
   Content,
   PlaceOrderWrapper,
@@ -18,6 +19,7 @@ import {
   OrderInfoWrapper,
   OrderInfoRow,
   ItemRow,
+  PaypalInfo,
   ImageContent,
   ProductName,
   ImageWrapper,
@@ -28,6 +30,8 @@ import { AppState } from "../../redux/rootReducer";
 import { IProduct, IBasket } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { mergeTwoArraysOfObject } from "../../utils/helpers";
+import { PayPalButton } from "react-paypal-button-v2";
+import Loader from "../../components/UI/Loader/Loader";
 
 const Step3 = () => {
   const {
@@ -38,11 +42,46 @@ const Step3 = () => {
   }: CartState = useSelector((state: AppState) => state.cart);
   const [products, setProducts] = useState<IProduct[] | null>(null);
   const [basket, setBasket] = useState<IBasket[] | null>([]);
+  const [sdkReady, setSdkReady] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // To make sure, that at this step every product has current price
+  useEffect(() => {
+    const addPayPalScript = async () => {
+      const { data } = await axios.get("/api/config/paypal");
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+    if (!window.paypal) {
+      addPayPalScript();
+    } else {
+      setSdkReady(true);
+    }
+    // if (!order || successPay || (order && order._id !== orderId)) {
+    //   dispatch({ type: ORDER_PAY_RESET });
+    //   dispatch(detailsOrder(orderId));
+    // } else {
+    //   if (!order.isPaid) {
+    //     if (!window.paypal) {
+    //       addPayPalScript();
+    //     } else {
+    //       setSdkReady(true);
+    //     }
+    //   }
+    // }
+  }, [dispatch, sdkReady]);
 
+  const successPaymentHandler = (paymentResult) => {
+    console.log(paymentResult);
+  };
+
+  // To make sure, that at this step every product has current price
   useEffect(() => {
     async function fetchData() {
       const cartItems = items.map((el) => el.productId);
@@ -92,17 +131,17 @@ const Step3 = () => {
                   Shipping
                 </Heading>
                 <p>
-                  <BolderSpan>Name:</BolderSpan> {shippingAddress.fullName}
-                </p>
-                <p>
-                  <BolderSpan>Email:</BolderSpan> {shippingAddress.email}
+                  <BolderSpan>Full name:</BolderSpan> {shippingAddress.fullName}
                 </p>
                 <p>
                   <BolderSpan>Address:</BolderSpan>{" "}
                   {`${shippingAddress.address}, ${shippingAddress.postalCode}, ${shippingAddress.city}`}
                 </p>
                 <p>
-                  <BolderSpan>Country: </BolderSpan> {shippingAddress.country}
+                  <p>
+                    <BolderSpan>Country: </BolderSpan> {shippingAddress.country}
+                  </p>
+                  <BolderSpan>Email:</BolderSpan> {shippingAddress.email}
                 </p>
               </ShippingInfo>
               <ShippingInfo>
@@ -127,31 +166,30 @@ const Step3 = () => {
                   </TotalPrice>
                 </ItemRow> */}
                 {basket.map((el) => (
-                  <>
-                    <ItemRow>
-                      <ImageContent>
-                        <ImageWrapper>
-                          <Image
-                            alt={`${el.name} image`}
-                            src={`${process.env.NEXT_PUBLIC_API_URL}/${el.mainProductImage}`}
-                            layout="fill"
-                            quality={100}
-                          />
-                        </ImageWrapper>
-                      </ImageContent>
-                      <ProductName>
-                        <p>{el.name}</p>
-                      </ProductName>
-                      <TotalPrice>
-                        <p>
-                          {`${el.qty} x $` +
-                            twoDecimals(el.price) +
-                            ` = $` +
-                            twoDecimals(el.price * el.qty)}
-                        </p>
-                      </TotalPrice>
-                    </ItemRow>
-                  </>
+                  <ItemRow key={el._id}>
+                    <ImageContent>
+                      <ImageWrapper>
+                        <Image
+                          alt={`${el.name} image`}
+                          src={`${process.env.NEXT_PUBLIC_API_URL}/${el.mainProductImage}`}
+                          layout="fill"
+                          quality={100}
+                        />
+                      </ImageWrapper>
+                    </ImageContent>
+                    <ProductName column center>
+                      <p>{el.name}</p>
+                      <Rating rColor="#be6a15" rating={el.rating} />
+                    </ProductName>
+                    <TotalPrice>
+                      <p>
+                        {`${el.qty} x $` +
+                          twoDecimals(el.price) +
+                          ` = $` +
+                          twoDecimals(el.price * el.qty)}
+                      </p>
+                    </TotalPrice>
+                  </ItemRow>
                 ))}
               </ShippingInfo>
             </div>
@@ -191,6 +229,27 @@ const Step3 = () => {
                   )}
                 </p>
               </OrderInfoRow>
+
+              {!sdkReady ? (
+                <OrderInfoRow margin="3em 0 0 0" center>
+                  <Loader />
+                </OrderInfoRow>
+              ) : (
+                <PaypalInfo>
+                  <PayPalButton
+                    amount={twoDecimals(
+                      basket
+                        .map((el) => el.price * el.qty)
+                        .reduce((a, b) => a + b, 0) + shippingPrice
+                    )}
+                    onSuccess={successPaymentHandler}
+                    style={{
+                      size: "responsive",
+                      height: 40,
+                    }}
+                  />
+                </PaypalInfo>
+              )}
             </OrderSummary>
           </OrderInfoWrapper>
         </PlaceOrderWrapper>

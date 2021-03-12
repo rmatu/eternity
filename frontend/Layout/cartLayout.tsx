@@ -172,20 +172,10 @@ export const BolderSpan = styled.span`
   color: #fff;
 `;
 
-export const OrderSummary = styled.div`
-  margin-top: 1em;
-  max-width: 300px;
-  max-height: 200px;
-  width: 100%;
-  padding: 1em;
-  border: 1px solid #363333;
-  border-radius: 1em;
-  margin-left: 3em;
-`;
-
-export const OrderInfoRow = styled.div`
+export const OrderInfoRow = styled.div<{ center?: boolean; margin?: string }>`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${({ center }) => (center ? "center" : "space-between")};
+  margin: ${({ margin }) => (margin ? margin : "")};
 `;
 
 export const ItemRow = styled.div`
@@ -253,12 +243,63 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const ProductName = styled.div<{ width?: string; center?: boolean }>`
+interface ProductNameProps {
+  width?: string;
+  center?: boolean;
+  column?: boolean;
+}
+
+export const ProductName = styled.div<ProductNameProps>`
   max-width: ${({ width }) => (width ? width : "200px")};
   width: 100%;
   display: flex;
+  flex-direction: ${({ column }) => (column ? "column" : "")};
   align-items: center;
   justify-content: ${({ center }) => (center ? "center" : "")};
+`;
+
+export const OrderSummary = styled.div`
+  margin-top: 1em;
+  max-width: 400px;
+  max-height: 550px;
+  width: 100%;
+  padding: 1em;
+  border: 1px solid #363333;
+  border-radius: 1em;
+  margin-left: 2em;
+
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #0d141f;
+    border-radius: 0 8px 8px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #525861;
+    border-radius: 0 8px 8px 0;
+  }
+`;
+
+export const PaypalInfo = styled.div`
+  margin-top: 2em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .billingAddress p {
+    color: pink !important;
+  }
+
+  div {
+    padding: 0 1em;
+    width: 100%;
+
+    p {
+      color: pink;
+    }
+  }
 `;
 
 export const TotalPrice = styled.div`
