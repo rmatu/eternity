@@ -134,7 +134,6 @@ export const ShippingWrapper = styled.div`
 
 export const PlaceOrderWrapper = styled.div`
   width: 100%;
-
   p {
     font-size: 1.1rem;
   }
@@ -261,7 +260,7 @@ export const ProductName = styled.div<ProductNameProps>`
 export const OrderSummary = styled.div`
   margin-top: 1em;
   max-width: 400px;
-  max-height: 550px;
+  height: 210px;
   width: 100%;
   padding: 1em;
   border: 1px solid #363333;
@@ -296,9 +295,7 @@ export const PaypalInfo = styled.div`
     padding: 0 1em;
     width: 100%;
 
-    p {
-      color: pink;
-    }
+    padding: 0 2em;
   }
 `;
 

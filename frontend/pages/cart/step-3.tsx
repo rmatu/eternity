@@ -32,6 +32,8 @@ import { twoDecimals } from "../../utils/format";
 import { mergeTwoArraysOfObject } from "../../utils/helpers";
 import { PayPalButton } from "react-paypal-button-v2";
 import Loader from "../../components/UI/Loader/Loader";
+import Button from "../../components/UI/Button/Button";
+import Modal from "../../components/UI/Modal/Modal";
 
 const Step3 = () => {
   const {
@@ -42,7 +44,8 @@ const Step3 = () => {
   }: CartState = useSelector((state: AppState) => state.cart);
   const [products, setProducts] = useState<IProduct[] | null>(null);
   const [basket, setBasket] = useState<IBasket[] | null>([]);
-  const [sdkReady, setSdkReady] = useState(false);
+  const [sdkReady, setSdkReady] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -78,6 +81,7 @@ const Step3 = () => {
   }, [dispatch, sdkReady]);
 
   const successPaymentHandler = (paymentResult) => {
+    setOpenModal(false);
     console.log(paymentResult);
   };
 
@@ -235,25 +239,56 @@ const Step3 = () => {
                   <Loader />
                 </OrderInfoRow>
               ) : (
-                <PaypalInfo>
-                  <PayPalButton
-                    amount={twoDecimals(
-                      basket
-                        .map((el) => el.price * el.qty)
-                        .reduce((a, b) => a + b, 0) + shippingPrice
-                    )}
-                    onSuccess={successPaymentHandler}
-                    style={{
-                      size: "responsive",
-                      height: 40,
-                    }}
-                  />
-                </PaypalInfo>
+                <OrderInfoRow center>
+                  <Button
+                    onClick={() => setOpenModal(true)}
+                    margin="1.5em 0 0 0"
+                    bColor="#be6a15"
+                  >
+                    Proceed the payment
+                  </Button>
+                </OrderInfoRow>
+                // <PaypalInfo>
+                //   <PayPalButton
+                //     amount={twoDecimals(
+                //       basket
+                //         .map((el) => el.price * el.qty)
+                //         .reduce((a, b) => a + b, 0) + shippingPrice
+                //     )}
+                //     onSuccess={successPaymentHandler}
+                //     style={{
+                //       size: "responsive",
+                //       height: 40,
+                //     }}
+                //   />
+                // </PaypalInfo>
               )}
             </OrderSummary>
           </OrderInfoWrapper>
         </PlaceOrderWrapper>
       </Content>
+      <Modal opened={openModal} close={() => setOpenModal(false)}>
+        {!sdkReady ? (
+          <OrderInfoRow margin="3em 0 0 0" center>
+            <Loader />
+          </OrderInfoRow>
+        ) : (
+          <PaypalInfo>
+            <PayPalButton
+              amount={twoDecimals(
+                basket
+                  .map((el) => el.price * el.qty)
+                  .reduce((a, b) => a + b, 0) + shippingPrice
+              )}
+              onSuccess={successPaymentHandler}
+              style={{
+                size: "responsive",
+                height: 40,
+              }}
+            />
+          </PaypalInfo>
+        )}
+      </Modal>
     </>
   );
 };
