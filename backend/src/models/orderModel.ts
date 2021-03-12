@@ -24,7 +24,6 @@ export interface IOrder extends Document {
   };
   itemsPrice: number;
   shippingPrice: number;
-  taxPrice: number;
   totalPrice: number;
   isPaid: boolean;
   paidAt: Date;

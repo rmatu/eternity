@@ -306,3 +306,21 @@ export const TotalPrice = styled.div`
   align-items: center;
   justify-content: flex-end;
 `;
+
+export const LogginWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  width: 100%;
+
+  p {
+    font-size: 1.1rem;
+  }
+`;
+
+export const RowButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+`;

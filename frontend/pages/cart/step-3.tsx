@@ -1,294 +1,139 @@
-import axios from "axios";
+import { Field, Formik } from "formik";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 import { Header } from "../../components/Header/Header";
-import PageLoader from "../../components/PageLoader/PageLoader";
 import SideCartNav from "../../components/SideCartNav/SideCartNav";
+import Button from "../../components/UI/Button/Button";
 import Heading from "../../components/UI/Heading/Heading";
-import Rating from "../../components/UI/Rating/Rating";
+import Input from "../../components/UI/Input/Input";
 import {
+  ButtonWrapper,
   Content,
-  PlaceOrderWrapper,
-  ShippingInfo,
-  TotalPrice,
-  BolderSpan,
-  OrderSummary,
-  OrderInfoWrapper,
-  OrderInfoRow,
-  ItemRow,
-  PaypalInfo,
-  ImageContent,
-  ProductName,
-  ImageWrapper,
+  ShippingForm,
+  ShippingWrapper,
 } from "../../layout/cartLayout";
-import { setStep } from "../../redux/cart/cartActions";
+import { saveShippingAddress, setStep } from "../../redux/cart/cartActions";
 import { CartState } from "../../redux/cart/cartTypes";
 import { AppState } from "../../redux/rootReducer";
-import { IProduct, IBasket } from "../../types";
-import { twoDecimals } from "../../utils/format";
-import { mergeTwoArraysOfObject } from "../../utils/helpers";
-import { PayPalButton } from "react-paypal-button-v2";
-import Loader from "../../components/UI/Loader/Loader";
-import Button from "../../components/UI/Button/Button";
-import Modal from "../../components/UI/Modal/Modal";
+
+const ShippingSchema = Yup.object().shape({
+  fullName: Yup.string().required("Full Name is required."),
+  address: Yup.string().required("Address is required."),
+  city: Yup.string().required("City is required."),
+  postalCode: Yup.string().required("Postal Code is required"),
+  country: Yup.string().required("Country is required"),
+  email: Yup.string().email().required("Email is required"),
+});
 
 const Step3 = () => {
-  const {
-    step,
-    shippingAddress,
-    items,
-    shippingPrice,
-  }: CartState = useSelector((state: AppState) => state.cart);
-  const [products, setProducts] = useState<IProduct[] | null>(null);
-  const [basket, setBasket] = useState<IBasket[] | null>([]);
-  const [sdkReady, setSdkReady] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const { step, shippingAddress }: CartState = useSelector(
+    (state: AppState) => state.cart
+  );
   const dispatch = useDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data } = await axios.get("/api/config/paypal");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
-    if (!window.paypal) {
-      addPayPalScript();
-    } else {
-      setSdkReady(true);
-    }
-    // if (!order || successPay || (order && order._id !== orderId)) {
-    //   dispatch({ type: ORDER_PAY_RESET });
-    //   dispatch(detailsOrder(orderId));
-    // } else {
-    //   if (!order.isPaid) {
-    //     if (!window.paypal) {
-    //       addPayPalScript();
-    //     } else {
-    //       setSdkReady(true);
-    //     }
-    //   }
-    // }
-  }, [dispatch, sdkReady]);
-
-  const successPaymentHandler = (paymentResult) => {
-    setOpenModal(false);
-    console.log(paymentResult);
-  };
-
-  // To make sure, that at this step every product has current price
-  useEffect(() => {
-    async function fetchData() {
-      const cartItems = items.map((el) => el.productId);
-      const { data } = await axios.post("/api/products/cartItems", {
-        data: {
-          cartItems,
-        },
-      });
-      //@ts-ignore
-      setProducts([...data]);
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (products) {
-      setBasket(mergeTwoArraysOfObject(products, items));
-    }
-  }, [products, items]);
 
   useEffect(() => {
     dispatch(setStep(3));
   }, []);
 
-  if (!products) {
-    return <PageLoader />;
-  }
-
   return (
     <>
       <Head>
         <title>Eternity</title>
-        <meta name="Cart" content="User's cart" />
+        <meta name="Cart" content="User's shipping information" />
       </Head>
       <Header />
       <Content>
         <SideCartNav step={step} />
-
-        <PlaceOrderWrapper>
-          <Heading size="h1" color="#fff">
-            Place Order
-          </Heading>
-          <OrderInfoWrapper>
-            <div style={{ width: "100%" }}>
-              <ShippingInfo>
-                <Heading size="h4" margin="0 0 0.5em 0" color="#fff">
-                  Shipping
+        <ShippingWrapper>
+          <Formik
+            validationSchema={ShippingSchema}
+            initialValues={shippingAddress}
+            onSubmit={async (values) => {
+              dispatch(saveShippingAddress(values));
+              router.push("/cart/step-4");
+            }}
+          >
+            {({ isSubmitting, isValid }) => (
+              <ShippingForm>
+                <Heading size="h1" margin="0 0 1em 0" color="#fff">
+                  Shipping Address
                 </Heading>
-                <p>
-                  <BolderSpan>Full name:</BolderSpan> {shippingAddress.fullName}
-                </p>
-                <p>
-                  <BolderSpan>Address:</BolderSpan>{" "}
-                  {`${shippingAddress.address}, ${shippingAddress.postalCode}, ${shippingAddress.city}`}
-                </p>
-                <p>
-                  <p>
-                    <BolderSpan>Country: </BolderSpan> {shippingAddress.country}
-                  </p>
-                  <BolderSpan>Email:</BolderSpan> {shippingAddress.email}
-                </p>
-              </ShippingInfo>
-              <ShippingInfo>
-                <Heading size="h4" margin="0 0 0.5em 0" color="#fff">
-                  Ordered Items
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  Full Name
                 </Heading>
-                {/* <ItemRow>
-                  <ProductName center width="100px">
-                    <p>
-                      <BolderSpan>Image</BolderSpan>
-                    </p>
-                  </ProductName>
-                  <ProductName>
-                    <p>
-                      <BolderSpan>Name</BolderSpan>
-                    </p>
-                  </ProductName>
-                  <TotalPrice>
-                    <p>
-                      <BolderSpan>Total</BolderSpan>
-                    </p>
-                  </TotalPrice>
-                </ItemRow> */}
-                {basket.map((el) => (
-                  <ItemRow key={el._id}>
-                    <ImageContent>
-                      <ImageWrapper>
-                        <Image
-                          alt={`${el.name} image`}
-                          src={`${process.env.NEXT_PUBLIC_API_URL}/${el.mainProductImage}`}
-                          layout="fill"
-                          quality={100}
-                        />
-                      </ImageWrapper>
-                    </ImageContent>
-                    <ProductName column center>
-                      <p>{el.name}</p>
-                      <Rating rColor="#be6a15" rating={el.rating} />
-                    </ProductName>
-                    <TotalPrice>
-                      <p>
-                        {`${el.qty} x $` +
-                          twoDecimals(el.price) +
-                          ` = $` +
-                          twoDecimals(el.price * el.qty)}
-                      </p>
-                    </TotalPrice>
-                  </ItemRow>
-                ))}
-              </ShippingInfo>
-            </div>
-            <OrderSummary>
-              <Heading size="h4" margin="0 0 0.5em 0" color="#fff">
-                Order Summary
-              </Heading>
-              <OrderInfoRow>
-                <p>
-                  <BolderSpan>Items price:</BolderSpan>
-                </p>
-                <p>
-                  $
-                  {twoDecimals(
-                    basket
-                      .map((el) => el.price * el.qty)
-                      .reduce((a, b) => a + b, 0)
-                  )}
-                </p>
-              </OrderInfoRow>
-              <OrderInfoRow>
-                <p>
-                  <BolderSpan>Shipping:</BolderSpan>
-                </p>
-                <p>${twoDecimals(shippingPrice)}</p>
-              </OrderInfoRow>
-              <OrderInfoRow>
-                <p>
-                  <BolderSpan>Total:</BolderSpan>
-                </p>
-                <p>
-                  $
-                  {twoDecimals(
-                    basket
-                      .map((el) => el.price * el.qty)
-                      .reduce((a, b) => a + b, 0) + shippingPrice
-                  )}
-                </p>
-              </OrderInfoRow>
+                <Field
+                  type="text"
+                  name="fullName"
+                  placeholder="Your first name and last name..."
+                  component={Input}
+                />
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  Email
+                </Heading>
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Your email..."
+                  component={Input}
+                />
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  Address
+                </Heading>
+                <Field
+                  type="address"
+                  name="address"
+                  placeholder="Your address..."
+                  component={Input}
+                />
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  City
+                </Heading>
+                <Field
+                  type="city"
+                  name="city"
+                  placeholder="Your city..."
+                  component={Input}
+                />
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  Postal Code
+                </Heading>
+                <Field
+                  type="postalCode"
+                  name="postalCode"
+                  placeholder="Your postal code..."
+                  component={Input}
+                />
+                <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
+                  Country
+                </Heading>
+                <Field
+                  type="country"
+                  name="country"
+                  placeholder="Your country..."
+                  component={Input}
+                />
 
-              {!sdkReady ? (
-                <OrderInfoRow margin="3em 0 0 0" center>
-                  <Loader />
-                </OrderInfoRow>
-              ) : (
-                <OrderInfoRow center>
+                <ButtonWrapper>
                   <Button
-                    onClick={() => setOpenModal(true)}
-                    margin="1.5em 0 0 0"
+                    loading={isSubmitting ? "Sending..." : null}
+                    disabled={!isValid}
+                    type="submit"
                     bColor="#be6a15"
+                    padding="0.2em 3em"
+                    margin="1em 0 0 0"
                   >
-                    Proceed the payment
+                    Continue
                   </Button>
-                </OrderInfoRow>
-                // <PaypalInfo>
-                //   <PayPalButton
-                //     amount={twoDecimals(
-                //       basket
-                //         .map((el) => el.price * el.qty)
-                //         .reduce((a, b) => a + b, 0) + shippingPrice
-                //     )}
-                //     onSuccess={successPaymentHandler}
-                //     style={{
-                //       size: "responsive",
-                //       height: 40,
-                //     }}
-                //   />
-                // </PaypalInfo>
-              )}
-            </OrderSummary>
-          </OrderInfoWrapper>
-        </PlaceOrderWrapper>
+                </ButtonWrapper>
+              </ShippingForm>
+            )}
+          </Formik>
+        </ShippingWrapper>
       </Content>
-      <Modal opened={openModal} close={() => setOpenModal(false)}>
-        {!sdkReady ? (
-          <OrderInfoRow margin="3em 0 0 0" center>
-            <Loader />
-          </OrderInfoRow>
-        ) : (
-          <PaypalInfo>
-            <PayPalButton
-              amount={twoDecimals(
-                basket
-                  .map((el) => el.price * el.qty)
-                  .reduce((a, b) => a + b, 0) + shippingPrice
-              )}
-              onSuccess={successPaymentHandler}
-              style={{
-                size: "responsive",
-                height: 40,
-              }}
-            />
-          </PaypalInfo>
-        )}
-      </Modal>
     </>
   );
 };
