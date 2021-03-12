@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cors from "cors";
 import productRouter from "./routers/productRouter";
 import userRouter from "./routers/userRouter";
+import orderRouter from "./routers/orderRouter";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.get("/api/config/paypal", (_, res) => {
 });
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 // An error catcher
 app.use((err: any, _: Request, res: Response, __: NextFunction) => {

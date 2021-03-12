@@ -25,7 +25,7 @@ export interface IOrder extends Document {
   itemsPrice: number;
   shippingPrice: number;
   totalPrice: number;
-  isPaid: boolean;
+
   paidAt: Date;
   isDelivered: boolean;
   deliveredAt: Date;
@@ -62,13 +62,12 @@ const orderSchema = new mongoose.Schema(
     },
     itemsPrice: { type: Number, required: true },
     shippingPrice: { type: Number, required: true },
-    taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    isPaid: { type: Boolean, default: false },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", default: null },
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
+    email: { type: String },
   },
   {
     timestamps: true,
