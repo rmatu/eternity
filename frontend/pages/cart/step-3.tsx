@@ -36,7 +36,11 @@ const Step3 = () => {
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(setStep(3));
+    if (step === 2) {
+      dispatch(setStep(3));
+    } else {
+      router.push("/cart/step-1");
+    }
   }, []);
 
   return (

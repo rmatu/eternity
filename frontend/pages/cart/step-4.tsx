@@ -3,42 +3,41 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { PayPalButton } from "react-paypal-button-v2";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../../components/Header/Header";
 import PageLoader from "../../components/PageLoader/PageLoader";
+import PaymentSucceeded from "../../components/PaymentSucceeded/PaymentSucceeded";
 import SideCartNav from "../../components/SideCartNav/SideCartNav";
+import Button from "../../components/UI/Button/Button";
 import Heading from "../../components/UI/Heading/Heading";
+import Loader from "../../components/UI/Loader/Loader";
+import Modal from "../../components/UI/Modal/Modal";
 import Rating from "../../components/UI/Rating/Rating";
 import {
+  BolderSpan,
   Content,
+  ImageContent,
+  ImageWrapper,
+  ItemRow,
+  OrderInfoRow,
+  OrderInfoWrapper,
+  OrderSummary,
+  PaypalInfo,
   PlaceOrderWrapper,
+  ProductName,
   ShippingInfo,
   TotalPrice,
-  BolderSpan,
-  OrderSummary,
-  OrderInfoWrapper,
-  OrderInfoRow,
-  ItemRow,
-  PaypalInfo,
-  ImageContent,
-  ProductName,
-  ImageWrapper,
 } from "../../layout/cartLayout";
 import { setStep } from "../../redux/cart/cartActions";
 import { CartState } from "../../redux/cart/cartTypes";
+import { createOrder } from "../../redux/order/orderActions";
+import { OrderState } from "../../redux/order/orderTypes";
 import { AppState } from "../../redux/rootReducer";
-import { IProduct, IBasket } from "../../types";
+import { UserState } from "../../redux/user/userTypes";
+import { IBasket, IProduct } from "../../types";
 import { twoDecimals } from "../../utils/format";
 import { mergeTwoArraysOfObject } from "../../utils/helpers";
-import { PayPalButton } from "react-paypal-button-v2";
-import Loader from "../../components/UI/Loader/Loader";
-import Button from "../../components/UI/Button/Button";
-import Modal from "../../components/UI/Modal/Modal";
-import { createOrder } from "../../redux/order/orderActions";
-import { UserState } from "../../redux/user/userTypes";
-import { OrderState } from "../../redux/order/orderTypes";
-import Footer from "../../components/Footer/Footer";
-import PaymentSucceeded from "../../components/PaymentSucceeded/PaymentSucceeded";
 
 const Step4 = () => {
   const {
@@ -130,7 +129,11 @@ const Step4 = () => {
   }, [products, items]);
 
   useEffect(() => {
-    dispatch(setStep(4));
+    if (step === 3) {
+      dispatch(setStep(4));
+    } else {
+      router.push("/cart/step-1");
+    }
   }, []);
 
   if (!products) {

@@ -21,7 +21,11 @@ const Step2 = () => {
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(setStep(2));
+    if (step === 1) {
+      dispatch(setStep(2));
+    } else {
+      router.push("/cart/step-1");
+    }
   }, []);
 
   if (!user) {
