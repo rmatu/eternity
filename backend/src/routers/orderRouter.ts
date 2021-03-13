@@ -1,7 +1,8 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel";
-import { isAuth } from "../utils";
+import Product from "../models/productModel";
+import { isAuth, mergeTwoArraysOfObject } from "../utils";
 
 const orderRouter = express.Router();
 
@@ -23,6 +24,34 @@ orderRouter.post(
 
     const createdProduct = await order.save();
     res.send(createdProduct);
+  })
+);
+
+orderRouter.get(
+  "/products-total-price",
+  expressAsyncHandler(async (req, res) => {
+    //@ts-ignore
+    const productsIds = req.body.productsList.map((el) => el.id);
+    const productsList = await Product.find({
+      _id: { $in: productsIds },
+    });
+
+    if (!productsList) {
+      res.status(404).send("Product doesn't exist");
+      return;
+    }
+
+    const singleProductArray = productsList.map((el) => ({
+      id: el.id,
+      price: el.price,
+    }));
+
+    const result = mergeTwoArraysOfObject(
+      req.body.productsList,
+      singleProductArray
+    );
+
+    res.send(result);
   })
 );
 
