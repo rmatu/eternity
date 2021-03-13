@@ -50,4 +50,9 @@ export const WrappedModal = styled.div<WrappedModalProps>`
       cursor: pointer;
     }
   }
+
+  .loader {
+    fill: black;
+    stroke: black;
+  }
 `;

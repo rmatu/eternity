@@ -38,6 +38,7 @@ import { createOrder } from "../../redux/order/orderActions";
 import { UserState } from "../../redux/user/userTypes";
 import { OrderState } from "../../redux/order/orderTypes";
 import Footer from "../../components/Footer/Footer";
+import PaymentSucceeded from "../../components/PaymentSucceeded/PaymentSucceeded";
 
 const Step4 = () => {
   const {
@@ -77,7 +78,6 @@ const Step4 = () => {
 
   const successPaymentHandler = async (paymentResult) => {
     setOpenModal(false);
-    console.log(paymentResult);
     await dispatch(
       createOrder({
         orderItems: basket.map((el) => ({
@@ -135,6 +135,10 @@ const Step4 = () => {
 
   if (!products) {
     return <PageLoader />;
+  }
+
+  if (paymentSucceed) {
+    return <PaymentSucceeded />;
   }
 
   return (
@@ -242,7 +246,7 @@ const Step4 = () => {
               </OrderInfoRow>
 
               {!sdkReady ? (
-                <OrderInfoRow margin="3em 0 0 0" center>
+                <OrderInfoRow margin="0.5 0 0 0" center>
                   <Loader />
                 </OrderInfoRow>
               ) : (
@@ -258,9 +262,7 @@ const Step4 = () => {
               )}
             </OrderSummary>
           </OrderInfoWrapper>
-          <Footer />
         </PlaceOrderWrapper>
-        {paymentSucceed && <p>Kozak Przeszło</p>}
       </Content>
       <Modal opened={openModal} close={() => setOpenModal(false)}>
         {!sdkReady ? (
@@ -269,6 +271,11 @@ const Step4 = () => {
           </OrderInfoRow>
         ) : (
           <PaypalInfo>
+            {/* 
+                READING AMMOUNT FROM CLIENT IS NOT SAFE AT ALL
+                I HAVE TO THINK ABOUT FETCHING THE DATA FROM SERVER
+                AND INJECTING IT HERE
+            */}
             <PayPalButton
               amount={twoDecimals(
                 basket

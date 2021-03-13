@@ -12,8 +12,7 @@ export const createOrder = (order) => async (
 ) => {
   dispatch({ type: orderActions.ORDER_CREATE_REQUEST });
   try {
-    const { data } = await axios.post("/api/orders", order);
-    console.log(data);
+    await axios.post("/api/orders", order);
     dispatch({ type: orderActions.ORDER_CREATE_SUCCESS });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem(localStorageNames.CART_ITEMS);

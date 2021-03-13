@@ -274,6 +274,7 @@ export const ProductName = styled.div<ProductNameProps>`
 
 export const OrderSummary = styled.div`
   margin-top: 1em;
+  margin-bottom: 2em;
   max-width: 400px;
   height: 210px;
   width: 100%;
