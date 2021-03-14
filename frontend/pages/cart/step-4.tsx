@@ -278,6 +278,12 @@ const Step4 = () => {
                 READING AMMOUNT FROM CLIENT IS NOT SAFE AT ALL
                 I HAVE TO THINK ABOUT FETCHING THE DATA FROM SERVER
                 AND INJECTING IT HERE
+
+                BEFORE SENDING THE REQUEST TO PAYPAL CHECK THE PIRCE ON BACKEND
+                USE MIDDLEWARE
+
+                This might work
+                https://github.com/paypal/paypal-checkout-components/blob/master/demo/react.htm
             */}
             <PayPalButton
               amount={twoDecimals(

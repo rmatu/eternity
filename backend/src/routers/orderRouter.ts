@@ -46,12 +46,16 @@ orderRouter.get(
       price: el.price,
     }));
 
-    const result = mergeTwoArraysOfObject(
+    const mergedArray = mergeTwoArraysOfObject(
       req.body.productsList,
       singleProductArray
     );
 
-    res.send(result);
+    const totalPrice = mergedArray
+      .map((el) => el.qty * el.price)
+      .reduce((a, b) => a + b, 0);
+
+    res.send({ price: totalPrice });
   })
 );
 
