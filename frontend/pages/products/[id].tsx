@@ -61,12 +61,7 @@ interface ProductProps {
   productId: string;
 }
 
-const Product: React.FC<ProductProps> = ({
-  product,
-  reviews,
-  productId,
-  relatedProducts,
-}) => {
+const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedProducts }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
   const [showComment, setShowComment] = useState<boolean>(false);
   const [specActive, setSpecActive] = useState<boolean>(false);
@@ -94,9 +89,7 @@ const Product: React.FC<ProductProps> = ({
   const relRef = useRef<HTMLDivElement>(null);
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
 
-  const { user, error }: UserState = useSelector(
-    (state: AppState) => state.user
-  );
+  const { user, error }: UserState = useSelector((state: AppState) => state.user);
 
   const handleClickScroll = (offset: number) => {
     window.scrollTo(0, offset + 500);
@@ -104,9 +97,7 @@ const Product: React.FC<ProductProps> = ({
 
   const handleDeleteComment = async (review) => {
     await dispatch(deleteComment(review._id, router.query.id as string));
-    const { data: reviews } = await axios.get(
-      `/api/products/${productId}/reviews/?limit=4&skip=0`
-    );
+    const { data: reviews } = await axios.get(`/api/products/${productId}/reviews/?limit=4&skip=0`);
     setComments([...reviews]);
   };
 
@@ -114,9 +105,7 @@ const Product: React.FC<ProductProps> = ({
     if (skip > limit) return;
 
     setReviewSkip(skip + 4);
-    const { data } = await axios.get(
-      `/api/products/${productId}/reviews/?limit=${limit}&skip=${skip}`
-    );
+    const { data } = await axios.get(`/api/products/${productId}/reviews/?limit=${limit}&skip=${skip}`);
     setComments([...comments, ...data]);
   };
 
@@ -124,9 +113,7 @@ const Product: React.FC<ProductProps> = ({
     if (skip > limit) return;
 
     setWatchesSkip(skip + 4);
-    const { data } = await axios.get(
-      `/api/products/${router.query.id}?limit=${limit}&skip=${skip}`
-    );
+    const { data } = await axios.get(`/api/products/${router.query.id}?limit=${limit}&skip=${skip}`);
     setWatches([...watches, ...data]);
   };
 
@@ -161,26 +148,17 @@ const Product: React.FC<ProductProps> = ({
   }, [size]);
 
   useEffect(() => {
-    if (
-      scrollPosition >= specRef.current.offsetTop + 500 &&
-      scrollPosition < descRef.current.offsetTop + 500
-    ) {
+    if (scrollPosition >= specRef.current.offsetTop + 500 && scrollPosition < descRef.current.offsetTop + 500) {
       setSpecActive(true);
     } else {
       setSpecActive(false);
     }
-    if (
-      scrollPosition >= descRef.current.offsetTop + 500 &&
-      scrollPosition < revRef.current.offsetTop + 500
-    ) {
+    if (scrollPosition >= descRef.current.offsetTop + 500 && scrollPosition < revRef.current.offsetTop + 500) {
       setDescActive(true);
     } else {
       setDescActive(false);
     }
-    if (
-      scrollPosition >= revRef.current.offsetTop + 500 &&
-      scrollPosition < relRef.current.offsetTop + 500
-    ) {
+    if (scrollPosition >= revRef.current.offsetTop + 500 && scrollPosition < relRef.current.offsetTop + 500) {
       setRevActive(true);
     } else {
       setRevActive(false);
@@ -231,11 +209,7 @@ const Product: React.FC<ProductProps> = ({
                     setTimeout(() => {
                       setShowPopup(false);
                     }, 5000);
-                    dispatchToPlace(
-                      product._id,
-                      localStorageNames.CART_ITEMS,
-                      dispatch
-                    );
+                    dispatchToPlace(product._id, localStorageNames.CART_ITEMS, dispatch);
                   }}
                 >
                   Add
@@ -254,21 +228,12 @@ const Product: React.FC<ProductProps> = ({
 
           <ImageContent>
             <ImageWrapper>
-              <Image
-                src={fullUrl}
-                alt={`${product.name} image`}
-                layout="fill"
-                quality={100}
-              />
+              <Image src={fullUrl} alt={`${product.name} image`} layout="fill" quality={100} />
             </ImageWrapper>
             <Favorite
               productId={product._id}
               onClick={() => {
-                dispatchToPlace(
-                  product._id,
-                  localStorageNames.FAVORITES,
-                  dispatch
-                );
+                dispatchToPlace(product._id, localStorageNames.FAVORITES, dispatch);
               }}
             />
           </ImageContent>
@@ -335,10 +300,7 @@ const Product: React.FC<ProductProps> = ({
                   </Info>
                   <ReviewText>{review.body}</ReviewText>
                   {user && user._id === review.user ? (
-                    <GoTrashcan
-                      onClick={async () => handleDeleteComment(review)}
-                      className="trashcan"
-                    />
+                    <GoTrashcan onClick={async () => handleDeleteComment(review)} className="trashcan" />
                   ) : null}
                 </Reviews>
               ))}
@@ -353,9 +315,7 @@ const Product: React.FC<ProductProps> = ({
                 <Button
                   onClick={() => {
                     if (!user) {
-                      router.push(
-                        `/login?redirect=products/${router.query.id}`
-                      );
+                      router.push(`/login?redirect=products/${router.query.id}`);
                     } else {
                       setShowComment(!showComment);
                     }
@@ -365,11 +325,7 @@ const Product: React.FC<ProductProps> = ({
                   Add Comment
                 </Button>
               </ButtonsWrapper>
-              <AddComment
-                productId={router.query.id as string}
-                visible={showComment}
-                setComments={setComments}
-              />
+              <AddComment productId={router.query.id as string} visible={showComment} setComments={setComments} />
               <div ref={relRef}>
                 <Heading color="#fff" size="h1" margin="1em 0 0.5em 0">
                   Related Watches
@@ -410,11 +366,7 @@ const Product: React.FC<ProductProps> = ({
                           <Favorite
                             productId={watch._id}
                             onClick={() => {
-                              dispatchToPlace(
-                                watch._id,
-                                localStorageNames.FAVORITES,
-                                dispatch
-                              );
+                              dispatchToPlace(watch._id, localStorageNames.FAVORITES, dispatch);
                             }}
                           />
                         </SmallerImageWrapper>
@@ -435,11 +387,7 @@ const Product: React.FC<ProductProps> = ({
                             setTimeout(() => {
                               setShowPopup(false);
                             }, 5000);
-                            dispatchToPlace(
-                              watch._id,
-                              localStorageNames.CART_ITEMS,
-                              dispatch
-                            );
+                            dispatchToPlace(watch._id, localStorageNames.CART_ITEMS, dispatch);
                           }}
                         >
                           Add
@@ -452,28 +400,16 @@ const Product: React.FC<ProductProps> = ({
             </BottomLeftContent>
             <BottomRightNav>
               <RightNav>
-                <RightLi
-                  active={specActive}
-                  onClick={() => handleClickScroll(specRef.current.offsetTop)}
-                >
+                <RightLi active={specActive} onClick={() => handleClickScroll(specRef.current.offsetTop)}>
                   Specification
                 </RightLi>
-                <RightLi
-                  active={descActive}
-                  onClick={() => handleClickScroll(descRef.current.offsetTop)}
-                >
+                <RightLi active={descActive} onClick={() => handleClickScroll(descRef.current.offsetTop)}>
                   Description
                 </RightLi>
-                <RightLi
-                  active={revActive}
-                  onClick={() => handleClickScroll(revRef.current.offsetTop)}
-                >
+                <RightLi active={revActive} onClick={() => handleClickScroll(revRef.current.offsetTop)}>
                   Reviews
                 </RightLi>
-                <RightLi
-                  active={relActive}
-                  onClick={() => handleClickScroll(relRef.current.offsetTop)}
-                >
+                <RightLi active={relActive} onClick={() => handleClickScroll(relRef.current.offsetTop)}>
                   Related Watches
                 </RightLi>
                 <Stroke className="stroke" />
@@ -481,11 +417,7 @@ const Product: React.FC<ProductProps> = ({
                   <PriceTag>${twoDecimals(product.price)}</PriceTag>
                 </Heading>
                 <ProductId>
-                  <Rating
-                    rating={product.rating}
-                    rColor
-                    margin="0.2em 0 0 0 "
-                  />
+                  <Rating rating={product.rating} rColor margin="0.2em 0 0 0 " />
                   <p>({`${product.numReviews}`})</p>
                 </ProductId>
                 <Button
@@ -493,11 +425,11 @@ const Product: React.FC<ProductProps> = ({
                   margin="2em 0 1em 0"
                   padding="0.3em 3em"
                   onClick={() => {
-                    dispatchToPlace(
-                      product._id,
-                      localStorageNames.CART_ITEMS,
-                      dispatch
-                    );
+                    setShowPopup(true);
+                    setTimeout(() => {
+                      setShowPopup(false);
+                    }, 5000);
+                    dispatchToPlace(product._id, localStorageNames.CART_ITEMS, dispatch);
                   }}
                 >
                   Add
@@ -515,21 +447,15 @@ const Product: React.FC<ProductProps> = ({
           <Footer />
         </MainContent>
       </Content>
-      <Popup showPopup={showPopup}>Item added to cart successfully!</Popup>
+      <Popup showPopup={showPopup}>Item added to cart!</Popup>
     </>
   );
 };
 
 export async function getServerSideProps(context) {
-  const { data: product } = await axios.get(
-    `/api/products/${context.params.id}`
-  );
-  const { data: reviews } = await axios.get(
-    `/api/products/${context.params.id}/reviews?limit=4&skip=0`
-  );
-  const { data: relatedProducts } = await axios.get(
-    `/api/products/${context.params.id}?limit=4&skip=0`
-  );
+  const { data: product } = await axios.get(`/api/products/${context.params.id}`);
+  const { data: reviews } = await axios.get(`/api/products/${context.params.id}/reviews?limit=4&skip=0`);
+  const { data: relatedProducts } = await axios.get(`/api/products/${context.params.id}?limit=4&skip=0`);
 
   return {
     props: {

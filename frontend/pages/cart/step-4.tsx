@@ -40,12 +40,7 @@ import { twoDecimals } from "../../utils/format";
 import { mergeTwoArraysOfObject } from "../../utils/helpers";
 
 const Step4 = () => {
-  const {
-    step,
-    shippingAddress,
-    items,
-    shippingPrice,
-  }: CartState = useSelector((state: AppState) => state.cart);
+  const { step, shippingAddress, items, shippingPrice }: CartState = useSelector((state: AppState) => state.cart);
   const { user }: UserState = useSelector((state: AppState) => state.user);
   const {}: OrderState = useSelector((state: AppState) => state.order);
   const [products, setProducts] = useState<IProduct[] | null>(null);
@@ -75,6 +70,25 @@ const Step4 = () => {
     }
   }, [dispatch, sdkReady]);
 
+  const paypalCreateOrder = async (actions) => {
+    const { data } = await axios.post("/api/orders/products-total-price", {
+      productsList: items,
+    });
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: twoDecimals(data.price),
+          },
+        },
+      ],
+    });
+  };
+
+  const approveHandler = (data, actions) => {
+    return actions.order.capture();
+  };
+
   const successPaymentHandler = async (paymentResult) => {
     setOpenModal(false);
     await dispatch(
@@ -93,13 +107,9 @@ const Step4 = () => {
           postalCode: shippingAddress.postalCode,
           country: shippingAddress.country,
         },
-        itemsPrice: basket
-          .map((el) => el.price * el.qty)
-          .reduce((a, b) => a + b, 0),
+        itemsPrice: basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0),
         shippingPrice: shippingPrice,
-        totalPrice:
-          basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0) +
-          shippingPrice,
+        totalPrice: basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0) + shippingPrice,
         user: user._id,
         paidAt: paymentResult.update_time,
       })
@@ -200,12 +210,7 @@ const Step4 = () => {
                       <Rating rColor="#be6a15" rating={el.rating} />
                     </ProductName>
                     <TotalPrice>
-                      <p>
-                        {`${el.qty} x $` +
-                          twoDecimals(el.price) +
-                          ` = $` +
-                          twoDecimals(el.price * el.qty)}
-                      </p>
+                      <p>{`${el.qty} x $` + twoDecimals(el.price) + ` = $` + twoDecimals(el.price * el.qty)}</p>
                     </TotalPrice>
                   </ItemRow>
                 ))}
@@ -219,14 +224,7 @@ const Step4 = () => {
                 <p>
                   <BolderSpan>Items price:</BolderSpan>
                 </p>
-                <p>
-                  $
-                  {twoDecimals(
-                    basket
-                      .map((el) => el.price * el.qty)
-                      .reduce((a, b) => a + b, 0)
-                  )}
-                </p>
+                <p>${twoDecimals(basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0))}</p>
               </OrderInfoRow>
               <OrderInfoRow>
                 <p>
@@ -238,14 +236,7 @@ const Step4 = () => {
                 <p>
                   <BolderSpan>Total:</BolderSpan>
                 </p>
-                <p>
-                  $
-                  {twoDecimals(
-                    basket
-                      .map((el) => el.price * el.qty)
-                      .reduce((a, b) => a + b, 0) + shippingPrice
-                  )}
-                </p>
+                <p>${twoDecimals(basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0) + shippingPrice)}</p>
               </OrderInfoRow>
 
               {!sdkReady ? (
@@ -254,11 +245,7 @@ const Step4 = () => {
                 </OrderInfoRow>
               ) : (
                 <OrderInfoRow center>
-                  <Button
-                    onClick={() => setOpenModal(true)}
-                    margin="1.5em 0 0 0"
-                    bColor="#be6a15"
-                  >
+                  <Button onClick={() => setOpenModal(true)} margin="1.5em 0 0 0" bColor="#be6a15">
                     Proceed the payment
                   </Button>
                 </OrderInfoRow>
@@ -274,23 +261,9 @@ const Step4 = () => {
           </OrderInfoRow>
         ) : (
           <PaypalInfo>
-            {/* 
-                READING AMMOUNT FROM CLIENT IS NOT SAFE AT ALL
-                I HAVE TO THINK ABOUT FETCHING THE DATA FROM SERVER
-                AND INJECTING IT HERE
-
-                BEFORE SENDING THE REQUEST TO PAYPAL CHECK THE PIRCE ON BACKEND
-                USE MIDDLEWARE
-
-                This might work
-                https://github.com/paypal/paypal-checkout-components/blob/master/demo/react.htm
-            */}
             <PayPalButton
-              amount={twoDecimals(
-                basket
-                  .map((el) => el.price * el.qty)
-                  .reduce((a, b) => a + b, 0) + shippingPrice
-              )}
+              createOrder={(_, actions) => paypalCreateOrder(actions)}
+              onApprove={(data, actions) => approveHandler(data, actions)}
               onSuccess={successPaymentHandler}
               style={{
                 size: "responsive",

@@ -20,6 +20,7 @@ orderRouter.post(
       isDelivered: req.body.isDelivered,
       deliveredAt: req.body.deliveredAt,
       email: req.body.email,
+      user: req.body.user || null,
     });
 
     const createdProduct = await order.save();
@@ -27,11 +28,11 @@ orderRouter.post(
   })
 );
 
-orderRouter.get(
+orderRouter.post(
   "/products-total-price",
   expressAsyncHandler(async (req, res) => {
     //@ts-ignore
-    const productsIds = req.body.productsList.map((el) => el.id);
+    const productsIds = req.body.productsList.map((el) => el.productId);
     const productsList = await Product.find({
       _id: { $in: productsIds },
     });
@@ -42,18 +43,13 @@ orderRouter.get(
     }
 
     const singleProductArray = productsList.map((el) => ({
-      id: el.id,
+      id: el._id,
       price: el.price,
     }));
 
-    const mergedArray = mergeTwoArraysOfObject(
-      req.body.productsList,
-      singleProductArray
-    );
+    const mergedArray = mergeTwoArraysOfObject(req.body.productsList, singleProductArray);
 
-    const totalPrice = mergedArray
-      .map((el) => el.qty * el.price)
-      .reduce((a, b) => a + b, 0);
+    const totalPrice = mergedArray.map((el) => el.qty * el.price).reduce((a, b) => a + b, 0);
 
     res.send({ price: totalPrice });
   })
