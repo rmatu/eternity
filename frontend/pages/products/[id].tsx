@@ -54,6 +54,7 @@ import { useThrottle } from "../../utils/helpers";
 import { dispatchToPlace } from "../../utils/reduxHelpers";
 import { GoTrashcan } from "react-icons/go";
 import { deleteComment } from "../../redux/user/userActions";
+import FullScreenImagesModal from "../../components/UI/FullScreenImagesModal/FullScreenImagesModal";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -63,12 +64,14 @@ interface ProductProps {
 
 const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedProducts }) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${product.mainProductImage}`;
+  const [allWatchImgUrls, setAllWatchImgUrls] = useState<string[]>([]);
   const [showComment, setShowComment] = useState<boolean>(false);
   const [specActive, setSpecActive] = useState<boolean>(false);
   const [descActive, setDescActive] = useState<boolean>(false);
   const [revActive, setRevActive] = useState<boolean>(false);
   const [relActive, setRelActive] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [fullScreenImagesModal, setFullScreenImagesModal] = useState<boolean>(false);
   const [mySwiper, setMySwiper] = useState();
   const [reviewLimit, setReviewLimit] = useState<number>(100);
   const [reviewSkip, setReviewSkip] = useState<number>(4);
@@ -88,6 +91,8 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
+
+  console.log(allWatchImgUrls);
 
   const { user, error }: UserState = useSelector((state: AppState) => state.user);
 
@@ -121,6 +126,12 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
     const position = window.pageYOffset;
     setScrollPosition(position);
   };
+
+  useEffect(() => {
+    const restUrls = product.restImages.map((url) => `${process.env.NEXT_PUBLIC_API_URL}/${url}`);
+    const urls = [fullUrl, ...restUrls];
+    setAllWatchImgUrls(urls);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", scrollThrottle, { passive: true });
@@ -228,7 +239,13 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
 
           <ImageContent>
             <ImageWrapper>
-              <Image src={fullUrl} alt={`${product.name} image`} layout="fill" quality={100} />
+              <Image
+                onClick={() => setFullScreenImagesModal(true)}
+                src={fullUrl}
+                alt={`${product.name} image`}
+                layout="fill"
+                quality={100}
+              />
             </ImageWrapper>
             <Favorite
               productId={product._id}
@@ -237,29 +254,6 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
               }}
             />
           </ImageContent>
-
-          {/* <Swiper
-            tag="section"
-            wrapperTag="ul"
-            spaceBetween={20}
-            navigation
-            pagination
-            slidesPerView={mainSlidesAmmount}
-          >
-            {product.restImages.map((imagePath) => (
-              <SwiperSlide key={imagePath} tag="li">
-                <CarouselImages>
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/${imagePath}`}
-                    alt={`${product.name} thumb screen`}
-                    layout="fill"
-                    quality={100}
-                  />
-                </CarouselImages>
-              </SwiperSlide>
-            ))}
-            <br />
-          </Swiper> */}
           <BottomContentWrapper>
             <BottomLeftContent>
               <div ref={specRef}>
@@ -448,6 +442,11 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
         </MainContent>
       </Content>
       <Popup showPopup={showPopup}>Item added to cart!</Popup>
+      <FullScreenImagesModal
+        imagesUrls={allWatchImgUrls}
+        opened={fullScreenImagesModal}
+        close={() => setFullScreenImagesModal(false)}
+      />
     </>
   );
 };
