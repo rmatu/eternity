@@ -1,5 +1,7 @@
 # Eternity
 
+Watch e-commerce with Next.js and Node.js
+
 # Disclaimer
 
 App is not ready yet
@@ -7,6 +9,7 @@ App is not ready yet
 ## Description
 
 - [Technology Stack](#Frontend)
+- [Features](#Features)
 - [Screenshots](#Screenshots)
 
 ## Frontend
@@ -33,6 +36,20 @@ App is not ready yet
 - Multer
 - JSON Web Token
 
+## Features
+
+- Sign in/Sign up with data validation
+- Adding/Removing/Updating/Deleting product from DB
+- Admin can decide which product is featured on the main page
+- User's reviews and watches pagination
+- User's shipping address, cart, favorites is persistent
+- User authentication with JWT
+- Adding/Removing product from cart
+- Changing the quantity of product in cart
+- Adding product to favorites
+- Adding/Removing review
+- Displaying images on fullscreen
+
 # Every Page is Fully Responsive
 
 ## Screenshots
@@ -45,7 +62,7 @@ App is not ready yet
 
 <img src="media/s2.png"/>
 
-### Fullscreen product images carousel
+### Fullscreen product images carousel:
 
 <img src="media/s12.png"/>
 
