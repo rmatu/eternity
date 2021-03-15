@@ -45,6 +45,10 @@ App is not ready yet
 
 <img src="media/s2.png"/>
 
+### Fullscreen product images carousel
+
+<img src="media/s12.png"/>
+
 ### Cart / Basket:
 
 <img src="media/s3.png"/>

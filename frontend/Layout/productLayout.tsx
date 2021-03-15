@@ -167,30 +167,25 @@ export const ImageContent = styled.div<{ margin?: string }>`
 `;
 
 export const ImageWrapper = styled.div`
+  margin-top: 0.4em;
+  transition: all 0.1s;
   position: relative;
   width: 300px;
   height: 500px;
   background: rgb(37, 44, 46);
-  background: -moz-radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
-  background: -webkit-radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
-  background: radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
+  background: -moz-radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
+  background: -webkit-radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
+  background: radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
   img {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+  }
+
+  :hover {
+    cursor: pointer;
+    transform: scale(1.02);
   }
 `;
 
@@ -270,21 +265,9 @@ export const SmallerImageWrapper = styled.div`
   width: 300px;
   height: 500px;
   background: rgb(37, 44, 46);
-  background: -moz-radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
-  background: -webkit-radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
-  background: radial-gradient(
-    circle,
-    rgba(37, 44, 46, 1) 20%,
-    rgba(0, 0, 0, 1) 53%
-  );
+  background: -moz-radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
+  background: -webkit-radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
+  background: radial-gradient(circle, rgba(37, 44, 46, 1) 20%, rgba(0, 0, 0, 1) 53%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#252c2e",endColorstr="#000000",GradientType=1);
 
   img {

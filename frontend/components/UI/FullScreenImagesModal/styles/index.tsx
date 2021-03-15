@@ -91,6 +91,12 @@ export const WrappedModal = styled.div<WrappedModalProps>`
     fill: black;
     stroke: black;
   }
+
+  @media (max-width: 760px) {
+    .cancel {
+      right: 0;
+    }
+  }
 `;
 
 export const ImageContent = styled.div<{ margin?: string }>`
@@ -101,28 +107,6 @@ export const ImageContent = styled.div<{ margin?: string }>`
   justify-content: center;
   flex-direction: column;
   margin: ${({ margin }) => (margin ? margin : null)};
-
-  svg {
-    transition: all 0.2s;
-    position: absolute;
-    height: 2em;
-    width: 2em;
-    top: 3em;
-    right: 3em;
-
-    :hover {
-      cursor: pointer;
-      fill: #be6a15;
-      stroke: #be6a15;
-    }
-  }
-
-  @media (max-width: 700px) {
-    svg {
-      top: 1em;
-      right: 1em;
-    }
-  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -135,5 +119,9 @@ export const ImageWrapper = styled.div`
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+  }
+
+  @media (max-width: 760px) {
+    width: 95vw;
   }
 `;

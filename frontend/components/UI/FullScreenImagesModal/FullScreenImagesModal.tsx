@@ -18,7 +18,7 @@ const FullScreenImagesModal: React.FC<Props> = ({ opened, close, imagesUrls }) =
       <Backdrop opened={opened} close={close} />
       <WrappedModal opened={opened}>
         <AiOutlineClose className="cancel" onClick={close} />
-        <Swiper tag="section" wrapperTag="ul" spaceBetween={0} slidesPerView={1} navigation pagination>
+        <Swiper tag="section" wrapperTag="ul" spaceBetween={30} slidesPerView={1} navigation pagination>
           {imagesUrls.map((url) => (
             <SwiperSlide tag="li" key={url}>
               <ImageContent>
