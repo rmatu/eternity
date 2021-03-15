@@ -216,7 +216,9 @@ productRouter.put(
     product.prevPrice = product.price;
     product.price = req.body.price;
 
-    res.send(product);
+    const updatedProduct = await product.save();
+
+    res.send(updatedProduct);
   })
 );
 

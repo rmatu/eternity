@@ -9,6 +9,7 @@ export interface IProduct {
   numReviews: number;
   mainProductImage: string;
   restImages: string[];
+  prevPrice: number;
   specification: {
     sex: string;
     claspType: string;
@@ -64,5 +65,4 @@ export interface IOrder {
   paidAt: Date;
   isDelivered: boolean;
   deliveredAt: Date;
-  prevPrice: number;
 }

@@ -55,6 +55,7 @@ import { dispatchToPlace } from "../../utils/reduxHelpers";
 import { GoTrashcan } from "react-icons/go";
 import { deleteComment } from "../../redux/user/userActions";
 import FullScreenImagesModal from "../../components/UI/FullScreenImagesModal/FullScreenImagesModal";
+import Price from "../../components/UI/Price/Price";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -208,9 +209,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
 
             <RightSection>
               <PriceWrapper>
-                <Heading size="h2" margin="0 0 0.4em 0" color="#be6a15">
-                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
-                </Heading>
+                <Price margin="0 0 0.5em 0" price={product.price} prevPrice={product.prevPrice || null} />
                 <Button
                   bColor="#be6a15"
                   margin="0 0 1em 2em"
@@ -364,13 +363,17 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
                             }}
                           />
                         </SmallerImageWrapper>
-                        <Heading color="#fff" size="h3" margin="0 0.5em 0 0">
+                        <Heading color="#fff" size="h3">
                           {watch.name}
                         </Heading>
 
-                        <Heading size="h4" margin="0 0.5em 0 0" color="#be6a15">
-                          <PriceTag>${twoDecimals(watch.price)}</PriceTag>
-                        </Heading>
+                        <Price
+                          fontWeight="400"
+                          margin="0 0 0.5em 0"
+                          price={watch.price}
+                          prevPrice={watch.prevPrice || null}
+                          row
+                        />
 
                         <Button
                           bColor="#be6a15"
@@ -407,9 +410,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
                   Related Watches
                 </RightLi>
                 <Stroke className="stroke" />
-                <Heading size="h2" margin="0.2em 0 0 0" color="#be6a15">
-                  <PriceTag>${twoDecimals(product.price)}</PriceTag>
-                </Heading>
+                <Price margin="0 0 0.5em 0" price={product.price} prevPrice={product.prevPrice || null} />
                 <ProductId>
                   <Rating rating={product.rating} rColor margin="0.2em 0 0 0 " />
                   <p>({`${product.numReviews}`})</p>
