@@ -64,4 +64,5 @@ export interface IOrder {
   paidAt: Date;
   isDelivered: boolean;
   deliveredAt: Date;
+  prevPrice: number;
 }

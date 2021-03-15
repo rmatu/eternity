@@ -44,6 +44,9 @@ App is not ready yet
 - User's reviews and watches pagination
 - User's shipping address, cart, favorites is persistent
 - User authentication with JWT
+- User can purchase products without creating an account
+- Payment with Paypal/Credit Card/Bank Transfer
+- User's orders are stored in DB
 - Adding/Removing product from cart
 - Changing the quantity of product in cart
 - Adding product to favorites

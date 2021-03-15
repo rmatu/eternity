@@ -7,7 +7,7 @@ import User from "../models/userModel";
 
 import multer from "multer";
 import fs from "fs";
-import { isAuth } from "../utils";
+import { isAuth, isAdmin } from "../utils";
 
 // Multer config
 const storage = multer.diskStorage({
@@ -29,11 +29,7 @@ const upload = multer({
   },
   fileFilter: (_, file, cb) => {
     // accept a file
-    if (
-      file.mimetype === "image/jpeg" ||
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/png"
-    ) {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/jpg" || file.mimetype === "image/png") {
       cb(null, true);
     } else {
       // decline a file
@@ -93,6 +89,8 @@ productRouter.get(
 productRouter.post(
   "/product",
   upload.array("images", 10),
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const mainPhotoUrl = req.files
       //@ts-ignore
@@ -172,6 +170,7 @@ productRouter.get(
 
 productRouter.put(
   "/:id",
+  isAuth,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     const user = await User.findById(req.body.userId);
@@ -202,6 +201,25 @@ productRouter.put(
   })
 );
 
+productRouter.put(
+  "/:id/update-price",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      res.status(404).send("Producnt not Found");
+      return;
+    }
+
+    product.prevPrice = product.price;
+    product.price = req.body.price;
+
+    res.send(product);
+  })
+);
+
 productRouter.get(
   "/:id/reviews",
   expressAsyncHandler(async (req, res) => {
@@ -209,10 +227,7 @@ productRouter.get(
     const skip = parseInt(req.query.skip) || 0;
     //@ts-ignore
     const limit = parseInt(req.query.limit) || 4;
-    const reviews = await Review.find({ product: req.params.id })
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(limit);
+    const reviews = await Review.find({ product: req.params.id }).sort({ _id: -1 }).skip(skip).limit(limit);
     if (reviews) {
       res.send(reviews);
     } else {
@@ -223,6 +238,7 @@ productRouter.get(
 
 productRouter.post(
   "/:id/reviews",
+  isAuth,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
 
