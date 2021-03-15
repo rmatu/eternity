@@ -1,4 +1,4 @@
-# ProgressPal
+# Eternity
 
 # Disclaimer
 
