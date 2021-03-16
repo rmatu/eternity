@@ -51,9 +51,15 @@ export const sortByAndReturnArray = (products: IProduct[], sortingMethod: Sortin
       data = products.sort((a, b) => (a.price < b.price ? 1 : b.price < a.price ? -1 : 0));
       return data;
     case SortingMethod.BIGGEST_DISCOUNT:
+      data = products.sort((a, b) => (a.price > b.price ? 1 : b.price > a.price ? -1 : 0));
       data = products.sort((a, b) =>
-        a.prevPrice - a.price < b.prevPrice - b.price ? 1 : b.prevPrice - b.price < a.prevPrice - a.price ? -1 : 0
+        (a.prevPrice || a.price) - a.price < (b.prevPrice || b.price) - b.price
+          ? 1
+          : (b.prevPrice || b.price) - b.price < (a.prevPrice || a.price) - a.price
+          ? -1
+          : 0
       );
+
       return data;
   }
 };

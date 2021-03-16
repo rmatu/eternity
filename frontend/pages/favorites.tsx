@@ -27,6 +27,9 @@ import { useRouter } from "next/router";
 import Price from "../components/UI/Price/Price";
 import { sortByAndReturnArray } from "../utils/helpers";
 import Discount from "../components/UI/Discount/Discount";
+import Button from "../components/UI/Button/Button";
+import { localStorageNames } from "../constants";
+import { dispatchToPlace } from "../utils/reduxHelpers";
 
 export enum SortingMethod {
   LOWEST_PRICE = "lowestPrice",
@@ -34,10 +37,15 @@ export enum SortingMethod {
   BIGGEST_DISCOUNT = "biggestDiscount",
 }
 
+/*
+ TODO: Pagination 
+ */
+
 const Favorites = () => {
   const { items }: FavoritesState = useSelector((state: AppState) => state.favorites);
   const [sortingMethod, setSortingMethod] = useState<SortingMethod>(SortingMethod.LOWEST_PRICE);
   const [showPopup, setShowPopup] = useState(false);
+  const [addToCartPopup, setAddToCartPopup] = useState(false);
   const [products, setProducts] = useState<IProduct[] | null>(null);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -141,6 +149,20 @@ const Favorites = () => {
                     prevPrice={watch.prevPrice || null}
                     row
                   />
+                  <Button
+                    bColor="#be6a15"
+                    margin="0 0.5em 2em 0"
+                    padding="0.3em 3em"
+                    onClick={() => {
+                      setAddToCartPopup(true);
+                      setTimeout(() => {
+                        setAddToCartPopup(false);
+                      }, 5000);
+                      dispatchToPlace(watch._id, localStorageNames.CART_ITEMS, dispatch);
+                    }}
+                  >
+                    Add
+                  </Button>
                 </ProductInfo>
               </Product>
             ))}
@@ -148,6 +170,7 @@ const Favorites = () => {
         </FavoritesWrapper>
       </Content>
       <Popup showPopup={showPopup}>Item removed from favorites!</Popup>
+      <Popup showPopup={addToCartPopup}>Item removed from favorites!</Popup>
     </>
   );
 };
