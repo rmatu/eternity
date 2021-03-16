@@ -10,12 +10,12 @@ const cartDefaultState: CartState = {
   shippingPrice: 499,
 };
 
+// This implementation is wrong, will fix it later
+
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
   switch (action.type) {
     case actions.CART_ADD_ITEM:
-      const existItem = state.items.find(
-        (x) => x.productId === action.payload.productId
-      );
+      const existItem = state.items.find((x) => x.productId === action.payload.productId);
       if (existItem) {
         return {
           ...state,
@@ -28,17 +28,13 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
         };
       }
     case actions.CART_REMOVE_ITEM:
-      const newArray = state.items.filter(
-        (item) => item.productId !== action.payload
-      );
+      const newArray = state.items.filter((item) => item.productId !== action.payload);
       return {
         ...state,
         items: [...newArray],
       };
     case actions.CART_ADD_QTY:
-      const idx = state.items.findIndex(
-        (item) => item.productId === action.payload
-      );
+      const idx = state.items.findIndex((item) => item.productId === action.payload);
       const newArr = state.items;
       newArr[idx].qty++;
       return {
@@ -46,9 +42,7 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
         items: [...newArr],
       };
     case actions.CART_SUB_QTY:
-      const index = state.items.findIndex(
-        (item) => item.productId === action.payload
-      );
+      const index = state.items.findIndex((item) => item.productId === action.payload);
       const newArra = state.items;
       if (state.items[index].qty === 1) {
         return {
