@@ -56,6 +56,7 @@ import { GoTrashcan } from "react-icons/go";
 import { deleteComment } from "../../redux/user/userActions";
 import FullScreenImagesModal from "../../components/UI/FullScreenImagesModal/FullScreenImagesModal";
 import Price from "../../components/UI/Price/Price";
+import Discount from "../../components/UI/Discount/Discount";
 interface ProductProps {
   product: IProduct;
   relatedProducts: IProduct[];
@@ -92,8 +93,6 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
   const revRef = useRef<HTMLDivElement>(null);
   const relRef = useRef<HTMLDivElement>(null);
   const scrollThrottle = useThrottle(() => handleScroll(), 100);
-
-  console.log(allWatchImgUrls);
 
   const { user, error }: UserState = useSelector((state: AppState) => state.user);
 
@@ -209,7 +208,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
 
             <RightSection>
               <PriceWrapper>
-                <Price margin="0 0 0.5em 0" price={product.price} prevPrice={product.prevPrice || null} />
+                <Price price={product.price} prevPrice={product.prevPrice || null} />
                 <Button
                   bColor="#be6a15"
                   margin="0 0 1em 2em"
@@ -246,6 +245,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
                 quality={100}
               />
             </ImageWrapper>
+            <Discount prevPrice={product.prevPrice} price={product.price} />
             <Favorite
               productId={product._id}
               onClick={() => {
@@ -356,6 +356,7 @@ const Product: React.FC<ProductProps> = ({ product, reviews, productId, relatedP
                               />
                             </a>
                           </Link>
+                          <Discount prevPrice={watch.prevPrice} price={watch.price} />
                           <Favorite
                             productId={watch._id}
                             onClick={() => {

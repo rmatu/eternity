@@ -9,7 +9,7 @@ export interface FavoritesAddItem {
 
 export interface FavoritesRemoveItem {
   type: typeof FAVORITES_REMOVE_ITEM;
-  payload: string;
+  payload: string[];
 }
 
 export interface FavoritesEmpty {
@@ -20,7 +20,4 @@ export interface FavoritesState {
   items: string[];
 }
 
-export type FavoritesActionTypes =
-  | FavoritesAddItem
-  | FavoritesRemoveItem
-  | FavoritesEmpty;
+export type FavoritesActionTypes = FavoritesAddItem | FavoritesRemoveItem | FavoritesEmpty;

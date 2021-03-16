@@ -1,30 +1,32 @@
-import Head from "next/head";
-import { Header } from "../components/Header/Header";
-import {
-  Content,
-  ButtonsRow,
-  MainContent,
-  Description,
-  ImageContent,
-  ImageWrapper,
-  DescriptionContent,
-} from "../layout/homeLayout";
-import Link from "next/link";
 import axios from "axios";
-import { IProduct } from "../types";
+import Head from "next/head";
 import Image from "next/image";
-import { twoDecimals } from "../utils/format";
+import Link from "next/link";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Header } from "../components/Header/Header";
+import { SideNavbar } from "../components/SideNavbar/SideNavbar";
 import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
-import Rating from "../components/UI/Rating/Rating";
-import { useDispatch } from "react-redux";
-import { SideNavbar } from "../components/SideNavbar/SideNavbar";
-import { dispatchToPlace } from "../utils/reduxHelpers";
-import { localStorageNames } from "../constants";
+import Popup from "../components/UI/Popup/Popup";
 import Price from "../components/UI/Price/Price";
+import Rating from "../components/UI/Rating/Rating";
+import { localStorageNames } from "../constants";
+import {
+  ButtonsRow,
+  Content,
+  Description,
+  DescriptionContent,
+  ImageContent,
+  ImageWrapper,
+  MainContent,
+} from "../layout/homeLayout";
+import { IProduct } from "../types";
+import { dispatchToPlace } from "../utils/reduxHelpers";
 
 const Home = ({ data }) => {
   const { mainProductImage, brand, description, price, rating, name, _id }: IProduct = data[0];
+  const [showPopup, setShowPopup] = useState(false);
 
   const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}/${mainProductImage}`;
   const dispatch = useDispatch();
@@ -52,7 +54,13 @@ const Home = ({ data }) => {
               <p>{description}</p>
               <ButtonsRow>
                 <Button
-                  onClick={() => dispatchToPlace(_id, localStorageNames.CART_ITEMS, dispatch)}
+                  onClick={() => {
+                    dispatchToPlace(_id, localStorageNames.CART_ITEMS, dispatch);
+                    setShowPopup(true);
+                    setTimeout(() => {
+                      setShowPopup(false);
+                    }, 5000);
+                  }}
                   margin="2em 0 0 0"
                   bColor="#be6a15"
                 >
@@ -72,6 +80,7 @@ const Home = ({ data }) => {
             </ImageWrapper>
           </ImageContent>
         </MainContent>
+        <Popup showPopup={showPopup}>Item added to cart!</Popup>
       </Content>
     </>
   );

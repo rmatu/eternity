@@ -11,7 +11,6 @@ interface Props {
   imagesUrls: string[];
 }
 
-//This will be rerender only if the props changes
 const FullScreenImagesModal: React.FC<Props> = ({ opened, close, imagesUrls }) => {
   return (
     <>
