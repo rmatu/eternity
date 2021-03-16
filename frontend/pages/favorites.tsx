@@ -17,6 +17,7 @@ import {
   SortOptions,
   Product,
   ProductInfo,
+  Flex,
   Option,
 } from "../layout/favoritesLayout";
 import { addToFavorites } from "../redux/favorites/favoritesActions";
@@ -79,6 +80,24 @@ const Favorites = () => {
 
   if (!products) {
     return <PageLoader />;
+  }
+
+  if (items.length === 0) {
+    return (
+      <>
+        <Head>
+          <title>Eternity</title>
+          <meta name="Favorites" content="User's favorites items" />
+        </Head>
+        <Header />
+
+        <Flex>
+          <Heading size="h1" color="#fff">
+            You don't have any favorites items...
+          </Heading>
+        </Flex>
+      </>
+    );
   }
 
   return (

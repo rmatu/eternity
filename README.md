@@ -52,6 +52,7 @@ App is not ready yet
 - Adding product to favorites
 - Adding/Removing review
 - Displaying images on fullscreen
+- Sorting favorites products
 
 # Every Page is Fully Responsive
 
@@ -68,6 +69,10 @@ App is not ready yet
 ### Fullscreen product images carousel:
 
 <img src="media/s12.png"/>
+
+### Favorites
+
+<img src="media/s13.png"/>
 
 ### Cart / Basket:
 

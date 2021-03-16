@@ -180,3 +180,14 @@ export const ProductInfo = styled.div`
   align-items: center;
   width: 300px;
 `;
+
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+
+  h1 {
+    text-align: center;
+  }
+`;
