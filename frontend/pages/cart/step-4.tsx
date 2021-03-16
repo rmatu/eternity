@@ -74,6 +74,7 @@ const Step4 = () => {
     const { data } = await axios.post("/api/orders/products-total-price", {
       productsList: items,
     });
+
     return actions.order.create({
       purchase_units: [
         {

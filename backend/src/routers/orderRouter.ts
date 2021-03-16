@@ -1,5 +1,6 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
+import { SHIPPING_PRICE } from "../constants";
 import Order from "../models/orderModel";
 import Product from "../models/productModel";
 import { isAuth, mergeTwoArraysOfObject } from "../utils";
@@ -47,11 +48,11 @@ orderRouter.post(
       price: el.price,
     }));
 
-    const mergedArray = mergeTwoArraysOfObject(req.body.productsList, singleProductArray);
+    const mergedArray = mergeTwoArraysOfObject(singleProductArray, req.body.productsList);
 
     const totalPrice = mergedArray.map((el) => el.qty * el.price).reduce((a, b) => a + b, 0);
 
-    res.send({ price: totalPrice });
+    res.send({ price: totalPrice + SHIPPING_PRICE });
   })
 );
 

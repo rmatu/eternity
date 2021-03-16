@@ -49,7 +49,7 @@ export const mergeTwoArraysOfObject = (arr1: any, arr2: any) => {
 
   arr1.forEach(function (o: any) {
     arr2.forEach(function (c: any) {
-      if (o._id === c.productId) result.push(Object.assign({}, o, c));
+      if (o.id.toString() === c.productId) result.push(Object.assign({}, o, c));
     });
   });
   //@ts-ignore
