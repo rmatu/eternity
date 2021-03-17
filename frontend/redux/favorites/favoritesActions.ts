@@ -9,9 +9,22 @@ export const addToFavorites = (productId: string) => async (
   dispatch: Dispatch<AppActions>,
   getState: () => AppState
 ) => {
+  const items = getState().favorites.items;
+  const existItem = items.find((id) => id === productId);
+
+  if (existItem) {
+    const newItems = items.filter((id) => id !== productId);
+
+    dispatch({
+      type: actions.FAVORITES_ADD_ITEM,
+      payload: newItems,
+    });
+    return;
+  }
+
   dispatch({
     type: actions.FAVORITES_ADD_ITEM,
-    payload: productId,
+    payload: [...items, productId],
   });
   localStorage.setItem(localStorageNames.FAVORITES, JSON.stringify(getState().favorites.items));
 };

@@ -10,24 +10,15 @@ const favoritesDefaultState: FavoritesState = {
 const favoritesReducer = (state = favoritesDefaultState, action: FavoritesActionTypes) => {
   switch (action.type) {
     case actions.FAVORITES_ADD_ITEM:
-      const existItem = state.items.find((productId) => productId === action.payload);
-      // If item exist remove it from the items list
-      if (existItem) {
-        const filteredList = state.items.filter((productId) => productId !== action.payload);
-        return {
-          ...state,
-          items: [...filteredList],
-        };
-      } else {
-        return {
-          ...state,
-          items: [...state.items, action.payload],
-        };
-      }
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case actions.FAVORITES_REMOVE_ITEM:
       return {
         ...state,
-        items: [...action.payload],
+        items: action.payload,
       };
 
     default:

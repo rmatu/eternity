@@ -4,7 +4,7 @@ export const FAVORITES_EMPTY = "FAVORITES_EMPTY";
 
 export interface FavoritesAddItem {
   type: typeof FAVORITES_ADD_ITEM;
-  payload: string;
+  payload: string[];
 }
 
 export interface FavoritesRemoveItem {
