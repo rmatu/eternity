@@ -26,7 +26,23 @@ export const ButtonsWrapper = styled.div`
   margin-top: 2em;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  @media (max-width: 530px) {
+    flex-direction: column;
+
+    > div :last-child {
+      margin-top: 0.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 `;
 
 export const Table = styled.div`
@@ -87,6 +103,10 @@ export const TableWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 830px) {
+    margin-top: 2em;
+  }
 `;
 
 export const MobileDesc = styled.div`

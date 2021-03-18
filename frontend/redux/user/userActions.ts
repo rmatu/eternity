@@ -4,6 +4,7 @@ import { localStorageNames } from "../../constants";
 import { AppActions } from "../actions";
 import { AppState } from "../rootReducer";
 import * as userActions from "./userTypes";
+import * as orderActions from "../order/orderTypes";
 
 export const signin = (email: string, password: string) => async (dispatch: Dispatch<AppActions>) => {
   dispatch({
@@ -92,11 +93,13 @@ export const deleteComment = (commentId: string, productId: string) => async (
 };
 
 export const signOut = () => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
-  console.log("here");
   localStorage.removeItem(localStorageNames.USER_INFO);
   localStorage.removeItem(localStorageNames.CART_ITEMS);
   dispatch({
     type: userActions.USER_SIGNOUT,
+  });
+  dispatch({
+    type: orderActions.ORDER_CLEAN_UP,
   });
 };
 

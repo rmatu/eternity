@@ -13,6 +13,16 @@ const orderDefaultState: OrderState = {
 
 const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
   switch (action.type) {
+    case actions.ORDER_CLEAN_UP:
+      return {
+        orders: null,
+        loading: false,
+        error: null,
+        orderSkip: 0,
+        orderLimit: 8,
+        canFetchMore: true,
+      };
+
     case actions.ORDER_CREATE_REQUEST:
       return {
         ...state,
@@ -69,6 +79,7 @@ const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
         ...state,
         canFetchMore: false,
       };
+
     default:
       return state;
   }

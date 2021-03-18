@@ -71,19 +71,26 @@ const Account = () => {
           </UserInfo>
         </UserInfoWrapper>
         <ButtonsWrapper>
-          <Button
-            bColor={active === ActiveTab.MY_ORDERS ? "#be6a15" : ""}
-            onClick={() => setActive(ActiveTab.MY_ORDERS)}
-            margin="0 1em 0 0"
-          >
-            Orders
-          </Button>
-          <Button
-            bColor={active === ActiveTab.CHANGE_INFO ? "#be6a15" : ""}
-            onClick={() => setActive(ActiveTab.CHANGE_INFO)}
-          >
-            Account
-          </Button>
+          <div>
+            <Button
+              bColor={active === ActiveTab.MY_ORDERS ? "#be6a15" : ""}
+              onClick={() => setActive(ActiveTab.MY_ORDERS)}
+              margin="0 1em 0 0"
+            >
+              Orders
+            </Button>
+            <Button
+              bColor={active === ActiveTab.CHANGE_INFO ? "#be6a15" : ""}
+              onClick={() => setActive(ActiveTab.CHANGE_INFO)}
+            >
+              Account
+            </Button>
+          </div>
+          <div>
+            <Button margin="0 0 0 1em" onClick={() => dispatch(signOut())}>
+              Loggout
+            </Button>
+          </div>
         </ButtonsWrapper>
         {active === ActiveTab.MY_ORDERS && (
           <>

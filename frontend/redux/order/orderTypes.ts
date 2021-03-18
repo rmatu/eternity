@@ -14,8 +14,13 @@ export const ORDER_MINE_LIST_FAIL = "ORDER_MINE_LIST_FAIL";
 
 export const ORDER_REFETCH_MINE_LIST_SUCCESS = "ORDER_REFETCH_MINE_LIST_SUCCESS";
 
+export const ORDER_CLEAN_UP = "ORDER_CLEAN_UP";
+
 export const ORDER_CANT_FETCH = "ORDER_CANT_FETCH";
 
+export interface OrderCleanUp {
+  type: typeof ORDER_CLEAN_UP;
+}
 export interface OrderCantFetch {
   type: typeof ORDER_CANT_FETCH;
 }
@@ -65,4 +70,5 @@ export type OrderActionTypes =
   | OrderMineListSuccess
   | OrderCantFetch
   | OrderRefetchMineListSuccess
+  | OrderCleanUp
   | OrderMineListFail;
