@@ -42,6 +42,9 @@ const userReducer = (state = userDefaultState, action: UserActionTypes) => {
     case userActions.USER_DELETE_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
+    case userActions.USER_SIGNOUT:
+      return { user: null, loading: false, error: null };
+
     default:
       return state;
   }

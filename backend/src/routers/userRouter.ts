@@ -80,6 +80,11 @@ userRouter.get(
       return;
     }
 
+    if (!orders) {
+      res.status(404).send({ message: "Orders not Found" });
+      return;
+    }
+
     res.send({
       user: {
         _id: user._id,

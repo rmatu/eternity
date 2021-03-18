@@ -76,6 +76,10 @@ export interface UserRegisterFail {
   payload: string;
 }
 
+export interface UserSignOut {
+  type: typeof USER_SIGNOUT;
+}
+
 interface User {
   _id: string;
   name: string;
@@ -103,4 +107,5 @@ export type UserActionTypes =
   | UserDeleteCommentRequest
   | UserDeleteCommentSucceess
   | UserDeleteCommentFail
+  | UserSignOut
   | UserCleanUp;

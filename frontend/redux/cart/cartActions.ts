@@ -16,52 +16,31 @@ export const addToCart = (productId: string, qty: number = 1) => async (
       qty,
     },
   });
-  localStorage.setItem(
-    localStorageNames.CART_ITEMS,
-    JSON.stringify(getState().cart.items)
-  );
+  localStorage.setItem(localStorageNames.CART_ITEMS, JSON.stringify(getState().cart.items));
 };
 
-export const removeItem = (productId: string) => async (
-  dispatch: Dispatch<AppActions>,
-  getState: () => AppState
-) => {
+export const removeItem = (productId: string) => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
   dispatch({
     type: actions.CART_REMOVE_ITEM,
     payload: productId,
   });
-  localStorage.setItem(
-    localStorageNames.CART_ITEMS,
-    JSON.stringify(getState().cart.items)
-  );
+  localStorage.setItem(localStorageNames.CART_ITEMS, JSON.stringify(getState().cart.items));
 };
 
-export const subQty = (productId: string) => async (
-  dispatch: Dispatch<AppActions>,
-  getState: () => AppState
-) => {
+export const subQty = (productId: string) => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
   dispatch({
     type: actions.CART_SUB_QTY,
     payload: productId,
   });
-  localStorage.setItem(
-    localStorageNames.CART_ITEMS,
-    JSON.stringify(getState().cart.items)
-  );
+  localStorage.setItem(localStorageNames.CART_ITEMS, JSON.stringify(getState().cart.items));
 };
 
-export const addQty = (productId: string) => async (
-  dispatch: Dispatch<AppActions>,
-  getState: () => AppState
-) => {
+export const addQty = (productId: string) => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
   dispatch({
     type: actions.CART_ADD_QTY,
     payload: productId,
   });
-  localStorage.setItem(
-    localStorageNames.CART_ITEMS,
-    JSON.stringify(getState().cart.items)
-  );
+  localStorage.setItem(localStorageNames.CART_ITEMS, JSON.stringify(getState().cart.items));
 };
 
 export const setStep = (step: number) => ({
@@ -69,15 +48,13 @@ export const setStep = (step: number) => ({
   payload: step,
 });
 
-export const saveShippingAddress = (
-  shippingAddress: actions.ShippingAddress
-) => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
+export const saveShippingAddress = (shippingAddress: actions.ShippingAddress) => async (
+  dispatch: Dispatch<AppActions>,
+  getState: () => AppState
+) => {
   dispatch({
     type: actions.CART_SAVE_SHIPPING_ADDRESS,
     payload: shippingAddress,
   });
-  localStorage.setItem(
-    localStorageNames.SHIPPING_ADDRESS,
-    JSON.stringify(getState().cart.shippingAddress)
-  );
+  localStorage.setItem(localStorageNames.SHIPPING_ADDRESS, JSON.stringify(getState().cart.shippingAddress));
 };

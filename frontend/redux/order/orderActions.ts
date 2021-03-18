@@ -7,9 +7,7 @@ import * as orderActions from "./orderTypes";
 import { CART_EMPTY } from "../cart/cartTypes";
 import { localStorageNames } from "../../constants";
 
-export const createOrder = (order) => async (
-  dispatch: Dispatch<AppActions>
-) => {
+export const createOrder = (order) => async (dispatch: Dispatch<AppActions>) => {
   dispatch({ type: orderActions.ORDER_CREATE_REQUEST });
   try {
     await axios.post("/api/orders", order);
@@ -19,10 +17,25 @@ export const createOrder = (order) => async (
   } catch (error) {
     dispatch({
       type: orderActions.ORDER_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const fetchAllOrders = () => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
+  dispatch({ type: orderActions.ORDER_CREATE_REQUEST });
+  try {
+    const user = getState().user.user;
+    const { data } = await axios.get(`/api/orders/${user._id}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    dispatch({ type: orderActions.ORDER_MINE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: orderActions.ORDER_CREATE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
     });
   }
 };

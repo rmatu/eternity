@@ -1,10 +1,8 @@
+import { IOrder } from "../../types";
+
 export const ORDER_CREATE_REQUEST = "ORDER_CREATE_REQUEST";
 export const ORDER_CREATE_SUCCESS = "ORDER_CREATE_SUCCESS";
 export const ORDER_CREATE_FAIL = "ORDER_CREATE_FAIL";
-
-export const ORDER_PAY_REQUEST = "ORDER_PAY_REQUEST";
-export const ORDER_PAY_SUCCESS = "ORDER_PAY_SUCCESS";
-export const ORDER_PAY_FAIL = "ORDER_PAY_FAIL";
 
 export const ORDER_DETAILS_REQUEST = "ORDER_DETAILS_REQUEST";
 export const ORDER_DETAILS_SUCCESS = "ORDER_DETAILS_SUCCESS";
@@ -27,7 +25,20 @@ export interface OrderCreateFail {
   payload: string;
 }
 
+export interface OrderMineListRequest {
+  type: typeof ORDER_MINE_LIST_REQUEST;
+}
+export interface OrderMineListSuccess {
+  type: typeof ORDER_MINE_LIST_SUCCESS;
+  payload: IOrder[];
+}
+export interface OrderMineListFail {
+  type: typeof ORDER_MINE_LIST_FAIL;
+  payload: string;
+}
+
 export interface OrderState {
+  orders: IOrder[];
   loading: boolean;
   error: string | null;
 }
@@ -35,4 +46,7 @@ export interface OrderState {
 export type OrderActionTypes =
   | OrderCreateRequest
   | OrderCreateSuccess
-  | OrderCreateFail;
+  | OrderCreateFail
+  | OrderMineListRequest
+  | OrderMineListSuccess
+  | OrderMineListFail;
