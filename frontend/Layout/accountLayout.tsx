@@ -7,6 +7,7 @@ export const Content = styled.div`
   align-items: center;
   width: 100%;
   font-size: 1.1rem;
+  margin-bottom: 3em;
 `;
 
 export const UserInfoWrapper = styled.div`

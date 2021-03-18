@@ -60,7 +60,12 @@ orderRouter.get(
   "/:id",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.params.id });
+    //@ts-ignore
+    const skip = parseInt(req.query.skip);
+    //@ts-ignore
+    const limit = parseInt(req.query.limit);
+
+    const orders = await Order.find({ user: req.params.id }).skip(skip).limit(limit);
 
     if (!orders) {
       res.status(404).send({ message: "Orders not Found" });

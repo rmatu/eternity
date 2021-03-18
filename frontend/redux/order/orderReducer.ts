@@ -1,10 +1,14 @@
 import { OrderActionTypes, OrderState } from "./orderTypes";
 import * as actions from "./orderTypes";
+import { number } from "yup/lib/locale";
 
 const orderDefaultState: OrderState = {
-  orders: [],
+  orders: null,
   loading: false,
   error: null,
+  orderSkip: 0,
+  orderLimit: 8,
+  canFetchMore: true,
 };
 
 const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
@@ -40,7 +44,8 @@ const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
         ...state,
         loading: false,
         error: null,
-        orders: action.payload,
+        orders: [...action.payload],
+        orderSkip: state.orderSkip + 8,
       };
 
     case actions.ORDER_MINE_LIST_FAIL:
@@ -48,6 +53,21 @@ const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case actions.ORDER_REFETCH_MINE_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        orders: [...state.orders, ...action.payload],
+        orderSkip: state.orderSkip + 8,
+      };
+
+    case actions.ORDER_CANT_FETCH:
+      return {
+        ...state,
+        canFetchMore: false,
       };
     default:
       return state;

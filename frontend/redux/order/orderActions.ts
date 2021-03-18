@@ -26,12 +26,39 @@ export const fetchAllOrders = () => async (dispatch: Dispatch<AppActions>, getSt
   dispatch({ type: orderActions.ORDER_CREATE_REQUEST });
   try {
     const user = getState().user.user;
-    const { data } = await axios.get(`/api/orders/${user._id}`, {
+    const order = getState().order;
+    const { data } = await axios.get(`/api/orders/${user._id}?limit=${order.orderLimit}&skip=${order.orderSkip}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
+
     dispatch({ type: orderActions.ORDER_MINE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: orderActions.ORDER_CREATE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const fetchMoreOrders = () => async (dispatch: Dispatch<AppActions>, getState: () => AppState) => {
+  dispatch({ type: orderActions.ORDER_CREATE_REQUEST });
+  try {
+    const user = getState().user.user;
+    const order = getState().order;
+    const { data } = await axios.get(`/api/orders/${user._id}?limit=${order.orderLimit}&skip=${order.orderSkip}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    dispatch({ type: orderActions.ORDER_REFETCH_MINE_LIST_SUCCESS, payload: data });
+
+    if (data.length === 0) {
+      console.log("here");
+      dispatch({ type: orderActions.ORDER_CANT_FETCH });
+    }
   } catch (error) {
     dispatch({
       type: orderActions.ORDER_CREATE_FAIL,
