@@ -5,6 +5,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   isAdmin: boolean;
+  createdAt: Date;
 }
 
 const userSchema = new mongoose.Schema(

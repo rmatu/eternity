@@ -10,7 +10,8 @@ const cartDefaultState: CartState = {
   shippingPrice: 499,
 };
 
-// This implementation is wrong, will fix it later
+// ! This implementation is wrong, will fix it later
+// ! Move the logic to cartActions
 
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
   switch (action.type) {

@@ -2,7 +2,8 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import argon2 from "argon2";
 import User from "../models/userModel";
-import { generateToken, isAuth } from "../utils";
+import Order from "../models/orderModel";
+import { generateToken, isAuth, isAdmin } from "../utils";
 
 const userRouter = express.Router();
 
@@ -50,13 +51,44 @@ userRouter.post(
 
 userRouter.get(
   "/:id",
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
-      res.send(user);
+      res.send({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        createrdAt: user.createdAt,
+      });
     } else {
-      res.status(404).send({ message: "User Not Found" });
+      res.status(404).send({ message: "User not Found" });
     }
+  })
+);
+
+userRouter.get(
+  "/:id/profile",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const orders = await Order.find({ user: req.params.id });
+
+    if (!user) {
+      res.status(404).send({ message: "User not Found" });
+      return;
+    }
+
+    res.send({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        createrdAt: user.createdAt,
+      },
+      orders,
+    });
   })
 );
 

@@ -44,14 +44,10 @@ const Step2 = () => {
             </Heading>
             <p>Sign in to save your order information on your account.</p>
             <RowButtons>
-              <Button margin="0.5em" bColor="#be6a15">
+              <Button onClick={() => router.push("/cart/step-3")} margin="0.5em" bColor="#be6a15">
                 Continue
               </Button>
-              <Button
-                onClick={() => router.push("/login?redirect=cart/step-3")}
-                margin="0.5em"
-                bColor="#be6a15"
-              >
+              <Button onClick={() => router.push("/login?redirect=cart/step-3")} margin="0.5em" bColor="#be6a15">
                 Sign in
               </Button>
             </RowButtons>
@@ -76,11 +72,7 @@ const Step2 = () => {
           </Heading>
           <p>All your order information will be saved on your account.</p>
           <div>
-            <Button
-              onClick={() => router.push("/cart/step-3")}
-              margin="1em 0 0 0 "
-              bColor="#be6a15"
-            >
+            <Button onClick={() => router.push("/cart/step-3")} margin="1em 0 0 0 " bColor="#be6a15">
               Continue
             </Button>
           </div>
