@@ -39,6 +39,7 @@ export interface IReviews {
 }
 
 export interface IOrder {
+  _id: string;
   orderItems: {
     name: string;
     qty: number;
@@ -64,5 +65,6 @@ export interface IOrder {
   user: string;
   paidAt: Date;
   isDelivered: boolean;
-  deliveredAt: Date;
+  deliveredAt: string;
+  createdAt: string;
 }
