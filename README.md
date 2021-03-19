@@ -2,8 +2,6 @@
 
 Watch e-commerce with Next.js and Node.js
 
-<img src="https://wakatime.com/badge/github/rmatu/eternity.svg"/>
-
 # Disclaimer
 
 App is not ready yet

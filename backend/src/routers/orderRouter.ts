@@ -65,7 +65,7 @@ orderRouter.get(
     //@ts-ignore
     const limit = parseInt(req.query.limit);
 
-    const orders = await Order.find({ user: req.params.id }).skip(skip).limit(limit);
+    const orders = await Order.find({ user: req.params.id }).sort({ _id: -1 }).skip(skip).limit(limit);
 
     if (!orders) {
       res.status(404).send({ message: "Orders not Found" });

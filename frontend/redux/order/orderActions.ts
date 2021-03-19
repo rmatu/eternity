@@ -66,3 +66,7 @@ export const fetchMoreOrders = () => async (dispatch: Dispatch<AppActions>, getS
     });
   }
 };
+
+export const orderCleanUp = () => ({
+  type: orderActions.ORDER_CLEAN_UP,
+});

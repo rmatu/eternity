@@ -1,6 +1,5 @@
 import { OrderActionTypes, OrderState } from "./orderTypes";
 import * as actions from "./orderTypes";
-import { number } from "yup/lib/locale";
 
 const orderDefaultState: OrderState = {
   orders: null,
@@ -15,7 +14,7 @@ const orderReducer = (state = orderDefaultState, action: OrderActionTypes) => {
   switch (action.type) {
     case actions.ORDER_CLEAN_UP:
       return {
-        orders: null,
+        ...state,
         loading: false,
         error: null,
         orderSkip: 0,

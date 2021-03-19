@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import PageLoader from "../components/PageLoader/PageLoader";
 import { signOut } from "../redux/user/userActions";
 import Button from "../components/UI/Button/Button";
-import { fetchAllOrders, fetchMoreOrders } from "../redux/order/orderActions";
+import { fetchAllOrders, fetchMoreOrders, orderCleanUp } from "../redux/order/orderActions";
 import {
   Content,
   UserInfoWrapper,
@@ -22,7 +22,6 @@ import {
 import Heading from "../components/UI/Heading/Heading";
 import { OrderState } from "../redux/order/orderTypes";
 import { twoDecimals } from "../utils/format";
-import Footer from "../components/Footer/Footer";
 
 enum ActiveTab {
   MY_ORDERS = "myOrders",
@@ -44,6 +43,12 @@ const Account = () => {
       dispatch(fetchAllOrders());
     }
   }, [user]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(orderCleanUp());
+    };
+  }, [dispatch]);
 
   if (!user || !orders) {
     return <PageLoader />;
@@ -145,7 +150,12 @@ const Account = () => {
                           <MobileDesc>
                             <strong>ACTIONS</strong>
                           </MobileDesc>
-                          <Button bColor="#be6a15" padding="0.1em 0.9em" margin="0.4rem 0.2rem">
+                          <Button
+                            bColor="#be6a15"
+                            padding="0.1em 0.9em"
+                            margin="0.4rem 0.2rem"
+                            onClick={() => router.push(`/orders/${order._id}`)}
+                          >
                             Details
                           </Button>
                         </Mobile>

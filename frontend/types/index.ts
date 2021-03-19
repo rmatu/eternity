@@ -46,6 +46,7 @@ export interface IOrder {
     image: string;
     price: number;
     product: string;
+    _id: string;
   }[];
   shippingAddress: {
     fullName: string;
@@ -63,7 +64,7 @@ export interface IOrder {
   shippingPrice: number;
   totalPrice: number;
   user: string;
-  paidAt: Date;
+  paidAt: string;
   isDelivered: boolean;
   deliveredAt: string;
   createdAt: string;
