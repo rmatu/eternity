@@ -46,7 +46,7 @@ App is not ready yet
 - User authentication with JWT
 - User can purchase products without creating an account
 - Payment with Paypal/Credit Card/Bank Transfer
-- User's orders are stored in DB
+- User's can see his previous orders
 - Adding/Removing product from cart
 - Changing the quantity of product in cart
 - Adding product to favorites
@@ -69,6 +69,14 @@ App is not ready yet
 ### Fullscreen product images carousel:
 
 <img src="media/s12.png"/>
+
+### Account:
+
+<img src="media/s15.png"/>
+
+### Order details:
+
+<img src="media/s14.png"/>
 
 ### Favorites
 
