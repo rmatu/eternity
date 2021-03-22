@@ -38,6 +38,8 @@ export const Special = styled.span`
 export const SvgWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
   .user {
     svg {
@@ -49,9 +51,10 @@ export const SvgWrapper = styled.div`
     margin: 0 1em;
     height: 2em;
     width: 2em;
+    cursor: pointer;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     display: none;
   }
 `;
@@ -125,11 +128,7 @@ export const Ul = styled.ul<UlProps>`
     justify-content: center;
     flex-flow: column nowrap;
     background: rgb(45, 52, 54);
-    background: linear-gradient(
-      180deg,
-      rgba(45, 52, 54, 1) 0%,
-      rgba(0, 0, 0, 1) 100%
-    );
+    background: linear-gradient(180deg, rgba(45, 52, 54, 1) 0%, rgba(0, 0, 0, 1) 100%);
     position: fixed;
     transform: ${({ open }) => (open ? "translateY(0%)" : "translateY(-100%)")};
     top: 0;
@@ -140,8 +139,7 @@ export const Ul = styled.ul<UlProps>`
     transition: transform 0.3s ease-in-out;
     -webkit-box-shadow: 0px 3px 19px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 3px 19px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: ${({ open }) =>
-      open ? "0px 3px 19px 0px rgba(0, 0, 0, 0.75)" : "none"};
+    box-shadow: ${({ open }) => (open ? "0px 3px 19px 0px rgba(0, 0, 0, 0.75)" : "none")};
     z-index: 998;
     ${Li} {
       transition: opacity 0.5s ease-in-out;
@@ -149,7 +147,7 @@ export const Ul = styled.ul<UlProps>`
     }
   }
 
-  @media (min-width: 500px) {
+  @media (min-width: 600px) {
     display: none;
   }
 `;
@@ -202,4 +200,27 @@ export const MobileQty = styled.div<{ cart?: boolean }>`
   height: 18px;
   margin-left: 0.25em;
   font-weight: 500;
+`;
+
+export const Input = styled.input<{ open: boolean; margin?: string }>`
+  border-radius: 1em;
+  transition: all 0.2s;
+  width: ${({ open }) => (open ? "15em" : "0")};
+  padding: ${({ open }) => (open ? "0.2em 1em" : "0")};
+  border: ${({ open }) => (open ? "1em" : "0")};
+
+  @media (max-width: 684px) {
+    width: ${({ open }) => (open ? "10em" : "0")};
+  }
+
+  @media (max-width: 600px) {
+    width: 12em;
+    margin: ${({ margin }) => margin};
+  }
+`;
+
+export const DesktopInputWrapper = styled.div`
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;

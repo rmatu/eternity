@@ -42,7 +42,7 @@ export const StyledBurger = styled.button<BurgerProps>`
     }
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     display: flex;
   }
 `;
