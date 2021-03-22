@@ -66,6 +66,7 @@ productRouter.get(
     const skip = parseInt(req.query.skip) || 0;
     //@ts-ignore
     const limit = parseInt(req.query.limit) || 20;
+    console.log(query);
 
     // Find an item that contains either the name or brand name
     if (query) {
@@ -73,24 +74,26 @@ productRouter.get(
         //@ts-ignore
         $or: [{ name: { $regex: query, $options: "i" } }, { brand: { $regex: query, $options: "i" } }],
       });
-
-      // Send similar producst base on sex
-      const similarProducts = await Product.find({
-        "specification.sex": products[0].specification.sex,
-        _id: { $ne: products[0]._id },
-      })
-        .skip(skip)
-        .limit(limit);
-      if (similarProducts) {
-        res.send({ products: products, similarProducts: similarProducts });
-        return;
-      } else {
-        res.status(404).send({ message: "Similar Products Not Found" });
-        return;
+      console.log(products);
+      if (products.length > 0) {
+        // Send similar producst base on sex
+        const similarProducts = await Product.find({
+          "specification.sex": products[0].specification.sex,
+          _id: { $nin: products.map((el) => el._id) },
+        })
+          .skip(skip)
+          .limit(limit);
+        if (similarProducts) {
+          res.send({ products: products, similarProducts: similarProducts });
+          return;
+        } else {
+          res.status(404).send({ message: "Similar Products Not Found" });
+          return;
+        }
       }
     }
 
-    res.send({ message: "No query params" });
+    res.send({ message: "Products not found" });
   })
 );
 
