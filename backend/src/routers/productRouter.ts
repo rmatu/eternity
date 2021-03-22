@@ -58,6 +58,42 @@ productRouter.get(
   })
 );
 
+productRouter.get(
+  "/search",
+  expressAsyncHandler(async (req, res) => {
+    const query = req.query.q;
+    //@ts-ignore
+    const skip = parseInt(req.query.skip) || 0;
+    //@ts-ignore
+    const limit = parseInt(req.query.limit) || 20;
+
+    // Find an item that contains either the name or brand name
+    if (query) {
+      const products = await Product.find({
+        //@ts-ignore
+        $or: [{ name: { $regex: query, $options: "i" } }, { brand: { $regex: query, $options: "i" } }],
+      });
+
+      // Send similar producst base on sex
+      const similarProducts = await Product.find({
+        "specification.sex": products[0].specification.sex,
+        _id: { $ne: products[0]._id },
+      })
+        .skip(skip)
+        .limit(limit);
+      if (similarProducts) {
+        res.send({ products: products, similarProducts: similarProducts });
+        return;
+      } else {
+        res.status(404).send({ message: "Similar Products Not Found" });
+        return;
+      }
+    }
+
+    res.send({ message: "No query params" });
+  })
+);
+
 productRouter.post(
   "/cartItems",
   expressAsyncHandler(async (req, res) => {
