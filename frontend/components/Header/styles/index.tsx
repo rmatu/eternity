@@ -224,3 +224,5 @@ export const DesktopInputWrapper = styled.div`
     display: none;
   }
 `;
+
+export const Form = styled.form``;

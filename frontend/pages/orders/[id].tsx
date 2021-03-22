@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { OrderState } from "../../redux/order/orderTypes";
-import { useSelector } from "react-redux";
-import { AppState } from "../../redux/rootReducer";
-import PageLoader from "../../components/PageLoader/PageLoader";
-import { IOrder } from "../../types";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Header } from "../../components/Header/Header";
+import PageLoader from "../../components/PageLoader/PageLoader";
+import Button from "../../components/UI/Button/Button";
+import Heading from "../../components/UI/Heading/Heading";
+import MessageBox from "../../components/UI/MessageBox/MessageBox";
 import {
   BolderSpan,
   Content,
@@ -21,12 +22,10 @@ import {
   ShippingInfo,
   TotalPrice,
 } from "../../layout/ordersLayout";
-import Image from "next/image";
-import Heading from "../../components/UI/Heading/Heading";
-import Rating from "../../components/UI/Rating/Rating";
+import { OrderState } from "../../redux/order/orderTypes";
+import { AppState } from "../../redux/rootReducer";
+import { IOrder } from "../../types";
 import { twoDecimals } from "../../utils/format";
-import Button from "../../components/UI/Button/Button";
-import MessageBox from "../../components/UI/MessageBox/MessageBox";
 
 interface Props {}
 
@@ -34,8 +33,6 @@ const Order: React.FC<Props> = ({}) => {
   const { orders }: OrderState = useSelector((state: AppState) => state.order);
   const [order, setOrder] = useState<IOrder>();
   const router = useRouter();
-
-  console.log(order);
 
   useEffect(() => {
     if (orders) {
@@ -99,7 +96,7 @@ const Order: React.FC<Props> = ({}) => {
 
                 {order.orderItems.map((el) => (
                   <ItemRow key={el._id}>
-                    <ImageContent>
+                    <ImageContent onClick={() => router.push(`/products/${el.product}`)}>
                       <ImageWrapper>
                         <Image
                           alt={`${el.name} image`}

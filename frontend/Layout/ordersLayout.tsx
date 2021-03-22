@@ -103,6 +103,11 @@ export const ImageContent = styled.div<{ margin?: string }>`
   justify-content: center;
   flex-direction: column;
   margin: ${({ margin }) => (margin ? margin : null)};
+  cursor: pointer;
+
+  :hover {
+    transform: scale(1.05);
+  }
 
   svg {
     transition: all 0.2s;
@@ -128,6 +133,7 @@ export const ImageContent = styled.div<{ margin?: string }>`
 `;
 
 export const ImageWrapper = styled.div`
+  transition: 0.1s all;
   position: relative;
   width: 100px;
   height: 100px;
