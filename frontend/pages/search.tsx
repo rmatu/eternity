@@ -28,6 +28,7 @@ import { dispatchToPlace } from "../utils/reduxHelpers";
 import { localStorageNames } from "../constants";
 import { useDispatch } from "react-redux";
 import { SideNavbar } from "../components/SideNavbar/SideNavbar";
+import { addToCart } from "../redux/cart/cartActions";
 
 interface searchProps {
   data: {
@@ -91,6 +92,7 @@ const Search: React.FC<searchProps> = ({ data }) => {
                     <Heading color="#fff" size="h4">
                       {watch.name}
                     </Heading>
+                    <p>{watch.brand}</p>
 
                     <Price
                       fontWeight="400"
@@ -146,6 +148,7 @@ const Search: React.FC<searchProps> = ({ data }) => {
                     <Heading color="#fff" size="h4">
                       {watch.name}
                     </Heading>
+                    <p>{watch.brand}</p>
 
                     <Price
                       fontWeight="400"
@@ -175,7 +178,7 @@ const Search: React.FC<searchProps> = ({ data }) => {
         </FavoritesWrapper>
       </Content>
       <Popup showPopup={showPopup}>Item removed from favorites!</Popup>
-      <Popup showPopup={addToCartPopup}>Item removed from favorites!</Popup>
+      <Popup showPopup={addToCartPopup}>Item added to cart!</Popup>
     </>
   );
 };

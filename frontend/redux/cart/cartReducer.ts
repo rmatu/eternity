@@ -16,10 +16,18 @@ const cartDefaultState: CartState = {
 const cartReducer = (state = cartDefaultState, action: CartActionTypes) => {
   switch (action.type) {
     case actions.CART_ADD_ITEM:
-      return {
-        ...state,
-        items: [action.payload],
-      };
+      const existItem = state.items.find((x) => x.productId === action.payload.productId);
+      if (existItem) {
+        return {
+          ...state,
+          items: [...state.items],
+        };
+      } else {
+        return {
+          ...state,
+          items: [...state.items, action.payload],
+        };
+      }
     case actions.CART_REMOVE_ITEM:
       const newArray = state.items.filter((item) => item.productId !== action.payload);
       return {

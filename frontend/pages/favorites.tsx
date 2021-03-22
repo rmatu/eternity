@@ -160,7 +160,7 @@ const Favorites = () => {
                   <Heading color="#fff" size="h4">
                     {watch.name}
                   </Heading>
-
+                  <p>{watch.brand}</p>
                   <Price
                     fontWeight="400"
                     margin="0 0 0.5em 0"
