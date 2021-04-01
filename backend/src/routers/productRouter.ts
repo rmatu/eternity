@@ -37,9 +37,9 @@ const upload = multer({
 const productRouter = express.Router();
 
 productRouter.get("/", productController.getAllProducts);
-productRouter.get("/:id", productController.getProduct);
-productRouter.get("/search", productController.getSearchedProducts);
 productRouter.get("/main-product", productController.getMainProduct);
+productRouter.get("/search", productController.getSearchedProducts);
+productRouter.get("/:id", productController.getProduct);
 productRouter.get("/:id/reviews", productController.getProductReviews);
 
 productRouter.post("/cartItems", productController.getCartItems);
