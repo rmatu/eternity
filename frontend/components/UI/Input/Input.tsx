@@ -7,17 +7,12 @@ interface InputProps {
   width?: string;
 }
 
-const Input: React.FC<InputProps> = ({
-  field,
-  form: { touched, errors },
-  children,
-  ...props
-}) => {
+const Input: React.FC<InputProps> = ({ field, form: { touched, errors }, children, ...props }) => {
   return (
     <Wrapper>
       <StyledInput {...field} {...props}></StyledInput>
       <IconWrapper>{children}</IconWrapper>
-      <Error show={errors[field.name] && touched[field.name]}>
+      <Error data-testid="input-error" show={errors[field.name] && touched[field.name]}>
         {errors[field.name]}
       </Error>
     </Wrapper>

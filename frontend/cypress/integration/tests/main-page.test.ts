@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("Login page", () => {
+describe("Main page", () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
     cy.visit("http://localhost:3000");
@@ -20,7 +20,7 @@ describe("Login page", () => {
     cy.get("[data-testid=description-content]").should("exist");
   });
 
-  it.only("Links on main page works", () => {
+  it("Links on main page works", () => {
     // Header navigation buttons
     cy.get("[data-testid=search-btn]").click();
     cy.get("[data-testid=search-input]").should("exist");
@@ -37,7 +37,7 @@ describe("Login page", () => {
     cy.url().should("include", "/login");
     cy.go("back");
 
-    // Header navigation buttons
+    // Main content buttons
     cy.get("[data-testid=details-btn]").click();
     cy.url().should("include", "/products/");
     cy.go("back");
@@ -51,11 +51,19 @@ describe("Login page", () => {
     cy.url().should("include", "/search?q=douglas%20dakota");
     cy.go("back");
   });
+
+  it("Add item to cart", () => {
+    cy.get("[data-testid=add-btn]").click();
+    cy.get("[data-testid=cart-btn]").click();
+    cy.url().should("include", "/cart/step-1");
+    cy.get("[data-testid=item-row]").should("exist");
+  });
 });
 
 describe("API Tests", () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
+    cy.visit("http://localhost:3000");
   });
 
   it("GET main product", () => {

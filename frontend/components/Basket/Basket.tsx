@@ -78,7 +78,7 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
 
       <Wrapper>
         {basket.map((item) => (
-          <Row key={item._id}>
+          <Row key={item._id} data-testid="item-row">
             <Product>
               <Link href={`/products/${item._id}`}>
                 <a>
@@ -139,13 +139,9 @@ const Basket: React.FC<BasketProps> = ({ products, cartItems }) => {
             Total:
           </Heading>
           <PriceWrapper>
-            {`$${twoDecimals(
-              basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0)
-            )}`}
+            {`$${twoDecimals(basket.map((el) => el.price * el.qty).reduce((a, b) => a + b, 0))}`}
           </PriceWrapper>
-          <ItemsCount>{`(${basket
-            .map((el) => el.qty)
-            .reduce((a, b) => a + b, 0)} items)`}</ItemsCount>
+          <ItemsCount>{`(${basket.map((el) => el.qty).reduce((a, b) => a + b, 0)} items)`}</ItemsCount>
         </BottomRowInfo>
         <div>
           <Link href="/cart/step-2">

@@ -10,14 +10,7 @@ import Heading from "../components/UI/Heading/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { cleanUp, signin } from "../redux/user/userActions";
 import Input from "../components/UI/Input/Input";
-import {
-  Content,
-  IconWrapper,
-  LoginForm,
-  BottomTextWrapper,
-  SpanWrapper,
-  ButtonWrapper,
-} from "../layout/loginLayout";
+import { Content, IconWrapper, LoginForm, BottomTextWrapper, SpanWrapper, ButtonWrapper } from "../layout/loginLayout";
 import Button from "../components/UI/Button/Button";
 import { useRouter } from "next/router";
 import { UserState } from "../redux/user/userTypes";
@@ -26,9 +19,7 @@ import Popup from "../components/UI/Popup/Popup";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required."),
-  password: Yup.string()
-    .required("The password is required.")
-    .min(3, "The password is to short"),
+  password: Yup.string().required("The password is required.").min(3, "The password is to short"),
 });
 
 const Login = () => {
@@ -36,9 +27,7 @@ const Login = () => {
   const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user, error }: UserState = useSelector(
-    (state: AppState) => state.user
-  );
+  const { user, error }: UserState = useSelector((state: AppState) => state.user);
 
   useEffect(() => {
     if (user) {
@@ -86,6 +75,7 @@ const Login = () => {
                 Email
               </Heading>
               <Field
+                data-testid="email-input"
                 type="email"
                 name="email"
                 placeholder="Your email..."
@@ -97,18 +87,21 @@ const Login = () => {
 
               <Field
                 type={showPassword ? "text" : "password"}
+                data-testid="password-input"
                 name="password"
                 placeholder="Your password..."
                 component={Input}
               >
                 {showPassword ? (
                   <AiOutlineEye
+                    data-testid="hide-password-btn"
                     onClick={() => {
                       setShowPassword(!showPassword);
                     }}
                   />
                 ) : (
                   <AiOutlineEyeInvisible
+                    data-testid="show-password-btn"
                     onClick={() => {
                       setShowPassword(!showPassword);
                     }}
@@ -118,6 +111,7 @@ const Login = () => {
 
               <ButtonWrapper>
                 <Button
+                  data-testid="login-submit-btn"
                   loading={isSubmitting ? "Sending..." : null}
                   disabled={!isValid}
                   type="submit"
@@ -133,7 +127,9 @@ const Login = () => {
                 <p>Don't have an account? </p>
                 <Link href="/register">
                   <a>
-                    <SpanWrapper bold>Sign up</SpanWrapper>
+                    <SpanWrapper bold data-testid="sign-up-link">
+                      Sign up
+                    </SpanWrapper>
                   </a>
                 </Link>
               </BottomTextWrapper>

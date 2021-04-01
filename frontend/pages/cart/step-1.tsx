@@ -19,9 +19,7 @@ import { setStep } from "../../redux/cart/cartActions";
 // to late. I will try it in my next project (－‸ლ)
 
 const Step1 = () => {
-  const { items, step }: CartState = useSelector(
-    (state: AppState) => state.cart
-  );
+  const { items, step }: CartState = useSelector((state: AppState) => state.cart);
   const [products, setProducts] = useState<IProduct[] | null>(null);
   const dispatch = useDispatch();
 
