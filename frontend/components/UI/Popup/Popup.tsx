@@ -7,14 +7,9 @@ interface PopupProps {
   error?: boolean | null;
 }
 
-const Popup: React.FC<PopupProps> = ({
-  showPopup,
-  success,
-  error,
-  children,
-}) => {
+const Popup: React.FC<PopupProps> = ({ showPopup, success, error, children }) => {
   return (
-    <Wrapper success={success} error={error} showPopup={showPopup}>
+    <Wrapper success={success} error={error} showPopup={showPopup} data-testid="popup">
       {children}
     </Wrapper>
   );

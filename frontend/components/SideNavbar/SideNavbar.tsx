@@ -7,7 +7,7 @@ interface SideNavbarProps {
 
 export const SideNavbar: React.FC<SideNavbarProps> = ({ width }) => {
   return (
-    <Wrapper width={width}>
+    <Wrapper width={width} data-testid="side-nav">
       <Links>
         <li>
           <Link href="/men">

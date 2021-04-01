@@ -42,7 +42,7 @@ const Home = ({ data }) => {
         <SideNavbar />
         <MainContent>
           <Description>
-            <DescriptionContent>
+            <DescriptionContent data-testid="description-content">
               <Heading size="h1" color="#fff">
                 {name}
               </Heading>
@@ -54,6 +54,7 @@ const Home = ({ data }) => {
               <p>{description}</p>
               <ButtonsRow>
                 <Button
+                  data-testid="add-btn"
                   onClick={() => {
                     dispatchToPlace(_id, localStorageNames.CART_ITEMS, dispatch);
                     setShowPopup(true);
@@ -68,7 +69,9 @@ const Home = ({ data }) => {
                 </Button>
                 <Link href={`/products/${_id}`}>
                   <a>
-                    <Button margin="2em">Details</Button>
+                    <Button data-testid="details-btn" margin="2em">
+                      Details
+                    </Button>
                   </a>
                 </Link>
               </ButtonsRow>

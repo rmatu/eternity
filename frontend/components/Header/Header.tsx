@@ -55,7 +55,7 @@ export const Header = () => {
       <Nav>
         <LeftWrapper>
           <Link href="/">
-            <Logo>ETERNITY</Logo>
+            <Logo data-testid="logo">ETERNITY</Logo>
           </Link>
         </LeftWrapper>
         <SvgWrapper>
@@ -63,6 +63,7 @@ export const Header = () => {
           <DesktopInputWrapper>
             <Form onSubmit={(e) => handleSubmit(e)}>
               <Input
+                data-testid="search-input"
                 open={searchOpen}
                 value={searchQuery}
                 placeholder="Search product..."
@@ -70,11 +71,11 @@ export const Header = () => {
               />
             </Form>
           </DesktopInputWrapper>
-          <DesktopInputWrapper>
+          <DesktopInputWrapper data-testid="search-btn">
             <BiSearch onClick={() => setSearchOpen(!searchOpen)} />
           </DesktopInputWrapper>
           <Link href="/cart/step-1">
-            <SvgContainer>
+            <SvgContainer data-testid="cart-btn">
               <a>
                 <BiCart />
               </a>
@@ -86,7 +87,7 @@ export const Header = () => {
             </SvgContainer>
           </Link>
           <Link href="/favorites">
-            <SvgContainer>
+            <SvgContainer data-testid="favorites-btn">
               <a>
                 <HiOutlineHeart />
                 {favoritesItems.length > 0 && (
@@ -100,7 +101,7 @@ export const Header = () => {
           <Link href={user ? "/account" : "/login"}>
             <a>
               <SvgContainer>
-                <div className="user">
+                <div className="user" data-testid="login-btn">
                   <User />
                   {user && <BiCheck className="check" />}
                 </div>
