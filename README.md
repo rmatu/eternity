@@ -36,6 +36,10 @@ App is not ready yet
 - Multer
 - JSON Web Token
 
+## Testing
+
+- E2E tests with Cypress
+
 ## Features
 
 - Sign in/Sign up with data validation
@@ -53,6 +57,7 @@ App is not ready yet
 - Adding/Removing review
 - Displaying images on fullscreen
 - Sorting favorites products
+- e2e tests with cypress
 
 # Every Page is Fully Responsive
 
