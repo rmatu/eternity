@@ -1,0 +1,25 @@
+{
+  "name": "nextjs-ecommerce",
+  "version": "1.0.0",
+  "description": "Watch e-commerce with Next.js and Node.js",
+  "main": "index.js",
+  "dependencies": {
+    "cypress": "^6.8.0",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmatu/nextjs-ecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmatu/nextjs-ecommerce/issues"
+  },
+  "homepage": "https://github.com/rmatu/nextjs-ecommerce#readme"
+}
