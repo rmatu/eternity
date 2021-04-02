@@ -3,7 +3,7 @@
 describe("Main page", () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
-    cy.visit("#");
+    cy.visit("");
   });
 
   it("DOM elements exists", () => {
@@ -63,7 +63,7 @@ describe("Main page", () => {
 describe("API Tests", () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
-    cy.visit("#");
+    cy.visit("");
   });
 
   it("GET main product", () => {

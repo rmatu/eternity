@@ -3,7 +3,7 @@
 describe("Login page", () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
-    cy.visit("http://localhost:3000/login");
+    cy.visit("/login");
   });
 
   it("DOM elements exists", () => {
@@ -51,9 +51,20 @@ describe("Login page", () => {
     cy.go("back");
   });
 
-  it.only("Invalid email text", () => {
+  it("Invalid email text", () => {
     cy.get("[data-testid=email-input]").type("testkdsada");
     cy.get("[data-testid=password-input]").focus();
     cy.get("[data-testid=input-error]").contains("Invalid email");
+  });
+
+  it("Successful login", () => {
+    const email = Cypress.env("email");
+    const password = Cypress.env("password");
+
+    cy.get("[data-testid=email-input]").type(email).blur();
+    cy.get("[data-testid=password-input]").type(password).blur();
+
+    cy.get("[data-testid=login-submit-btn]").click();
+    cy.url().should("include", "/account");
   });
 });

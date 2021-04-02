@@ -12,21 +12,19 @@ interface FavoriteProps {
 }
 
 const Favorite: React.FC<FavoriteProps> = ({ productId, onClick }) => {
-  const { items: favoritesItems }: FavoritesState = useSelector(
-    (state: AppState) => state.favorites
-  );
+  const { items: favoritesItems }: FavoritesState = useSelector((state: AppState) => state.favorites);
 
   if (checkIfFavorite(productId, favoritesItems)) {
     return (
       <Wrapper onClick={onClick}>
-        <HiHeart fill="#BE6A15" />
+        <HiHeart data-testid="favorite-btn" fill="#BE6A15" />
       </Wrapper>
     );
   }
 
   return (
     <Wrapper onClick={onClick}>
-      <HiOutlineHeart />
+      <HiOutlineHeart data-testid="favorite-btn" />
     </Wrapper>
   );
 };

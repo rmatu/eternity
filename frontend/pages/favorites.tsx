@@ -91,7 +91,7 @@ const Favorites = () => {
         </Head>
         <Header />
 
-        <Flex>
+        <Flex data-testid="no-favorites-text">
           <Heading size="h1" color="#fff">
             You don't have any favorites items...
           </Heading>
@@ -113,18 +113,21 @@ const Favorites = () => {
             Sorting options
           </Heading>
           <Option
+            data-testid="lowest-price"
             active={sortingMethod === SortingMethod.LOWEST_PRICE}
             onClick={() => setSortingMethod(SortingMethod.LOWEST_PRICE)}
           >
             <p>Lowest price</p>
           </Option>
           <Option
+            data-testid="highest-price"
             active={sortingMethod === SortingMethod.HIGHEST_PRICE}
             onClick={() => setSortingMethod(SortingMethod.HIGHEST_PRICE)}
           >
             <p>Highest price</p>
           </Option>
           <Option
+            data-testid="biggest-discount"
             active={sortingMethod === SortingMethod.BIGGEST_DISCOUNT}
             onClick={() => setSortingMethod(SortingMethod.BIGGEST_DISCOUNT)}
           >
@@ -137,7 +140,7 @@ const Favorites = () => {
           </Heading>
           <ProductsWrapper>
             {products.map((watch) => (
-              <Product key={watch._id}>
+              <Product key={watch._id} data-testid="product">
                 <ImageWrapper>
                   <ImageContent>
                     <Image

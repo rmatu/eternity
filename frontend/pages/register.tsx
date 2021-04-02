@@ -12,29 +12,15 @@ import Button from "../components/UI/Button/Button";
 import Heading from "../components/UI/Heading/Heading";
 import Input from "../components/UI/Input/Input";
 import Popup from "../components/UI/Popup/Popup";
-import {
-  BottomTextWrapper,
-  ButtonWrapper,
-  Content,
-  IconWrapper,
-  LoginForm,
-  SpanWrapper,
-} from "../layout/loginLayout";
+import { BottomTextWrapper, ButtonWrapper, Content, IconWrapper, LoginForm, SpanWrapper } from "../layout/loginLayout";
 import { AppState } from "../redux/rootReducer";
 import { register } from "../redux/user/userActions";
 import { UserState } from "../redux/user/userTypes";
 
 export const SignUpSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Your name is required.")
-    .min(3, "Too short.")
-    .max(25, "Too long."),
-  email: Yup.string()
-    .email("Invalid email.")
-    .required("The email is required."),
-  password: Yup.string()
-    .required("The password is required.")
-    .min(1, "The password is to short"),
+  name: Yup.string().required("Your name is required.").min(3, "Too short.").max(25, "Too long."),
+  email: Yup.string().email("Invalid email.").required("The email is required."),
+  password: Yup.string().required("The password is required.").min(1, "The password is to short"),
   confirmPassword: Yup.string()
     //Getting the reference to the password
     .oneOf([Yup.ref("password"), null], `Password doesn't match`)
@@ -48,9 +34,7 @@ const Register = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { user, error }: UserState = useSelector(
-    (state: AppState) => state.user
-  );
+  const { user, error }: UserState = useSelector((state: AppState) => state.user);
 
   useEffect(() => {
     if (user) {
@@ -75,10 +59,7 @@ const Register = () => {
             password: "",
             confirmPassword: "",
           }}
-          onSubmit={async (
-            { name, email, password },
-            { setSubmitting, setErrors }
-          ) => {
+          onSubmit={async ({ name, email, password }, { setSubmitting, setErrors }) => {
             await dispatch(register(email, name, password));
           }}
         >
@@ -90,21 +71,11 @@ const Register = () => {
               <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
                 Email
               </Heading>
-              <Field
-                type="email"
-                name="email"
-                placeholder="Your email..."
-                component={Input}
-              />
+              <Field type="email" name="email" placeholder="Your email..." component={Input} />
               <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
                 Name
               </Heading>
-              <Field
-                type="name"
-                name="name"
-                placeholder="Your name..."
-                component={Input}
-              />
+              <Field type="name" name="name" placeholder="Your name..." component={Input} />
               <Heading size="h4" margin="0 0 0.3em 0.4em" color="#fff">
                 Password
               </Heading>
