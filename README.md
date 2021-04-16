@@ -45,12 +45,12 @@ App is not ready yet
 - Sign in/Sign up with data validation
 - Adding/Reading/Updating/Deleting product from DB
 - Admin can decide which product is featured on the main page
-- User's reviews and watches pagination
-- User's shipping address, cart, favorites is persistent
+- Users reviews and watches pagination
+- Users shipping address, cart, favorites is persistent
 - User authentication with JWT
 - User can purchase products without creating an account
 - Payment with Paypal/Credit Card/Bank Transfer
-- User's can see his previous orders
+- Users can see his previous orders
 - Adding/Removing product from cart
 - Changing the quantity of product in cart
 - Adding product to favorites
