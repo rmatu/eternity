@@ -43,7 +43,7 @@ App is not ready yet
 ## Features
 
 - Sign in/Sign up with data validation
-- Adding/Removing/Updating/Deleting product from DB
+- Adding/Reading/Updating/Deleting product from DB
 - Admin can decide which product is featured on the main page
 - User's reviews and watches pagination
 - User's shipping address, cart, favorites is persistent
