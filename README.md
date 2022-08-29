@@ -2,10 +2,6 @@
 
 Watch e-commerce with Next.js and Node.js
 
-# Disclaimer
-
-App is not ready yet
-
 ## Description
 
 - [Technology Stack](#Frontend)
